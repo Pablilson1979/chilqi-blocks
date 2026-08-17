@@ -99,7 +99,9 @@ export function SiteHeader({
         </div>
 
         {tagline && (
-          <p className="text-center text-3xl font-bold text-primary lg:text-4xl">{tagline}</p>
+          <p className="hidden text-center text-3xl font-bold text-primary lg:block lg:text-4xl">
+            {tagline}
+          </p>
         )}
 
         {/* Navegación desktop */}
