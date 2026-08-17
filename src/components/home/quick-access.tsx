@@ -35,7 +35,7 @@ export function QuickAccess() {
                     loading="lazy"
                   />
                 </span>
-                <span className="whitespace-pre-line text-sm font-semibold text-foreground group-hover:text-primary">
+                <span className="whitespace-pre-line text-[16px] font-semibold text-foreground group-hover:text-primary">
                   {label}
                 </span>
               </a>
