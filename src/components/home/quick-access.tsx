@@ -1,21 +1,14 @@
 import { CreditCard } from "lucide-react";
-import lupaAsset from "@/assets/lupa.svg.asset.json";
-import reclamosAsset from "@/assets/reclamos.svg.asset.json";
-import boletaAsset from "@/assets/boleta.svg.asset.json";
-import cortesAsset from "@/assets/cortes.svg.asset.json";
-import convenioAsset from "@/assets/convenio_pago.svg.asset.json";
-import electroAsset from "@/assets/electro.svg.asset.json";
-
 type Item = { label: string; src?: string };
 
 const items: Item[] = [
-  { label: "Busca tu\nN°cliente", src: lupaAsset.url },
-  { label: "Reclamos", src: reclamosAsset.url },
-  { label: "Boletas", src: boletaAsset.url },
-  { label: "Cortes", src: cortesAsset.url },
+  { label: "Busca tu\nN°cliente", src: "/icons/lupa.svg" },
+  { label: "Reclamos", src: "/icons/reclamos.svg" },
+  { label: "Boletas", src: "/icons/boleta.svg" },
+  { label: "Cortes", src: "/icons/cortes.svg" },
   { label: "Medios\nde pago" },
-  { label: "Convenio\nde pago", src: convenioAsset.url },
-  { label: "Electro\nDependientes", src: electroAsset.url },
+  { label: "Convenio\nde pago", src: "/icons/convenio_pago.svg" },
+  { label: "Electro\nDependientes", src: "/icons/electro.svg" },
 ];
 
 /** Accesos rápidos: fila de iconos rojos bajo el hero. */
