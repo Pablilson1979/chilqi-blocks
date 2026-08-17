@@ -29,13 +29,13 @@ export function QuickAccess() {
               >
                 <span
                   aria-hidden
-                  className="flex size-20 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-card ring-2 ring-primary/20 ring-offset-2 ring-offset-background transition-colors group-hover:bg-primary-hover sm:size-[5.5rem] sm:ring-0 sm:ring-offset-0"
+                  className="flex size-[4.5rem] items-center justify-center rounded-full bg-primary text-primary-foreground shadow-card ring-2 ring-primary/20 ring-offset-2 ring-offset-background transition-colors group-hover:bg-primary-hover sm:size-[5rem] sm:ring-0 sm:ring-offset-0"
                 >
                   <img
                     src={src}
                     alt=""
                     aria-hidden
-                    className="size-9 object-contain sm:size-[3.25rem]"
+                    className="size-8 object-contain sm:size-12"
                     loading="lazy"
                   />
                 </span>
