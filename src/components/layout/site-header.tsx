@@ -234,29 +234,29 @@ export function SiteHeader({
             item.panel && openPanel === item.label ? (
               <div
                 key={item.label}
-                className="absolute left-0 right-0 top-full z-50 animate-in fade-in slide-in-from-top-2 duration-200"
+                className="absolute left-1/2 top-full z-50 w-full max-w-4xl -translate-x-1/2 animate-in fade-in slide-in-from-top-2 duration-200"
               >
-                <div className="mt-2 rounded-[1.75rem] bg-surface p-ch-xl shadow-card-hover">
-                  <ul className="grid grid-cols-2 gap-x-ch-3xl gap-y-ch-lg">
+                <div className="mt-2 rounded-[1.75rem] bg-surface p-ch-lg shadow-card-hover">
+                  <ul className="grid grid-cols-2 gap-x-ch-xl gap-y-ch-base">
                     {item.panel.map((link) => (
                       <li key={link.label}>
                         <a
                           href={link.href}
                           onClick={() => setOpenPanel(null)}
-                          className="group flex items-start gap-ch-base rounded-card p-ch-sm transition-colors hover:bg-accent"
+                          className="group flex items-start gap-ch-sm rounded-card p-ch-sm transition-colors hover:bg-accent"
                         >
                           <img
                             src={link.icon}
                             alt=""
                             aria-hidden
-                            className="mt-1 size-7 shrink-0 object-contain"
+                            className="mt-1 size-6 shrink-0 object-contain"
                             loading="lazy"
                           />
                           <span className="min-w-0">
-                            <span className="block text-[18px] font-bold leading-snug text-foreground group-hover:text-primary">
+                            <span className="block text-[17px] font-bold leading-snug text-foreground group-hover:text-primary">
                               {link.label}
                             </span>
-                            <span className="mt-1 block text-[15px] leading-snug text-muted-foreground">
+                            <span className="mt-1 block text-[14px] leading-snug text-muted-foreground">
                               {link.description}
                             </span>
                           </span>
