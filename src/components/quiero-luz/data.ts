@@ -111,10 +111,22 @@ export const MACRO_STAGES: MacroStage[] = [
 
 /* ---------- Simulador ---------- */
 
-export type Requerimiento = "nuevo" | "aumento";
-export type Tension = "baja" | "media";
-export type Uso = "unitario" | "alumbrado";
-export type Acometida = "aerea" | "subterranea";
+export const COMUNAS = [
+  "Algarrobo","Cabildo","Calera","Calle Larga","Cartagena","Casablanca","Catemu","Concón",
+  "El Quisco","El Tabo","Hijuelas","La Cruz","La Ligua","Limache","Llaillay","Los Andes",
+  "Nogales","Olmué","Panquehue","Papudo","Petorca","Puchuncaví","Putaendo","Quillota",
+  "Quilpué","Quintero","Rinconada","San Antonio","San Esteban","San Felipe","Santa María",
+  "Santo Domingo","Valparaíso","Villa Alemana","Viña del Mar","Zapallar",
+];
+
+export type Relacion = "Propietario" | "Arrendatario" | "Comodato" | "Otro";
+export type TipoPropiedad = "Casa" | "Local Comercial" | "Oficina" | "Industria";
+export type UbicacionEmpalme =
+  | "En la propiedad"
+  | "Fuera de la propiedad"
+  | "Camino público"
+  | "Camino privado";
+export type TipoRedes = "Aéreas" | "Subterráneas";
 
 export type Pack = {
   id: string;
@@ -152,27 +164,42 @@ export const PACKS: Pack[] = [
 ];
 
 export type SimuladorState = {
-  requerimiento: Requerimiento | null;
-  tension: Tension | null;
-  uso: Uso | null;
-  tipoInmueble: string;
+  /* Paso 1 — Ingresar datos */
+  rut: string;
+  nombre: string;
+  apellido: string;
   comuna: string;
-  solicitante: "propietario" | "tercero" | null;
-  tieneMedidor: "si" | "no" | null;
-  acometida: Acometida | null;
+  direccion: string;
+  celular: string;
+  email: string;
+  emailRepetir: string;
+  /* Paso 2 — Detalles de la propiedad */
+  relacion: Relacion | null;
+  tipoPropiedad: TipoPropiedad | null;
   packId: string | null;
+  /* Paso 3 — Detalles de la conexión */
+  ubicacionEmpalme: UbicacionEmpalme | null;
+  instaladorSEC: "Si" | "No" | null;
+  redesExistentes: "Si" | "No" | null;
+  tipoRedes: TipoRedes | null;
 };
 
 export const ESTADO_INICIAL: SimuladorState = {
-  requerimiento: null,
-  tension: null,
-  uso: null,
-  tipoInmueble: "",
+  rut: "",
+  nombre: "",
+  apellido: "",
   comuna: "",
-  solicitante: null,
-  tieneMedidor: null,
-  acometida: null,
+  direccion: "",
+  celular: "",
+  email: "",
+  emailRepetir: "",
+  relacion: null,
+  tipoPropiedad: null,
   packId: null,
+  ubicacionEmpalme: null,
+  instaladorSEC: null,
+  redesExistentes: null,
+  tipoRedes: null,
 };
 
 export type Resultado = {
@@ -180,30 +207,75 @@ export type Resultado = {
   amperes: number;
   fases: "Monofásico" | "Trifásico";
   nota: string;
+  observaciones: string[];
 };
 
-/** Cálculo referencial de empalme a partir de las respuestas del simulador. */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+export function datosCompletos(s: SimuladorState) {
+  return (
+    s.rut.trim().length >= 8 &&
+    s.nombre.trim().length > 1 &&
+    s.apellido.trim().length > 1 &&
+    s.comuna !== "" &&
+    s.direccion.trim().length > 3 &&
+    /^\d{8,9}$/.test(s.celular.replace(/\D/g, "")) &&
+    EMAIL_RE.test(s.email) &&
+    s.email.trim().toLowerCase() === s.emailRepetir.trim().toLowerCase()
+  );
+}
+
+export function propiedadCompleta(s: SimuladorState) {
+  return Boolean(s.relacion && s.tipoPropiedad && s.packId);
+}
+
+export function conexionCompleta(s: SimuladorState) {
+  return Boolean(
+    s.ubicacionEmpalme &&
+      s.instaladorSEC &&
+      s.redesExistentes &&
+      (s.redesExistentes === "No" || s.tipoRedes),
+  );
+}
+
+/** Cálculo referencial del empalme a partir de las respuestas del simulador. */
 export function calcularResultado(s: SimuladorState): Resultado | null {
   const pack = PACKS.find((p) => p.id === s.packId);
-  if (!pack || !s.tension || !s.uso) return null;
+  if (!pack) return null;
 
-  const acometida = s.acometida === "subterranea" ? "Subterráneo" : "Aéreo";
-  const trifasico = s.tension === "media" || pack.amperes >= 63;
-  const amperes = s.tension === "media" ? Math.max(pack.amperes, 63) : pack.amperes;
+  const subterranea = s.tipoRedes === "Subterráneas";
+  const acometida = subterranea ? "Subterráneo" : "Aéreo";
+  const trifasico = pack.amperes >= 63 || s.tipoPropiedad === "Industria";
+  const amperes = s.tipoPropiedad === "Industria" ? Math.max(pack.amperes, 63) : pack.amperes;
 
-  const titulo =
-    s.uso === "alumbrado"
-      ? `Empalme ${acometida} de alumbrado público de ${amperes} amperes`
-      : `Empalme ${acometida} de ${amperes} amperes`;
+  const observaciones: string[] = [];
+  if (s.redesExistentes === "No") {
+    observaciones.push(
+      "No existen redes de distribución frente a la propiedad: se requerirá una extensión de red, evaluada en la etapa de factibilidad.",
+    );
+  }
+  if (s.instaladorSEC === "No") {
+    observaciones.push(
+      "Necesitas contratar un instalador eléctrico autorizado por la SEC para ejecutar la instalación interior y presentar la declaración TE1.",
+    );
+  }
+  if (s.ubicacionEmpalme === "Camino privado" || s.ubicacionEmpalme === "Fuera de la propiedad") {
+    observaciones.push(
+      "Al instalarse fuera de la propiedad o en camino privado se requieren autorizaciones o servidumbres de paso.",
+    );
+  }
+  if (s.relacion !== "Propietario") {
+    observaciones.push(
+      "Si no eres el propietario, deberás adjuntar la autorización notarial del propietario de la propiedad.",
+    );
+  }
 
   return {
-    titulo,
+    titulo: `Empalme ${acometida} de ${amperes} amperes`,
     amperes,
     fases: trifasico ? "Trifásico" : "Monofásico",
-    nota:
-      s.requerimiento === "aumento"
-        ? "*considera el aumento de potencia sobre el empalme existente, con medidor propiedad de Chilquinta"
-        : "*considera la construcción de empalme con medidor propiedad de Chilquinta",
+    nota: "*considera la construcción de empalme con medidor propiedad de Chilquinta",
+    observaciones,
   };
 }
 
