@@ -17,11 +17,11 @@ export function QuickAccess() {
   return (
     <section aria-label="Accesos rápidos" className="bg-background">
       <div className="ch-container pb-ch-xl">
-        <ul className="-mx-ch-base flex snap-x gap-ch-base overflow-x-auto scroll-smooth px-ch-base pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-4 sm:overflow-visible sm:px-0 lg:grid-cols-7">
+        <ul className="-mx-ch-base flex snap-x gap-ch-base overflow-x-auto scroll-smooth px-ch-base pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-4 sm:gap-ch-lg sm:overflow-visible sm:px-0 lg:grid-cols-7">
           {items.map(({ label, src }) => (
             <li
               key={label}
-              className="w-[5.5rem] shrink-0 snap-start sm:w-auto"
+              className="w-[6.5rem] shrink-0 snap-start sm:w-auto"
             >
               <a
                 href="#"
@@ -29,13 +29,13 @@ export function QuickAccess() {
               >
                 <span
                   aria-hidden
-                  className="flex size-[4.25rem] items-center justify-center rounded-full bg-primary text-primary-foreground shadow-card ring-2 ring-primary/20 ring-offset-2 ring-offset-background transition-colors group-hover:bg-primary-hover sm:size-16 sm:ring-0 sm:ring-offset-0"
+                  className="flex size-[5.5rem] items-center justify-center rounded-full bg-primary text-primary-foreground shadow-card ring-2 ring-primary/20 ring-offset-2 ring-offset-background transition-colors group-hover:bg-primary-hover sm:size-24 sm:ring-0 sm:ring-offset-0"
                 >
                   <img
                     src={src}
                     alt=""
                     aria-hidden
-                    className="size-8 object-contain"
+                    className="size-10 object-contain sm:size-14"
                     loading="lazy"
                   />
                 </span>
