@@ -1,124 +1,117 @@
 import * as React from "react";
-import { ExternalLink, Search } from "lucide-react";
+import { ExternalLink, History, Info, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Field } from "@/components/chilquinta/field";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { SEGUIMIENTO_CORTE, TU_CONEXION_URL } from "./data";
+import { SEGUIMIENTO_CORTE, TU_CONEXION_URL } from "./content";
 
-type Resultado = "nueva-plataforma" | "sistema-antiguo" | null;
+type Consulta = { numero: string; nueva: boolean } | null;
 
 /**
- * Seguimiento de solicitud. Deriva a Tu Conexión cuando la solicitud fue
- * ingresada en el sistema nuevo (correlativo alto o fecha posterior al corte).
+ * Seguimiento simple: con el número de solicitud identificamos si se gestiona
+ * en Tu Conexión (sistema nuevo) o en el sistema anterior.
  */
 export function Seguimiento() {
   const [numero, setNumero] = React.useState("");
-  const [periodo, setPeriodo] = React.useState<"antes" | "despues" | "">("");
-  const [resultado, setResultado] = React.useState<Resultado>(null);
+  const [consulta, setConsulta] = React.useState<Consulta>(null);
 
-  const valido = numero.trim().length >= 4 && periodo !== "";
+  const valido = numero.replace(/\D/g, "").length >= 4;
 
   function consultar() {
     const correlativo = Number(numero.replace(/\D/g, ""));
-    const esNueva =
-      periodo === "despues" || correlativo >= SEGUIMIENTO_CORTE.correlativoDesde;
-    setResultado(esNueva ? "nueva-plataforma" : "sistema-antiguo");
+    setConsulta({ numero: numero.trim(), nueva: correlativo >= SEGUIMIENTO_CORTE.correlativoDesde });
   }
 
   return (
-    <Card className="flex flex-col gap-5 p-6 lg:p-8">
-      <div>
-        <h2 className="text-lg font-bold text-foreground">Seguimiento de tu solicitud</h2>
-        <p className="text-sm text-muted-foreground">
-          Si ingresaste tu solicitud a partir del {SEGUIMIENTO_CORTE.fechaLabel}, el seguimiento se
-          realiza directamente en la plataforma Tu Conexión.
-        </p>
+    <div className="flex flex-col gap-ch-xl">
+      <div className="flex items-start gap-4">
+        <span className="flex size-12 shrink-0 items-center justify-center rounded-card bg-info-soft text-info">
+          <History className="size-6" aria-hidden />
+        </span>
+        <div>
+          <p className="text-sm font-bold tracking-wide text-muted-foreground uppercase">
+            Seguimiento
+          </p>
+          <h1 className="text-3xl font-bold text-foreground lg:text-4xl">
+            Revisa dónde se gestiona tu solicitud
+          </h1>
+          <p className="max-w-xl text-muted-foreground">
+            Ingresa el número recibido al finalizar el trámite. Identificaremos la plataforma
+            correspondiente.
+          </p>
+        </div>
       </div>
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
-        <Field
-          id="ql-solicitud"
-          label="N° de solicitud"
-          placeholder="Ej. 845321"
-          inputMode="numeric"
-          className="flex-1"
-          value={numero}
-          onChange={(e) => {
-            setNumero(e.target.value);
-            setResultado(null);
-          }}
-        />
-        <Button disabled={!valido} onClick={consultar}>
-          <Search />
-          Consultar
-        </Button>
+      <div className="grid items-start gap-ch-lg lg:grid-cols-2">
+        <Card className="flex flex-col gap-4 p-6 lg:p-8">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+            <Field
+              id="ql-seguimiento"
+              label="Número de solicitud"
+              placeholder="Ej. 123456"
+              inputMode="numeric"
+              className="flex-1"
+              value={numero}
+              onChange={(e) => {
+                setNumero(e.target.value);
+                setConsulta(null);
+              }}
+            />
+            <Button disabled={!valido} onClick={consultar}>
+              <Search />
+              Consultar estado
+            </Button>
+          </div>
+          <p className="text-sm text-muted-foreground">
+            Si ingresaste tu solicitud a partir del {SEGUIMIENTO_CORTE.fechaLabel}, el seguimiento se
+            realiza en Tu Conexión.
+          </p>
+        </Card>
+
+        {consulta ? (
+          <Card className="flex flex-col gap-4 p-6 lg:p-8">
+            <span className="self-start rounded-pill bg-info-soft px-3 py-1 text-sm font-bold text-info">
+              {consulta.nueva ? "Tu Conexión" : "Sistema anterior"}
+            </span>
+            <h2 className="text-2xl font-bold text-foreground lg:text-3xl">
+              {consulta.nueva
+                ? "Esta solicitud se gestiona en la nueva plataforma"
+                : "Solicitud del sistema anterior"}
+            </h2>
+            <p className="text-muted-foreground">
+              {consulta.nueva
+                ? "Ingresa a Tu Conexión para revisar su avance, corregir antecedentes o continuar con la siguiente etapa."
+                : "Encontramos una solicitud gestionada mediante el sistema anterior de venta de servicios."}
+            </p>
+            <dl className="grid gap-x-8 border-t pt-4 sm:grid-cols-2">
+              <div>
+                <dt className="text-sm text-muted-foreground">Número de solicitud</dt>
+                <dd className="text-base font-bold text-foreground">{consulta.numero}</dd>
+              </div>
+              <div>
+                <dt className="text-sm text-muted-foreground">Plataforma</dt>
+                <dd className="text-base font-bold text-foreground">
+                  {consulta.nueva ? "Tu Conexión" : "Venta de servicios"}
+                </dd>
+              </div>
+            </dl>
+            <Button asChild className="self-start">
+              <a href={TU_CONEXION_URL} target="_blank" rel="noreferrer">
+                {consulta.nueva ? "Ir al seguimiento en Tu Conexión" : "Ver estado de mi solicitud"}
+                <ExternalLink />
+              </a>
+            </Button>
+          </Card>
+        ) : (
+          <div className="flex items-start gap-3 rounded-card bg-info-soft p-4">
+            <Info className="mt-0.5 size-5 shrink-0 text-info" aria-hidden />
+            <p className="text-sm text-muted-foreground">
+              Ingresa tu número de solicitud para saber en qué plataforma continuar el seguimiento.
+            </p>
+          </div>
+        )}
       </div>
-
-      <fieldset className="flex flex-col gap-3">
-        <legend className="text-sm font-semibold text-foreground">
-          ¿Cuándo ingresaste tu solicitud?
-        </legend>
-        <RadioGroup
-          value={periodo}
-          onValueChange={(v) => {
-            setPeriodo(v as "antes" | "despues");
-            setResultado(null);
-          }}
-          className="flex flex-col gap-3 sm:flex-row sm:gap-6"
-        >
-          <div className="flex items-center gap-3">
-            <RadioGroupItem id="periodo-antes" value="antes" />
-            <Label htmlFor="periodo-antes" className="text-base font-normal">
-              Antes del {SEGUIMIENTO_CORTE.fechaLabel}
-            </Label>
-          </div>
-          <div className="flex items-center gap-3">
-            <RadioGroupItem id="periodo-despues" value="despues" />
-            <Label htmlFor="periodo-despues" className="text-base font-normal">
-              A partir del {SEGUIMIENTO_CORTE.fechaLabel}
-            </Label>
-          </div>
-        </RadioGroup>
-      </fieldset>
-
-      {resultado === "nueva-plataforma" ? (
-        <div
-          role="status"
-          className="flex flex-col gap-3 rounded-input bg-info-soft p-4 text-sm text-foreground"
-        >
-          <p>
-            Tu solicitud se gestiona en la plataforma Tu Conexión. Continúa el seguimiento con tu N°
-            de solicitud <strong>{numero}</strong> ahí.
-          </p>
-          <Button variant="secondary" className="self-start" asChild>
-            <a href={TU_CONEXION_URL} target="_blank" rel="noreferrer">
-              Ir a Tu Conexión
-              <ExternalLink />
-            </a>
-          </Button>
-        </div>
-      ) : null}
-
-      {resultado === "sistema-antiguo" ? (
-        <div
-          role="status"
-          className="flex flex-col gap-3 rounded-input bg-success-soft p-4 text-sm text-foreground"
-        >
-          <p>
-            La solicitud <strong>{numero}</strong> se encuentra en nuestro sistema de venta de
-            servicios. Consulta su estado con tu N° de solicitud y RUT.
-          </p>
-          <Button variant="secondary" className="self-start" asChild>
-            <a href={TU_CONEXION_URL} target="_blank" rel="noreferrer">
-              Ver estado de mi solicitud
-              <ExternalLink />
-            </a>
-          </Button>
-        </div>
-      ) : null}
-    </Card>
+    </div>
   );
 }
