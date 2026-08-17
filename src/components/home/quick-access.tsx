@@ -1,4 +1,4 @@
-import { CreditCard } from "lucide-react";
+
 type Item = { label: string; src?: string };
 
 const items: Item[] = [
