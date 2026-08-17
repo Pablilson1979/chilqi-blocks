@@ -8,12 +8,19 @@ import { Button } from "@/components/ui/button";
 import { QuieroLuzHeader } from "@/components/quiero-luz/page-header";
 import { ProcessGuide } from "@/components/quiero-luz/process-guide";
 import { Stepper } from "@/components/quiero-luz/stepper";
-import { StepTipo } from "@/components/quiero-luz/step-tipo";
+import { StepDatos } from "@/components/quiero-luz/step-datos";
 import { StepPropiedad } from "@/components/quiero-luz/step-propiedad";
-import { StepPacks } from "@/components/quiero-luz/step-packs";
+import { StepConexion } from "@/components/quiero-luz/step-conexion";
 import { StepResumen } from "@/components/quiero-luz/step-resumen";
 import { Seguimiento } from "@/components/quiero-luz/seguimiento";
-import { ESTADO_INICIAL, TU_CONEXION_URL, type SimuladorState } from "@/components/quiero-luz/data";
+import {
+  ESTADO_INICIAL,
+  TU_CONEXION_URL,
+  conexionCompleta,
+  datosCompletos,
+  propiedadCompleta,
+  type SimuladorState,
+} from "@/components/quiero-luz/data";
 
 const TITLE = "Quiero luz en mi propiedad | Chilquinta Energía";
 const DESCRIPTION =
@@ -33,7 +40,12 @@ export const Route = createFileRoute("/quiero-luz")({
   component: QuieroLuzPage,
 });
 
-const STEPS = ["Requerimiento", "Propiedad", "Artefactos", "Resultado"];
+const STEPS = [
+  "Ingresar datos",
+  "Detalles de la propiedad",
+  "Detalles de la conexión",
+  "Resultado de tu simulación",
+];
 
 function QuieroLuzPage() {
   const [modo, setModo] = React.useState<"guia" | "simulador">("guia");
@@ -44,14 +56,9 @@ function QuieroLuzPage() {
     setValue((prev) => ({ ...prev, ...patch }));
 
   const puedeAvanzar =
-    (step === 0 && value.requerimiento && value.tension && value.uso) ||
-    (step === 1 &&
-      value.tipoInmueble &&
-      value.comuna.trim().length > 1 &&
-      value.solicitante &&
-      value.tieneMedidor &&
-      value.acometida) ||
-    (step === 2 && value.packId);
+    (step === 0 && datosCompletos(value)) ||
+    (step === 1 && propiedadCompleta(value)) ||
+    (step === 2 && conexionCompleta(value));
 
   return (
     <div className="flex min-h-svh flex-col bg-background">
@@ -87,9 +94,9 @@ function QuieroLuzPage() {
             <>
               <Stepper steps={STEPS} current={step} />
 
-              {step === 0 ? <StepTipo value={value} onChange={onChange} /> : null}
+              {step === 0 ? <StepDatos value={value} onChange={onChange} /> : null}
               {step === 1 ? <StepPropiedad value={value} onChange={onChange} /> : null}
-              {step === 2 ? <StepPacks value={value} onChange={onChange} /> : null}
+              {step === 2 ? <StepConexion value={value} onChange={onChange} /> : null}
               {step === 3 ? <StepResumen value={value} /> : null}
 
               <div className="flex flex-col gap-3 sm:flex-row sm:justify-between">

@@ -22,16 +22,16 @@ import {
 /** Paso 4 — Resumen referencial del empalme y pasos a seguir. */
 export function StepResumen({ value }: { value: SimuladorState }) {
   const resultado = calcularResultado(value);
-  const [email, setEmail] = React.useState("");
+  const [email, setEmail] = React.useState(value.email);
   const [enviado, setEnviado] = React.useState(false);
 
   const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const documentos = React.useMemo(
     () =>
-      value.solicitante === "tercero"
+      value.relacion && value.relacion !== "Propietario"
         ? [...DOCUMENTOS_BASE, "Autorización notarial del propietario"]
         : DOCUMENTOS_BASE,
-    [value.solicitante],
+    [value.relacion],
   );
 
   return (
@@ -47,6 +47,13 @@ export function StepResumen({ value }: { value: SimuladorState }) {
             <p className="text-base font-semibold text-foreground/80">{resultado.fases}</p>
             <p className="text-sm text-muted-foreground">{resultado.nota}</p>
           </>
+        ) : null}
+        {resultado && resultado.observaciones.length > 0 ? (
+          <ul className="mt-2 flex list-disc flex-col gap-1 text-left text-sm text-foreground/80">
+            {resultado.observaciones.map((obs) => (
+              <li key={obs}>{obs}</li>
+            ))}
+          </ul>
         ) : null}
         <p className="mt-2 max-w-xl text-xs text-muted-foreground">
           Este resultado es una orientación referencial: no constituye una cotización ni garantiza

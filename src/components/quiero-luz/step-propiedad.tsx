@@ -1,114 +1,79 @@
-import { AlertCircle, CableCar, Cable } from "lucide-react";
+import { Check } from "lucide-react";
 
-import { Field } from "@/components/chilquinta/field";
-import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { SelectionCard } from "@/components/chilquinta/cards";
-import type { StepProps } from "./step-tipo";
+import { cn } from "@/lib/utils";
+import { OptionButton, QuestionGroup } from "./option-button";
+import { PACKS, type Relacion, type TipoPropiedad } from "./data";
+import type { StepProps } from "./step-datos";
 
-const INMUEBLES = ["Casa", "Departamento", "Sitio o terreno", "Local comercial", "Bodega o taller"];
+const RELACIONES: Relacion[] = ["Propietario", "Arrendatario", "Comodato", "Otro"];
+const TIPOS: TipoPropiedad[] = ["Casa", "Local Comercial", "Oficina", "Industria"];
 
-/** Paso 2 — Datos de la propiedad. */
+/** Paso 2 — Detalles de la propiedad y pack referencial de artefactos. */
 export function StepPropiedad({ value, onChange }: StepProps) {
   return (
-    <div className="flex flex-col gap-8">
-      <fieldset className="flex flex-col gap-3">
-        <legend className="text-base font-bold text-foreground">Tipo de inmueble</legend>
-        <RadioGroup
-          value={value.tipoInmueble}
-          onValueChange={(v) => onChange({ tipoInmueble: v })}
-          className="grid gap-3 sm:grid-cols-2"
-        >
-          {INMUEBLES.map((item) => (
-            <div key={item} className="flex items-center gap-3">
-              <RadioGroupItem id={`inmueble-${item}`} value={item} />
-              <Label htmlFor={`inmueble-${item}`} className="text-base font-normal">
-                {item}
-              </Label>
-            </div>
-          ))}
-        </RadioGroup>
-      </fieldset>
+    <div className="mx-auto flex w-full max-w-2xl flex-col gap-8">
+      <QuestionGroup number={1} question="¿Qué tipo de relación tienes con la propiedad?">
+        {RELACIONES.map((item) => (
+          <OptionButton
+            key={item}
+            label={item}
+            selected={value.relacion === item}
+            onSelect={() => onChange({ relacion: item })}
+          />
+        ))}
+      </QuestionGroup>
 
-      <Field
-        id="ql-comuna"
-        label="Comuna de la propiedad"
-        placeholder="Ej. Viña del Mar"
-        value={value.comuna}
-        onChange={(e) => onChange({ comuna: e.target.value })}
-      />
+      <QuestionGroup number={2} question="¿Qué tipo de propiedad necesitas conectar?">
+        {TIPOS.map((item) => (
+          <OptionButton
+            key={item}
+            label={item}
+            selected={value.tipoPropiedad === item}
+            onSelect={() => onChange({ tipoPropiedad: item })}
+          />
+        ))}
+      </QuestionGroup>
 
-      <fieldset className="flex flex-col gap-3">
-        <legend className="text-base font-bold text-foreground">¿Quién hace la solicitud?</legend>
-        <RadioGroup
-          value={value.solicitante ?? ""}
-          onValueChange={(v) => onChange({ solicitante: v as "propietario" | "tercero" })}
-          className="flex flex-col gap-3"
-        >
-          <div className="flex items-center gap-3">
-            <RadioGroupItem id="sol-propietario" value="propietario" />
-            <Label htmlFor="sol-propietario" className="text-base font-normal">
-              El propietario de la propiedad
-            </Label>
-          </div>
-          <div className="flex items-center gap-3">
-            <RadioGroupItem id="sol-tercero" value="tercero" />
-            <Label htmlFor="sol-tercero" className="text-base font-normal">
-              Un tercero autorizado
-            </Label>
-          </div>
-        </RadioGroup>
-        {value.solicitante === "tercero" ? (
-          <p className="inline-flex items-start gap-2 rounded-input bg-warning-soft p-3 text-sm text-foreground">
-            <AlertCircle className="mt-0.5 size-4 shrink-0 text-warning" aria-hidden />
-            Si la solicitud la realiza un tercero distinto del propietario, deberás adjuntar una
-            autorización notarial.
-          </p>
-        ) : null}
-      </fieldset>
-
-      <fieldset className="flex flex-col gap-3">
+      <fieldset className="flex flex-col gap-4">
         <legend className="text-base font-bold text-foreground">
-          ¿La propiedad ya tiene medidor instalado?
+          3.- Para dimensionar la capacidad de tu empalme selecciona el pack referencial según los
+          artefactos que vas a utilizar.
         </legend>
-        <RadioGroup
-          value={value.tieneMedidor ?? ""}
-          onValueChange={(v) => onChange({ tieneMedidor: v as "si" | "no" })}
-          className="flex gap-6"
-        >
-          <div className="flex items-center gap-3">
-            <RadioGroupItem id="medidor-si" value="si" />
-            <Label htmlFor="medidor-si" className="text-base font-normal">
-              Sí
-            </Label>
-          </div>
-          <div className="flex items-center gap-3">
-            <RadioGroupItem id="medidor-no" value="no" />
-            <Label htmlFor="medidor-no" className="text-base font-normal">
-              No
-            </Label>
-          </div>
-        </RadioGroup>
-      </fieldset>
-
-      <fieldset className="flex flex-col gap-3">
-        <legend className="text-base font-bold text-foreground">Tipo de acometida en la red</legend>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <SelectionCard
-            icon={<CableCar />}
-            title="Aérea"
-            description="La red llega por postes en la vía pública."
-            selected={value.acometida === "aerea"}
-            onClick={() => onChange({ acometida: "aerea" })}
-          />
-          <SelectionCard
-            icon={<Cable />}
-            title="Subterránea"
-            description="La red llega por cámaras o ductos bajo tierra."
-            selected={value.acometida === "subterranea"}
-            onClick={() => onChange({ acometida: "subterranea" })}
-          />
-        </div>
+        {PACKS.map((pack) => {
+          const selected = value.packId === pack.id;
+          return (
+            <button
+              key={pack.id}
+              type="button"
+              aria-pressed={selected}
+              onClick={() => onChange({ packId: pack.id })}
+              className={cn(
+                "flex flex-col gap-2 rounded-card border-2 bg-card p-6 text-left transition-colors focus-visible:outline-3 focus-visible:outline-ring focus-visible:outline-offset-2",
+                selected
+                  ? "border-success bg-success-soft"
+                  : "border-border hover:border-success/50",
+              )}
+            >
+              <span className="flex items-start justify-between gap-3">
+                <span className="flex flex-col">
+                  <span className="text-lg font-bold text-foreground">{pack.nombre}</span>
+                  <span className="text-sm font-semibold text-foreground/80">{pack.rango}</span>
+                </span>
+                <span
+                  aria-hidden
+                  className={cn(
+                    "flex size-7 shrink-0 items-center justify-center rounded-full",
+                    selected ? "bg-success-tint text-success" : "border-2 border-border",
+                  )}
+                >
+                  <Check className={cn("size-4", !selected && "opacity-0")} />
+                </span>
+              </span>
+              <span className="mt-2 text-sm font-bold text-foreground">Artefactos:</span>
+              <span className="text-sm leading-relaxed text-foreground/80">{pack.artefactos}</span>
+            </button>
+          );
+        })}
       </fieldset>
     </div>
   );
