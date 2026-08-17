@@ -7,7 +7,7 @@ export function QuieroLuzHeader() {
     <div className="ch-container relative flex items-center justify-center py-6 lg:py-8">
       <Link
         to="/"
-        className="ch-touch absolute left-0 inline-flex items-center gap-1 rounded-input text-base font-semibold text-primary hover:text-primary-hover"
+        className="ch-touch absolute left-4 inline-flex lg:left-8 items-center gap-1 rounded-input text-base font-semibold text-primary hover:text-primary-hover"
       >
         <ChevronLeft className="size-5" aria-hidden />
         Volver
