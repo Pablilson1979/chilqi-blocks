@@ -22,13 +22,6 @@ function HeroMobile() {
 
       <div className="ch-container py-ch-xl">
         <PayExpressCard className="max-w-none rounded-none bg-transparent p-0 shadow-none backdrop-blur-none" />
-        <a
-          href="#"
-          className="ch-touch mt-ch-lg inline-flex w-full items-center justify-center gap-ch-sm rounded-pill border-2 border-primary px-ch-xl py-ch-md text-base font-bold text-primary"
-        >
-          <MessageCircle className="size-5" aria-hidden />
-          Hablar con Luz
-        </a>
       </div>
     </section>
   );
