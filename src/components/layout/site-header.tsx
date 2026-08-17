@@ -52,7 +52,7 @@ const SERVICIO_AL_CLIENTE: MenuLink[] = [
   {
     label: "Quiero luz en mi propiedad",
     description: "Revisa los pasos necesarios para obtener un empalme",
-    href: "#",
+    href: "/quiero-luz",
     icon: "/icons/menu/luz.svg",
   },
   {
