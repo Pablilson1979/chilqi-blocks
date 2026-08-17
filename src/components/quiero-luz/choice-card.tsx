@@ -10,7 +10,7 @@ export function ChoiceCard({
   onSelect,
 }: {
   label: string;
-  description?: string;
+  description?: string | undefined;
   selected: boolean;
   onSelect: () => void;
 }) {
