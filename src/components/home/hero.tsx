@@ -13,17 +13,11 @@ export function Hero() {
       aria-label="Pago express y atención por WhatsApp"
       className="relative isolate overflow-hidden"
     >
-      {/* Imagen de fondo corporativa */}
+      {/* Imagen de fondo corporativa a color original */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-20 bg-cover bg-[position:65%_center] lg:bg-right"
+        className="absolute inset-0 -z-10 bg-cover bg-[position:65%_center] lg:bg-right"
         style={{ backgroundImage: `url(${luzWinter.url})` }}
-      />
-
-      {/* Overlay para legibilidad del contenido */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 bg-gradient-to-r from-background/85 via-background/50 to-transparent"
       />
 
       <div className="ch-container">
