@@ -6,7 +6,7 @@ const items: Item[] = [
   { label: "Reclamos", src: "/icons/reclamos.svg" },
   { label: "Boletas", src: "/icons/boleta.svg" },
   { label: "Cortes", src: "/icons/cortes.svg" },
-  { label: "Medios\nde pago" },
+  { label: "Medios\nde pago", src: "/icons/medios_de_pago.svg" },
   { label: "Convenio\nde pago", src: "/icons/convenio_pago.svg" },
   { label: "Electro\nDependientes", src: "/icons/electro.svg" },
 ];
