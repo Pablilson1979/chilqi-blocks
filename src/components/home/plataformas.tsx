@@ -1,3 +1,4 @@
+import { useRef, useState, useEffect } from "react";
 import { PlusCircle } from "lucide-react";
 
 import { Card } from "@/components/ui/card";
@@ -29,8 +30,26 @@ const platforms = [
   },
 ];
 
-/** Plataformas digitales: carrusel de tarjetas con imagen. */
+/** Plataformas digitales: carrusel horizontal en mobile, grilla en desktop. */
 export function Plataformas() {
+  const trackRef = useRef<HTMLUListElement>(null);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    const handleScroll = () => {
+      const scrollLeft = track.scrollLeft;
+      const width = track.clientWidth;
+      const index = Math.round(scrollLeft / (width * 0.85 + 16));
+      setActive(Math.max(0, Math.min(index, platforms.length - 1)));
+    };
+
+    track.addEventListener("scroll", handleScroll, { passive: true });
+    return () => track.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <section aria-labelledby="plataformas" className="bg-background">
       <div className="ch-container py-ch-3xl">
@@ -38,9 +57,15 @@ export function Plataformas() {
           Plataformas digitales
         </h2>
 
-        <ul className="mt-ch-2xl grid gap-ch-lg sm:grid-cols-2 lg:grid-cols-4">
+        <ul
+          ref={trackRef}
+          className="mt-ch-2xl flex snap-x snap-mandatory gap-ch-lg overflow-x-auto scroll-smooth sm:grid sm:grid-cols-2 sm:overflow-visible lg:grid-cols-4"
+        >
           {platforms.map((platform) => (
-            <li key={platform.title}>
+            <li
+              key={platform.title}
+              className="w-[85%] shrink-0 snap-center sm:w-auto"
+            >
               <Card className="flex h-full flex-col overflow-hidden p-0">
                 <img
                   src={platform.image}
@@ -63,6 +88,18 @@ export function Plataformas() {
             </li>
           ))}
         </ul>
+
+        <div className="mt-ch-lg flex justify-center gap-2 sm:hidden">
+          {platforms.map((_, i) => (
+            <span
+              key={i}
+              className={`size-2 rounded-full transition-colors ${
+                i === active ? "bg-foreground" : "bg-muted-foreground/40"
+              }`}
+              aria-hidden
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

@@ -1,3 +1,4 @@
+import { useRef, useState, useEffect } from "react";
 
 type Item = { label: string; src?: string };
 
@@ -11,14 +12,17 @@ const items: Item[] = [
   { label: "Electro\nDependientes", src: "/icons/electro.svg" },
 ];
 
-/** Accesos rápidos: fila de iconos rojos bajo el hero. */
+/** Accesos rápidos: carrusel horizontal en mobile, grilla en desktop. */
 export function QuickAccess() {
   return (
     <section aria-label="Accesos rápidos" className="bg-background">
       <div className="ch-container py-ch-xl">
-        <ul className="grid grid-cols-3 gap-ch-lg sm:grid-cols-4 lg:grid-cols-7">
+        <ul className="flex snap-x snap-mandatory gap-ch-lg overflow-x-auto scroll-smooth sm:grid sm:grid-cols-4 sm:overflow-visible lg:grid-cols-7">
           {items.map(({ label, src }) => (
-            <li key={label}>
+            <li
+              key={label}
+              className="w-[22%] shrink-0 snap-start min-w-[5.5rem] sm:w-auto"
+            >
               <a
                 href="#"
                 className="group flex flex-col items-center gap-ch-md rounded-card p-ch-sm text-center"
