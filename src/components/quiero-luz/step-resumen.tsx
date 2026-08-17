@@ -138,7 +138,9 @@ export function StepResumen({ value }: { value: SimuladorState }) {
               setEnviado(false);
             }}
             state={enviado ? "success" : "default"}
-            message={enviado ? "Enviamos el resumen de tu simulación a tu correo." : undefined}
+            {...(enviado
+              ? { message: "Enviamos el resumen de tu simulación a tu correo." }
+              : {})}
           />
           <Button disabled={!emailValido} onClick={() => setEnviado(true)}>
             <Mail />
