@@ -1,23 +1,31 @@
 import { PlusCircle } from "lucide-react";
 
 import { Card } from "@/components/ui/card";
+import gestionInmobiliaria from "@/assets/GestionInmobiliaria.webp.asset.json";
+import ventaServicios from "@/assets/VentaServicios.webp.asset.json";
+import miConsumo from "@/assets/MiConsumoControlado.webp.asset.json";
+import llamanosAntes from "@/assets/LlamanosAntes.webp.asset.json";
 
 const platforms = [
   {
     title: "Gestión Inmobiliaria",
     description: "Solicita aquí proyectos eléctricos de múltiples empalmes.",
+    image: gestionInmobiliaria.url,
   },
   {
     title: "Venta de servicios",
     description: "Solicita un nuevo empalme o un aumento de potencia.",
+    image: ventaServicios.url,
   },
   {
     title: "Mi consumo controlado",
     description: "Accede a la información de tu medidor inteligente.",
+    image: miConsumo.url,
   },
   {
     title: "Llámanos antes de excavar",
     description: "Infórmanos si vas a hacer alguna excavación.",
+    image: llamanosAntes.url,
   },
 ];
 
@@ -34,10 +42,11 @@ export function Plataformas() {
           {platforms.map((platform) => (
             <li key={platform.title}>
               <Card className="flex h-full flex-col overflow-hidden p-0">
-                {/* Imagen pendiente: se reemplaza por la fotografía oficial */}
-                <div
-                  aria-hidden
-                  className="h-40 w-full bg-[linear-gradient(135deg,var(--color-info-soft),var(--color-muted))]"
+                <img
+                  src={platform.image}
+                  alt={platform.title}
+                  loading="lazy"
+                  className="h-40 w-full object-cover"
                 />
                 <div className="flex flex-1 flex-col gap-ch-sm p-ch-base">
                   <h3 className="text-base font-bold text-foreground">{platform.title}</h3>
