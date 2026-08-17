@@ -1,30 +1,23 @@
 import * as React from "react";
-import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight, ExternalLink, Wand2 } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ChevronLeft } from "lucide-react";
 
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
-import { Button } from "@/components/ui/button";
-import { QuieroLuzHeader } from "@/components/quiero-luz/page-header";
-import { ProcessGuide } from "@/components/quiero-luz/process-guide";
-import { Stepper } from "@/components/quiero-luz/stepper";
-import { StepDatos } from "@/components/quiero-luz/step-datos";
-import { StepPropiedad } from "@/components/quiero-luz/step-propiedad";
-import { StepConexion } from "@/components/quiero-luz/step-conexion";
-import { StepResumen } from "@/components/quiero-luz/step-resumen";
+import { Inicio } from "@/components/quiero-luz/inicio";
+import { Orientacion, pasoCompleto } from "@/components/quiero-luz/orientacion";
+import { Resultado } from "@/components/quiero-luz/resultado";
 import { Seguimiento } from "@/components/quiero-luz/seguimiento";
+import { PASOS } from "@/components/quiero-luz/steps-nav";
 import {
-  ESTADO_INICIAL,
-  TU_CONEXION_URL,
-  conexionCompleta,
-  datosCompletos,
-  propiedadCompleta,
-  type SimuladorState,
-} from "@/components/quiero-luz/data";
+  ORIENTACION_INICIAL,
+  type Necesidad,
+  type Orientacion as Datos,
+} from "@/components/quiero-luz/content";
 
-const TITLE = "Quiero luz en mi propiedad | Chilquinta Energía";
+const TITLE = "Quiero Luz | Orientación de conexión eléctrica | Chilquinta";
 const DESCRIPTION =
-  "Orientación para solicitar un nuevo empalme o aumento de potencia: simula el empalme que necesitas y conoce las etapas, documentos y plazos del proceso.";
+  "Descubre en 4 pasos qué conexión eléctrica podrías necesitar, revisa los requisitos y continúa tu solicitud en Tu Conexión.";
 
 export const Route = createFileRoute("/quiero-luz")({
   head: () => ({
@@ -40,92 +33,87 @@ export const Route = createFileRoute("/quiero-luz")({
   component: QuieroLuzPage,
 });
 
-const STEPS = [
-  "Ingresar datos",
-  "Detalles de la propiedad",
-  "Detalles de la conexión",
-  "Resultado de tu simulación",
-];
+type Vista = "inicio" | "orientacion" | "resultado" | "seguimiento";
 
 function QuieroLuzPage() {
-  const [modo, setModo] = React.useState<"guia" | "simulador">("guia");
+  const [vista, setVista] = React.useState<Vista>("inicio");
   const [step, setStep] = React.useState(0);
-  const [value, setValue] = React.useState<SimuladorState>(ESTADO_INICIAL);
+  const [datos, setDatos] = React.useState<Datos>(ORIENTACION_INICIAL);
 
-  const onChange = (patch: Partial<SimuladorState>) =>
-    setValue((prev) => ({ ...prev, ...patch }));
+  const onChange = (patch: Partial<Datos>) =>
+    setDatos((prev: Datos) => ({ ...prev, ...patch }));
 
-  const puedeAvanzar =
-    (step === 0 && datosCompletos(value)) ||
-    (step === 1 && propiedadCompleta(value)) ||
-    (step === 2 && conexionCompleta(value));
+  function comenzar(necesidad?: Necesidad) {
+    setDatos({ ...ORIENTACION_INICIAL, necesidad: necesidad ?? null });
+    setStep(necesidad ? 1 : 0);
+    setVista("orientacion");
+  }
+
+  function siguiente() {
+    if (!pasoCompleto(step, datos)) return;
+    if (step === PASOS.length - 1) setVista("resultado");
+    else setStep(step + 1);
+  }
+
+  function anterior() {
+    if (step === 0) setVista("inicio");
+    else setStep(step - 1);
+  }
 
   return (
     <div className="flex min-h-svh flex-col bg-background">
       <SiteHeader />
-      <main className="flex-1 pb-16">
-        <QuieroLuzHeader />
+      <main className="flex-1 py-ch-xl lg:py-ch-2xl">
+        <div className="ch-container flex flex-col gap-ch-lg">
+          <div className="flex items-center justify-between gap-4">
+            {vista === "inicio" ? (
+              <Link
+                to="/"
+                className="ch-touch inline-flex items-center gap-1 text-base font-bold text-primary hover:text-primary-hover"
+              >
+                <ChevronLeft className="size-5" aria-hidden />
+                Volver al sitio
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={() => setVista("inicio")}
+                className="ch-touch inline-flex items-center gap-1 text-base font-bold text-primary hover:text-primary-hover"
+              >
+                <ChevronLeft className="size-5" aria-hidden />
+                Volver al inicio
+              </button>
+            )}
+            <span className="rounded-pill bg-info-soft px-3 py-1 text-sm font-bold text-info">
+              Orientación referencial
+            </span>
+          </div>
 
-        <div className="ch-container flex max-w-4xl flex-col gap-10">
-          {modo === "guia" ? (
-            <>
-              <ProcessGuide />
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <Button
-                  size="lg"
-                  onClick={() => {
-                    setModo("simulador");
-                    setStep(0);
-                  }}
-                >
-                  <Wand2 />
-                  Simular mi empalme
-                </Button>
-                <Button size="lg" variant="secondary" asChild>
-                  <a href={TU_CONEXION_URL} target="_blank" rel="noreferrer">
-                    Ya sé lo que necesito, ir a Tu Conexión
-                    <ExternalLink />
-                  </a>
-                </Button>
-              </div>
-              <Seguimiento />
-            </>
-          ) : (
-            <>
-              <Stepper steps={STEPS} current={step} />
+          {vista === "inicio" ? (
+            <Inicio onComenzar={comenzar} onSeguimiento={() => setVista("seguimiento")} />
+          ) : null}
 
-              {step === 0 ? <StepDatos value={value} onChange={onChange} /> : null}
-              {step === 1 ? <StepPropiedad value={value} onChange={onChange} /> : null}
-              {step === 2 ? <StepConexion value={value} onChange={onChange} /> : null}
-              {step === 3 ? <StepResumen value={value} /> : null}
+          {vista === "orientacion" ? (
+            <Orientacion
+              step={step}
+              datos={datos}
+              onChange={onChange}
+              onBack={anterior}
+              onNext={siguiente}
+            />
+          ) : null}
 
-              <div className="flex flex-col gap-3 sm:flex-row sm:justify-between">
-                <Button
-                  variant="secondary"
-                  onClick={() => (step === 0 ? setModo("guia") : setStep(step - 1))}
-                >
-                  <ArrowLeft />
-                  {step === 0 ? "Volver a la guía" : "Anterior"}
-                </Button>
-                {step < 3 ? (
-                  <Button disabled={!puedeAvanzar} onClick={() => setStep(step + 1)}>
-                    Continuar
-                    <ArrowRight />
-                  </Button>
-                ) : (
-                  <Button
-                    variant="tertiary"
-                    onClick={() => {
-                      setValue(ESTADO_INICIAL);
-                      setStep(0);
-                    }}
-                  >
-                    Simular de nuevo
-                  </Button>
-                )}
-              </div>
-            </>
-          )}
+          {vista === "resultado" ? (
+            <Resultado
+              datos={datos}
+              onEditar={() => {
+                setStep(0);
+                setVista("orientacion");
+              }}
+            />
+          ) : null}
+
+          {vista === "seguimiento" ? <Seguimiento /> : null}
         </div>
       </main>
       <SiteFooter />
