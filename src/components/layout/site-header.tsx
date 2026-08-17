@@ -109,7 +109,7 @@ export function SiteHeader({
               <li key={item.label}>
                 <a
                   href={item.href}
-                  className="rounded-input text-[15px] font-semibold text-foreground transition-colors hover:text-primary"
+                  className="rounded-input text-[16px] font-semibold text-foreground transition-colors hover:text-primary"
                 >
                   {item.label}
                 </a>
