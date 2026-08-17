@@ -24,6 +24,8 @@ export interface SiteHeaderProps {
   /** Acción de inicio de sesión; si es null, se oculta el botón. */
   loginHref?: string | null;
   loginLabel?: string;
+  /** Texto destacado centrado entre la barra superior y la navegación. */
+  tagline?: string;
   className?: string;
 }
 
@@ -37,6 +39,7 @@ export function SiteHeader({
   showSearch = true,
   loginHref = "#",
   loginLabel = "Iniciar Sesión",
+  tagline,
   className,
 }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
@@ -94,6 +97,10 @@ export function SiteHeader({
             </button>
           </div>
         </div>
+
+        {tagline && (
+          <p className="text-center text-3xl font-bold text-primary lg:text-4xl">{tagline}</p>
+        )}
 
         {/* Navegación desktop */}
         <nav className="hidden lg:block" aria-label="Navegación principal">
