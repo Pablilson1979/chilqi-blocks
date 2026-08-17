@@ -40,9 +40,11 @@ function HeroMobile() {
  */
 export function Hero() {
   return (
-    <section
+    <>
+      <HeroMobile />
+      <section
       aria-label="Pago express y atención por WhatsApp"
-      className="relative isolate overflow-hidden"
+      className="relative isolate hidden overflow-hidden lg:block"
     >
       {/* Imagen de fondo corporativa a color original */}
       <div
@@ -70,7 +72,8 @@ export function Hero() {
           </div>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 }
 
