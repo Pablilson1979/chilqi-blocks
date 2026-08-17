@@ -24,7 +24,7 @@ export function Stepper({ steps, current }: StepperProps) {
               />
               <span
                 className={cn(
-                  "flex size-8 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-colors",
+                  "flex size-9 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-colors",
                   done && "bg-success text-success-foreground",
                   active && "bg-primary text-primary-foreground",
                   !done && !active && "border-2 border-border bg-card text-muted-foreground",
@@ -42,8 +42,8 @@ export function Stepper({ steps, current }: StepperProps) {
             </div>
             <span
               className={cn(
-                "text-center text-xs leading-snug sm:text-sm",
-                active ? "font-semibold text-foreground" : "text-muted-foreground",
+                "text-center text-sm leading-snug",
+                active ? "text-muted-foreground" : "sr-only",
               )}
             >
               {label}
