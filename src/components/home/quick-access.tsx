@@ -27,17 +27,13 @@ export function QuickAccess() {
                   aria-hidden
                   className="flex size-16 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-card transition-colors group-hover:bg-primary-hover"
                 >
-                  {src ? (
-                    <img
-                      src={src}
-                      alt=""
-                      aria-hidden
-                      className="size-8 object-contain"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <CreditCard className="size-8" strokeWidth={2} />
-                  )}
+                  <img
+                    src={src}
+                    alt=""
+                    aria-hidden
+                    className="size-8 object-contain"
+                    loading="lazy"
+                  />
                 </span>
                 <span className="whitespace-pre-line text-sm font-semibold text-foreground group-hover:text-primary">
                   {label}
