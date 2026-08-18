@@ -220,3 +220,70 @@ export const SEGUIMIENTO_CORTE = {
   /** Desde este correlativo la solicitud se gestiona en Tu Conexión. */
   correlativoDesde: 900000,
 };
+
+export type EstadoEtapa = "completada" | "en-curso" | "pendiente";
+
+export type SolicitudDemo = {
+  numero: string;
+  plataforma: "nueva" | "antigua";
+  tipo: string;
+  direccion: string;
+  ingreso: string;
+  etapaActual: string;
+  etapas: { titulo: string; estado: EstadoEtapa; detalle: string }[];
+  siguientePaso: string;
+};
+
+/**
+ * Casos de ejemplo para mostrar el seguimiento: uno vive en Tu Conexión
+ * (con su avance real) y otro quedó en el sistema anterior.
+ */
+export const SOLICITUDES_DEMO: SolicitudDemo[] = [
+  {
+    numero: "902451",
+    plataforma: "nueva",
+    tipo: "Conexión nueva · Empalme monofásico 25 A",
+    direccion: "Av. Los Carrera 1240, Quilpué",
+    ingreso: "28 de julio de 2026",
+    etapaActual: "Solicitud de conexión",
+    etapas: [
+      {
+        titulo: "Solicitud de factibilidad",
+        estado: "completada",
+        detalle: "Respondida el 31 de julio: existe red aérea frente al inmueble.",
+      },
+      {
+        titulo: "Solicitud de conexión",
+        estado: "en-curso",
+        detalle: "Presupuesto y condiciones técnicas disponibles para tu aprobación.",
+      },
+      {
+        titulo: "Notificación y ejecución",
+        estado: "pendiente",
+        detalle: "Requiere documentos finales, pago y coordinación de visita.",
+      },
+    ],
+    siguientePaso: "Aprueba el presupuesto en Tu Conexión para continuar.",
+  },
+  {
+    numero: "123456",
+    plataforma: "antigua",
+    tipo: "Conexión nueva · Ingresada en el sistema anterior",
+    direccion: "Calle Valparaíso 88, Viña del Mar",
+    ingreso: "12 de mayo de 2026",
+    etapaActual: "Gestión en Venta de Servicios",
+    etapas: [],
+    siguientePaso:
+      "Esta solicitud se sigue en la plataforma anterior de venta de servicios; su avance no se muestra en Tu Conexión.",
+  },
+];
+
+export function buscarSolicitud(numero: string): SolicitudDemo | "no-encontrada" {
+  const limpio = numero.replace(/\D/g, "");
+  const encontrada = SOLICITUDES_DEMO.find((s) => s.numero === limpio);
+  if (encontrada) return encontrada;
+  if (!limpio) return "no-encontrada";
+  return Number(limpio) >= SEGUIMIENTO_CORTE.correlativoDesde
+    ? { ...SOLICITUDES_DEMO[0]!, numero: limpio }
+    : { ...SOLICITUDES_DEMO[1]!, numero: limpio };
+}
