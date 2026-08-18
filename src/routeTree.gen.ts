@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as IngresoDatosRouteImport } from './routes/ingreso-datos'
 import { Route as QuieroLuzRouteImport } from './routes/quiero-luz'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IngresoDatosRoute = IngresoDatosRouteImport.update({
+  id: '/ingreso-datos',
+  path: '/ingreso-datos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuieroLuzRoute = QuieroLuzRouteImport.update({
@@ -25,27 +31,31 @@ const QuieroLuzRoute = QuieroLuzRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ingreso-datos': typeof IngresoDatosRoute
   '/quiero-luz': typeof QuieroLuzRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ingreso-datos': typeof IngresoDatosRoute
   '/quiero-luz': typeof QuieroLuzRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ingreso-datos': typeof IngresoDatosRoute
   '/quiero-luz': typeof QuieroLuzRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/quiero-luz'
+  fullPaths: '/' | '/ingreso-datos' | '/quiero-luz'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/quiero-luz'
-  id: '__root__' | '/' | '/quiero-luz'
+  to: '/' | '/ingreso-datos' | '/quiero-luz'
+  id: '__root__' | '/' | '/ingreso-datos' | '/quiero-luz'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  IngresoDatosRoute: typeof IngresoDatosRoute
   QuieroLuzRoute: typeof QuieroLuzRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ingreso-datos': {
+      id: '/ingreso-datos'
+      path: '/ingreso-datos'
+      fullPath: '/ingreso-datos'
+      preLoaderRoute: typeof IngresoDatosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/quiero-luz': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  IngresoDatosRoute: IngresoDatosRoute,
   QuieroLuzRoute: QuieroLuzRoute,
 }
 export const routeTree = rootRouteImport

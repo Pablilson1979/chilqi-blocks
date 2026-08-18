@@ -1,14 +1,29 @@
-import { useRef, useState, useEffect } from "react";
+import { Link } from "@tanstack/react-router";
 
-type Item = { label: string; src?: string };
+type Item = {
+  label: string;
+  src?: string;
+  to?: string;
+  search?: { servicio: "boletas" | "convenio" };
+};
 
 const items: Item[] = [
   { label: "Busca tu\nN°cliente", src: "/icons/lupa.svg" },
   { label: "Reclamos", src: "/icons/reclamos.svg" },
-  { label: "Boletas", src: "/icons/boleta.svg" },
+  {
+    label: "Boletas",
+    src: "/icons/boleta.svg",
+    to: "/ingreso-datos",
+    search: { servicio: "boletas" },
+  },
   { label: "Cortes", src: "/icons/cortes.svg" },
   { label: "Medios\nde pago", src: "/icons/medios_de_pago.svg" },
-  { label: "Convenio\nde pago", src: "/icons/convenio_pago.svg" },
+  {
+    label: "Convenio\nde pago",
+    src: "/icons/convenio_pago.svg",
+    to: "/ingreso-datos",
+    search: { servicio: "convenio" },
+  },
   { label: "Electro\nDependientes", src: "/icons/electro.svg" },
 ];
 
@@ -18,15 +33,9 @@ export function QuickAccess() {
     <section aria-label="Accesos rápidos" className="bg-background">
       <div className="ch-container pb-ch-xl">
         <ul className="mt-[50px] -mx-ch-base flex snap-x gap-ch-base overflow-x-auto scroll-smooth px-ch-base pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-4 sm:gap-ch-lg sm:overflow-visible sm:px-0 lg:grid-cols-7">
-          {items.map(({ label, src }) => (
-            <li
-              key={label}
-              className="w-[6.5rem] shrink-0 snap-start sm:w-auto"
-            >
-              <a
-                href="#"
-                className="group flex flex-col items-center gap-ch-sm rounded-card text-center sm:gap-ch-md sm:p-ch-sm"
-              >
+          {items.map(({ label, src, to, search }) => {
+            const inner = (
+              <>
                 <span
                   aria-hidden
                   className="flex size-[4.5rem] items-center justify-center rounded-full bg-primary text-primary-foreground shadow-card ring-2 ring-primary/20 ring-offset-2 ring-offset-background transition-colors group-hover:bg-primary-hover sm:size-[5rem] sm:ring-0 sm:ring-offset-0"
@@ -42,9 +51,27 @@ export function QuickAccess() {
                 <span className="whitespace-pre-line text-[15px] font-semibold leading-tight text-foreground group-hover:text-primary sm:text-[16px]">
                   {label}
                 </span>
-              </a>
+              </>
+            );
+            const classes =
+              "group flex flex-col items-center gap-ch-sm rounded-card text-center sm:gap-ch-md sm:p-ch-sm";
+            return (
+            <li
+              key={label}
+              className="w-[6.5rem] shrink-0 snap-start sm:w-auto"
+            >
+              {to && search ? (
+                <Link to="/ingreso-datos" search={search} className={classes}>
+                  {inner}
+                </Link>
+              ) : (
+                <a href="#" className={classes}>
+                  {inner}
+                </a>
+              )}
             </li>
-          ))}
+            );
+          })}
         </ul>
       </div>
     </section>
