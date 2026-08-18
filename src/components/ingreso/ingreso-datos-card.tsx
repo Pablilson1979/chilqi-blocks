@@ -72,7 +72,7 @@ export function IngresoDatosCard({ servicio, className }: IngresoDatosCardProps)
             rut.length === 0
               ? "Sin puntos y con guión."
               : rutOk
-                ? undefined
+                ? "RUT con formato válido."
                 : "Revisa el formato: 12345678-9."
           }
         />
