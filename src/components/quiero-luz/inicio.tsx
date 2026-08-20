@@ -50,11 +50,8 @@ export function Inicio({
             Quiero Luz: orientación para tu conexión
           </p>
           <h1 className="text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
-            ¿Qué necesitas hacer?
+            Elige una opción:
           </h1>
-          <p className="text-muted-foreground">
-            Selecciona la alternativa que mejor representa tu situación.
-          </p>
         </div>
 
         <div className="grid gap-4 lg:grid-cols-3">
