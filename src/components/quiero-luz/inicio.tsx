@@ -47,7 +47,7 @@ export function Inicio({
 
         <div className="flex flex-col gap-1">
           <p className="text-sm font-bold tracking-wide text-muted-foreground uppercase">
-            Elige tu camino
+            Quiero Luz: orientación para tu conexión
           </p>
           <h1 className="text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
             ¿Qué necesitas hacer?
