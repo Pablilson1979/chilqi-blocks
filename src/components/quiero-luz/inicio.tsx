@@ -73,7 +73,7 @@ export function Inicio({
                 </span>
                 <span className="min-w-0 text-lg font-bold text-foreground">{titulo}</span>
                 <ArrowRight
-                  className="mt-3 size-5 shrink-0 text-info transition-transform group-hover:translate-x-1"
+                  className="mt-3 size-5 shrink-0 text-primary transition-colors transition-transform group-hover:translate-x-1 group-hover:text-primary-hover"
                   aria-hidden
                 />
               </span>
