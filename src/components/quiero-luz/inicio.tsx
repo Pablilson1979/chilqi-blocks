@@ -121,7 +121,7 @@ export function Inicio({
                   <span className="flex size-9 shrink-0 items-center justify-center rounded-card bg-info/10 text-info">
                     <Icon className="size-4" aria-hidden />
                   </span>
-                  <span aria-hidden className="text-2xl leading-none font-semibold text-muted-foreground/60">
+                  <span aria-hidden className="text-2xl leading-none font-semibold text-muted-foreground">
                     {etapa.numero}
                   </span>
                 </div>
