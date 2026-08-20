@@ -84,9 +84,6 @@ function QuieroLuzPage() {
                 Volver al inicio
               </button>
             )}
-            <span className="rounded-pill bg-info-soft px-3 py-1 text-sm font-bold text-info">
-              Orientación referencial
-            </span>
           </div>
 
           {vista === "inicio" ? (
