@@ -44,18 +44,6 @@ export function Inicio({
   return (
     <div className="flex flex-col gap-ch-3xl">
       <section className="flex flex-col gap-ch-lg">
-        <div className="flex max-w-3xl items-start gap-3 rounded-card border border-info/30 bg-info-soft p-4 lg:p-5">
-          <Info className="mt-0.5 size-5 shrink-0 text-info" aria-hidden />
-          <div className="min-w-0 text-sm">
-            <p className="text-base font-bold text-foreground">
-              Esta herramienta entrega una orientación referencial
-            </p>
-            <p className="text-muted-foreground">
-              Te ayuda a entender qué podrías necesitar antes de iniciar tu solicitud en Tu
-              Conexión. La solución definitiva se confirma durante la evaluación de factibilidad.
-            </p>
-          </div>
-        </div>
 
         <div className="flex flex-col gap-1">
           <p className="text-sm font-bold tracking-wide text-muted-foreground uppercase">
