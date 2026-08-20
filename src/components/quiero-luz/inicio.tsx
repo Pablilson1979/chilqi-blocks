@@ -95,40 +95,40 @@ export function Inicio({
         </div>
       </section>
 
-      <section className="flex flex-col gap-ch-lg">
+      <section className="flex flex-col gap-ch-md border-t border-border pt-ch-lg">
         <div className="flex flex-col gap-1 text-center">
-          <p className="text-sm font-bold tracking-wide text-muted-foreground uppercase">
+          <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
             Después de orientarte
           </p>
-          <h2 className="mx-auto max-w-2xl text-2xl font-bold text-foreground sm:text-3xl lg:text-4xl">
+          <h2 className="mx-auto max-w-2xl text-xl font-bold text-foreground sm:text-2xl">
             Tu solicitud formal tiene tres macroetapas
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             Quiero Luz te prepara. El trámite y sus acciones se realizan en Tu Conexión.
           </p>
         </div>
 
-        <ol className="grid gap-4 lg:grid-cols-3">
+        <ol className="grid gap-3 lg:grid-cols-3">
           {ETAPAS.map((etapa, i) => {
             const Icon = ICONOS_ETAPA[i]!;
             return (
               <li
                 key={etapa.numero}
-                className="flex flex-col gap-4 rounded-card border bg-card p-5 shadow-card lg:p-6"
+                className="flex flex-col gap-3 rounded-card border bg-muted/30 p-4 lg:p-5"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <span className="flex size-11 shrink-0 items-center justify-center rounded-card bg-info-soft text-info">
-                    <Icon className="size-5" aria-hidden />
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-card bg-info/10 text-info">
+                    <Icon className="size-4" aria-hidden />
                   </span>
-                  <span aria-hidden className="text-4xl leading-none font-bold text-info/40">
+                  <span aria-hidden className="text-2xl leading-none font-semibold text-muted-foreground/60">
                     {etapa.numero}
                   </span>
                 </div>
-                <div className="flex flex-col gap-2">
-                  <h3 className="text-lg font-bold text-foreground">{etapa.titulo}</h3>
+                <div className="flex flex-col gap-1">
+                  <h3 className="text-base font-semibold text-foreground">{etapa.titulo}</h3>
                   <p className="text-sm text-muted-foreground">{etapa.descripcion}</p>
                 </div>
-                <p className="mt-auto border-t pt-4 text-sm font-bold text-foreground">
+                <p className="mt-auto border-t border-border pt-3 text-xs font-medium text-muted-foreground">
                   {etapa.plazo}
                 </p>
               </li>
