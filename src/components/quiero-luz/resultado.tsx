@@ -1,4 +1,4 @@
-import { Check, ChevronRight, ExternalLink, Info } from "lucide-react";
+import { Check, ExternalLink, Info } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
