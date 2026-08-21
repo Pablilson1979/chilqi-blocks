@@ -1,4 +1,4 @@
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Opcion } from "./content";
 
@@ -18,26 +18,26 @@ export function ChoiceGroup<T extends string>({
   return (
     <fieldset className="flex flex-col gap-ch-md">
       <legend className="mb-1 text-base font-bold text-foreground">{question}</legend>
-      <RadioGroup
-        value={value ?? ""}
-        onValueChange={(v) => onChange(v as T)}
-        className={cn("gap-ch-md", columns === 2 && "sm:grid-cols-2")}
+      <div
+        role="radiogroup"
+        className={cn("grid gap-ch-md", columns === 2 && "sm:grid-cols-2")}
       >
         {options.map((o) => {
           const selected = value === o.value;
-          const id = `${question}-${o.value}`;
           return (
-            <label
+            <button
               key={o.value}
-              htmlFor={id}
+              type="button"
+              role="radio"
+              aria-checked={selected}
+              onClick={() => onChange(o.value)}
               className={cn(
-                "ch-touch flex cursor-pointer items-start gap-ch-md rounded-card border bg-card p-ch-base transition-colors",
+                "ch-touch flex w-full cursor-pointer items-center justify-between gap-ch-md rounded-card border-2 p-ch-base text-left transition-colors",
                 selected
-                  ? "border-warning bg-warning-soft/60"
-                  : "border-border hover:border-border-strong hover:bg-muted/40",
+                  ? "border-success bg-success-soft"
+                  : "border-transparent bg-card shadow-card hover:bg-muted/40",
               )}
             >
-              <RadioGroupItem id={id} value={o.value} className="mt-1 h-5 w-5" />
               <span className="flex flex-col gap-1">
                 <span className="text-base font-bold text-foreground">{o.label}</span>
                 {o.description ? (
@@ -46,10 +46,20 @@ export function ChoiceGroup<T extends string>({
                   </span>
                 ) : null}
               </span>
-            </label>
+              <span
+                className={cn(
+                  "flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-opacity",
+                  selected ? "bg-success-tint opacity-100" : "opacity-0",
+                )}
+                aria-hidden="true"
+              >
+                <Check className="h-5 w-5 text-success" strokeWidth={3} />
+              </span>
+            </button>
           );
         })}
-      </RadioGroup>
+      </div>
     </fieldset>
   );
 }
+
