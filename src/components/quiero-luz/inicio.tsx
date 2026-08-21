@@ -93,12 +93,12 @@ export function Inicio({
         </div>
       </section>
 
-      <section className="flex flex-col gap-ch-md border-t border-border pt-ch-lg">
+      <section className="flex flex-col gap-ch-md pt-ch-lg">
         <div className="flex flex-col gap-1 text-center">
           <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
             Después de orientarte
           </p>
-          <h2 className="mx-auto max-w-2xl text-xl font-bold text-foreground sm:text-2xl">
+          <h2 className="mx-auto max-w-2xl text-lg font-semibold text-foreground sm:text-xl">
             Tu solicitud formal tiene tres macroetapas
           </h2>
           <p className="text-sm text-muted-foreground">
@@ -106,19 +106,19 @@ export function Inicio({
           </p>
         </div>
 
-        <ol className="grid gap-3 lg:grid-cols-3">
+        <ol className="grid gap-4 lg:grid-cols-3">
           {ETAPAS.map((etapa, i) => {
             const Icon = ICONOS_ETAPA[i]!;
             return (
               <li
                 key={etapa.numero}
-                className="flex flex-col gap-3 rounded-card border bg-muted/30 p-4 lg:p-5"
+                className="flex flex-col gap-4 rounded-card bg-muted/20 p-5 lg:p-6"
               >
-                <div className="flex items-start justify-between gap-3">
-                  <span className="flex size-9 shrink-0 items-center justify-center rounded-card bg-info/10 text-info">
-                    <Icon className="size-4" aria-hidden />
+                <div className="flex items-center justify-between gap-3">
+                  <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-info/10 text-info">
+                    <Icon className="size-5" aria-hidden />
                   </span>
-                  <span aria-hidden className="text-2xl leading-none font-semibold text-muted-foreground">
+                  <span aria-hidden className="text-3xl leading-none font-semibold text-muted-foreground/60">
                     {etapa.numero}
                   </span>
                 </div>
@@ -126,9 +126,9 @@ export function Inicio({
                   <h3 className="text-base font-semibold text-foreground">{etapa.titulo}</h3>
                   <p className="text-sm text-muted-foreground">{etapa.descripcion}</p>
                 </div>
-                <p className="mt-auto border-t border-border pt-3 text-xs font-medium text-muted-foreground">
-                  {etapa.plazo}
-                </p>
+                <div className="mt-auto border-t border-border/60 pt-3">
+                  <p className="text-xs font-medium text-muted-foreground">{etapa.plazo}</p>
+                </div>
               </li>
             );
           })}
