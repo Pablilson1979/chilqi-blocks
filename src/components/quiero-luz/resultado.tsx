@@ -63,9 +63,9 @@ export function Resultado({ datos, onEditar }: { datos: Orientacion; onEditar: (
             >
               Editar
             </Button>
-            <Accordion type="single" collapsible defaultValue="resumen">
+            <Accordion type="single" collapsible>
               <AccordionItem value="resumen" className="border-0">
-                <AccordionTrigger className="px-6 py-5 pr-24 hover:no-underline lg:px-8 lg:py-6 lg:pr-28">
+                <AccordionTrigger className="px-6 py-5 pr-28 hover:no-underline lg:px-8 lg:py-6 lg:pr-36">
                   <div className="text-left">
                     <p className="text-sm font-bold tracking-wide text-muted-foreground uppercase">
                       Qué consideramos
