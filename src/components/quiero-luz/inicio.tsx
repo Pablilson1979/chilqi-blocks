@@ -95,40 +95,35 @@ export function Inicio({
 
       <section className="flex flex-col gap-ch-md pt-ch-lg">
         <div className="flex flex-col gap-1 text-center">
-          <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
-            Después de orientarte
-          </p>
-          <h2 className="mx-auto max-w-2xl text-lg font-semibold text-foreground sm:text-xl">
-            Tu solicitud formal tiene tres macroetapas
+          <h2 className="text-base font-semibold text-foreground">
+            Después de orientarte, tu solicitud sigue 3 pasos
           </h2>
-          <p className="text-sm text-muted-foreground">
-            Quiero Luz te prepara. El trámite y sus acciones se realizan en Tu Conexión.
-          </p>
         </div>
 
-        <ol className="grid gap-4 lg:grid-cols-3">
+        <ol className="relative flex flex-col gap-2 lg:flex-row lg:items-start lg:justify-between">
           {ETAPAS.map((etapa, i) => {
             const Icon = ICONOS_ETAPA[i]!;
+            const ultima = i === ETAPAS.length - 1;
             return (
               <li
                 key={etapa.numero}
-                className="flex flex-col gap-4 rounded-card bg-muted/20 p-5 lg:p-6"
+                className="relative flex flex-1 items-center gap-4 rounded-card bg-muted/20 p-4 lg:flex-col lg:gap-3 lg:p-5"
               >
-                <div className="flex items-center justify-between gap-3">
-                  <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-info/10 text-info">
-                    <Icon className="size-5" aria-hidden />
+                <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-info/10 text-info lg:size-11">
+                  <Icon className="size-6 lg:size-5" aria-hidden />
+                </span>
+                <div className="flex min-w-0 flex-1 flex-col lg:items-center lg:text-center">
+                  <span className="text-xs font-bold tracking-wide text-muted-foreground uppercase">
+                    Paso {etapa.numero}
                   </span>
-                  <span aria-hidden className="text-3xl leading-none font-semibold text-muted-foreground/60">
-                    {etapa.numero}
+                  <h3 className="text-sm font-semibold text-foreground">{etapa.titulo}</h3>
+                  <p className="hidden text-xs text-muted-foreground lg:block">{etapa.descripcion}</p>
+                </div>
+                {!ultima && (
+                  <span className="absolute right-5 top-1/2 hidden -translate-y-1/2 text-muted-foreground/40 lg:block">
+                    <ArrowRight className="size-5" aria-hidden />
                   </span>
-                </div>
-                <div className="flex flex-col gap-1">
-                  <h3 className="text-base font-semibold text-foreground">{etapa.titulo}</h3>
-                  <p className="text-sm text-muted-foreground">{etapa.descripcion}</p>
-                </div>
-                <div className="mt-auto border-t border-border/60 pt-3">
-                  <p className="text-xs font-medium text-muted-foreground">{etapa.plazo}</p>
-                </div>
+                )}
               </li>
             );
           })}
