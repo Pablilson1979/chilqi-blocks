@@ -1,4 +1,4 @@
-import { ArrowRight, ClipboardList, History, Home, Info, PlugZap, ShieldCheck, TrendingUp } from "lucide-react";
+import { ArrowRight, ArrowRight as FlechaConexion, ClipboardList, History, Home, Info, PlugZap, ShieldCheck, TrendingUp } from "lucide-react";
 
 import { ETAPAS, type Necesidad } from "./content";
 
