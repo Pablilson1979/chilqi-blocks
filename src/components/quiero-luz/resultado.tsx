@@ -55,17 +55,22 @@ export function Resultado({ datos, onEditar }: { datos: Orientacion; onEditar: (
             </div>
           </Card>
 
-          <Card className="overflow-hidden">
+          <Card className="relative overflow-hidden">
+            <Button
+              variant="tertiary"
+              onClick={onEditar}
+              className="absolute top-5 right-5 z-10 lg:top-6 lg:right-8"
+            >
+              Editar
+            </Button>
             <Accordion type="single" collapsible defaultValue="resumen">
               <AccordionItem value="resumen" className="border-0">
-                <AccordionTrigger className="px-6 py-5 hover:no-underline lg:px-8 lg:py-6">
-                  <div className="flex w-full items-center justify-between gap-4 pr-4">
-                    <div className="text-left">
-                      <p className="text-sm font-bold tracking-wide text-muted-foreground uppercase">
-                        Qué consideramos
-                      </p>
-                      <h3 className="text-2xl font-bold text-foreground">Resumen de tu orientación</h3>
-                    </div>
+                <AccordionTrigger className="px-6 py-5 pr-24 hover:no-underline lg:px-8 lg:py-6 lg:pr-28">
+                  <div className="text-left">
+                    <p className="text-sm font-bold tracking-wide text-muted-foreground uppercase">
+                      Qué consideramos
+                    </p>
+                    <h3 className="text-2xl font-bold text-foreground">Resumen de tu orientación</h3>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="px-6 pb-6 lg:px-8 lg:pb-8">
