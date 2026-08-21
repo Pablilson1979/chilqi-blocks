@@ -7,7 +7,7 @@ export const PASOS = ["Necesidad", "Uso", "Equipamiento", "Contexto"];
 export function StepsNav({ current }: { current: number }) {
   return (
     <ol
-      className="mx-auto flex w-full max-w-[640px] items-start"
+      className="mx-auto flex w-full max-w-[840px] items-start"
       aria-label="Progreso de la orientación"
     >
       {PASOS.map((label, i) => {

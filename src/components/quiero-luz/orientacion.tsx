@@ -81,7 +81,7 @@ export function Orientacion({
 
       <StepsNav current={step} />
 
-      <section className="mx-auto flex w-full max-w-[640px] flex-col gap-ch-lg rounded-[1.5rem] bg-card p-ch-lg shadow-card sm:p-ch-xl">
+      <section className="mx-auto flex w-full max-w-[840px] flex-col gap-ch-lg rounded-[1.5rem] bg-card p-ch-lg shadow-card sm:p-ch-xl">
         <div className="flex flex-col gap-1">
           <p className="text-sm font-bold tracking-wide text-muted-foreground uppercase">
             {encabezado.kicker}
@@ -104,18 +104,21 @@ export function Orientacion({
           <>
             <ChoiceGroup
               question="¿Qué tipo de inmueble es?"
+              number={1}
               options={OPCIONES_INMUEBLE}
               value={datos.inmueble}
               onChange={(inmueble) => onChange({ inmueble })}
             />
             <ChoiceGroup
               question="¿Qué relación tienes con el inmueble?"
+              number={2}
               options={OPCIONES_RELACION}
               value={datos.relacion}
               onChange={(relacion) => onChange({ relacion })}
             />
             <ChoiceGroup
               question="¿Cuál será su uso principal?"
+              number={3}
               options={OPCIONES_USO}
               value={datos.uso}
               onChange={(uso) => onChange({ uso })}
@@ -132,6 +135,7 @@ export function Orientacion({
             </div>
             <ChoiceGroup
               question="Nivel de uso"
+              number={1}
               options={OPCIONES_EQUIPAMIENTO}
               value={datos.equipamiento}
               columns={1}
@@ -144,18 +148,21 @@ export function Orientacion({
           <>
             <ChoiceGroup
               question="¿Hay postes, cables o una cámara eléctrica frente al inmueble?"
+              number={1}
               options={OPCIONES_RED_FRENTE}
               value={datos.redFrente}
               onChange={(redFrente) => onChange({ redFrente })}
             />
             <ChoiceGroup
               question="Si puedes identificarla, ¿qué tipo de red existe?"
+              number={2}
               options={OPCIONES_TIPO_RED}
               value={datos.tipoRed}
               onChange={(tipoRed) => onChange({ tipoRed })}
             />
             <ChoiceGroup
               question="¿Cuentas con un instalador eléctrico autorizado?"
+              number={3}
               options={OPCIONES_INSTALADOR}
               value={datos.instalador}
               onChange={(instalador) => onChange({ instalador })}
