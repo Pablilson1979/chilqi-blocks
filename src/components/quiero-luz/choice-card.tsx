@@ -20,17 +20,18 @@ export function ChoiceCard({
       aria-pressed={selected}
       onClick={onSelect}
       className={cn(
-        "ch-touch flex w-full items-start gap-3 rounded-input border-2 p-4 text-left transition-colors",
+        "ch-touch flex w-full items-start gap-ch-md rounded-card border p-ch-base text-left transition-colors",
+        "focus-visible:outline-3 focus-visible:outline-ring focus-visible:outline-offset-2",
         selected
-          ? "border-success bg-success-soft"
-          : "border-border bg-card hover:border-border-strong",
+          ? "border-primary bg-primary-soft"
+          : "border-border bg-card hover:border-primary-tint hover:bg-primary-soft/40",
       )}
     >
       <span
         aria-hidden
         className={cn(
-          "mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border-2 transition-colors",
-          selected ? "border-success bg-success text-success-foreground" : "border-border-strong",
+          "mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full border transition-colors",
+          selected ? "border-primary bg-primary text-primary-foreground" : "border-border-strong",
         )}
       >
         {selected ? <Check className="size-4" strokeWidth={3} /> : null}
@@ -38,7 +39,7 @@ export function ChoiceCard({
       <span className="flex flex-col gap-1">
         <span className="text-base font-bold text-foreground">{label}</span>
         {description ? (
-          <span className="text-sm text-muted-foreground">{description}</span>
+          <span className="text-sm leading-relaxed text-muted-foreground">{description}</span>
         ) : null}
       </span>
     </button>
@@ -50,7 +51,7 @@ export function ChoiceGroup<T extends string>({
   options,
   value,
   onChange,
-  columns = 2,
+  columns = 1,
 }: {
   question: string;
   options: Opcion<T>[];
@@ -59,9 +60,9 @@ export function ChoiceGroup<T extends string>({
   columns?: 1 | 2;
 }) {
   return (
-    <fieldset className="flex flex-col gap-3">
+    <fieldset className="flex flex-col gap-ch-md">
       <legend className="mb-1 text-base font-bold text-foreground">{question}</legend>
-      <div className={cn("grid gap-3", columns === 2 && "sm:grid-cols-2")}>
+      <div className={cn("grid gap-ch-md", columns === 2 && "sm:grid-cols-2")}>
         {options.map((o) => (
           <ChoiceCard
             key={o.value}

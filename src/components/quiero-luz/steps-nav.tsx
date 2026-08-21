@@ -15,13 +15,13 @@ export function StepsNav({ current }: { current: number }) {
             <div className="flex w-full items-center">
               <span
                 aria-hidden
-                className={cn("h-0.5 flex-1", i === 0 ? "opacity-0" : done ? "bg-success" : "bg-border")}
+                className={cn("h-0.5 flex-1", i === 0 ? "opacity-0" : done ? "bg-primary" : "bg-border")}
               />
               <span
                 className={cn(
                   "flex size-9 shrink-0 items-center justify-center rounded-full border-2 text-sm font-bold",
-                  done && "border-success bg-card text-success",
-                  active && "border-info bg-info text-info-foreground",
+                  done && "border-primary bg-card text-primary",
+                  active && "border-primary bg-primary text-primary-foreground",
                   !done && !active && "border-border bg-card text-muted-foreground",
                 )}
               >
@@ -31,7 +31,7 @@ export function StepsNav({ current }: { current: number }) {
                 aria-hidden
                 className={cn(
                   "h-0.5 flex-1",
-                  i === PASOS.length - 1 ? "opacity-0" : done ? "bg-success" : "bg-border",
+                  i === PASOS.length - 1 ? "opacity-0" : done ? "bg-primary" : "bg-border",
                 )}
               />
             </div>
