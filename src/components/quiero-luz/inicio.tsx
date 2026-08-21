@@ -7,28 +7,24 @@ const CAMINOS: {
   icon: typeof Home;
   titulo: string;
   texto: string;
-  tono: string;
 }[] = [
   {
     necesidad: "nueva",
     icon: Home,
     titulo: "Necesito una conexión nueva",
     texto: "Para un inmueble que todavía no cuenta con suministro eléctrico.",
-    tono: "bg-info-soft text-info",
   },
   {
     necesidad: "potencia",
     icon: TrendingUp,
     titulo: "Necesito más potencia",
     texto: "Para usar más equipamiento en un servicio eléctrico existente.",
-    tono: "bg-warning-soft text-warning",
   },
   {
     necesidad: "seguimiento",
     icon: History,
     titulo: "Quiero revisar una solicitud",
     texto: "Consulta dónde se gestiona una solicitud que ya ingresaste.",
-    tono: "bg-success-soft text-success",
   },
 ];
 
@@ -55,7 +51,7 @@ export function Inicio({
         </div>
 
         <div className="grid gap-4 lg:grid-cols-3">
-          {CAMINOS.map(({ necesidad, icon: Icon, titulo, texto, tono }) => (
+          {CAMINOS.map(({ necesidad, icon: Icon, titulo, texto }) => (
             <button
               key={titulo}
               type="button"
@@ -63,9 +59,7 @@ export function Inicio({
               className="group flex flex-col gap-3 rounded-card border bg-card p-5 text-left shadow-card transition-shadow hover:shadow-card-hover lg:p-6"
             >
               <span className="grid grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-3">
-                <span
-                  className={`flex size-11 shrink-0 items-center justify-center rounded-card ${tono}`}
-                >
+                <span className="flex size-11 shrink-0 items-center justify-center rounded-card border border-primary-tint bg-primary-soft text-primary">
                   <Icon className="size-5" aria-hidden />
                 </span>
                 <span className="min-w-0 text-lg font-bold text-foreground">{titulo}</span>
