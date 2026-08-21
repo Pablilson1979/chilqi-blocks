@@ -1,7 +1,6 @@
 import { ArrowLeft, ArrowRight, Info } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { ChoiceGroup } from "./choice-card";
 import { PASOS, StepsNav } from "./steps-nav";
 import {
@@ -82,7 +81,7 @@ export function Orientacion({
 
       <StepsNav current={step} />
 
-      <Card className="mx-auto flex w-full max-w-3xl flex-col gap-6 p-6 lg:p-8">
+      <section className="mx-auto flex w-full max-w-[640px] flex-col gap-ch-lg rounded-[1.5rem] bg-card p-ch-lg shadow-card sm:p-ch-xl">
         <div className="flex flex-col gap-1">
           <p className="text-sm font-bold tracking-wide text-muted-foreground uppercase">
             {encabezado.kicker}
@@ -126,7 +125,7 @@ export function Orientacion({
 
         {step === 2 ? (
           <>
-            <div className="flex items-start gap-3 rounded-input bg-info-soft p-4 text-sm text-muted-foreground">
+            <div className="flex items-start gap-ch-md rounded-card bg-info-soft p-ch-base text-sm leading-relaxed text-foreground">
               <Info className="mt-0.5 size-5 shrink-0 text-info" aria-hidden />
               Piensa en los equipos que podrían funcionar al mismo tiempo y en lo que podrías
               incorporar en el futuro.
@@ -164,17 +163,17 @@ export function Orientacion({
           </>
         ) : null}
 
-        <div className="flex flex-col-reverse gap-3 border-t pt-6 sm:flex-row sm:justify-between">
-          <Button variant="secondary" onClick={onBack}>
+        <div className="flex flex-col-reverse gap-ch-md border-t pt-ch-lg sm:flex-row sm:justify-between">
+          <Button variant="secondary" size="lg" onClick={onBack}>
             <ArrowLeft />
             {step === 0 ? "Volver al inicio" : "Anterior"}
           </Button>
-          <Button disabled={!listo} onClick={onNext}>
+          <Button size="lg" disabled={!listo} onClick={onNext}>
             {step === PASOS.length - 1 ? "Ver mi orientación" : "Continuar"}
             <ArrowRight />
           </Button>
         </div>
-      </Card>
+      </section>
     </div>
   );
 }
