@@ -7,28 +7,24 @@ const CAMINOS: {
   icon: typeof Home;
   titulo: string;
   texto: string;
-  tono: string;
 }[] = [
   {
     necesidad: "nueva",
     icon: Home,
     titulo: "Necesito una conexión nueva",
     texto: "Para un inmueble que todavía no cuenta con suministro eléctrico.",
-    tono: "bg-info-soft text-info",
   },
   {
     necesidad: "potencia",
     icon: TrendingUp,
     titulo: "Necesito más potencia",
     texto: "Para usar más equipamiento en un servicio eléctrico existente.",
-    tono: "bg-warning-soft text-warning",
   },
   {
     necesidad: "seguimiento",
     icon: History,
     titulo: "Quiero revisar una solicitud",
     texto: "Consulta dónde se gestiona una solicitud que ya ingresaste.",
-    tono: "bg-success-soft text-success",
   },
 ];
 
