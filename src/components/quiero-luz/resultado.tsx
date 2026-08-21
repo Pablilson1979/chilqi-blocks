@@ -55,26 +55,36 @@ export function Resultado({ datos, onEditar }: { datos: Orientacion; onEditar: (
             </div>
           </Card>
 
-          <Card className="flex flex-col gap-4 p-6 lg:p-8">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="text-sm font-bold tracking-wide text-muted-foreground uppercase">
-                  Qué consideramos
-                </p>
-                <h3 className="text-2xl font-bold text-foreground">Resumen de tu orientación</h3>
-              </div>
-              <Button variant="tertiary" onClick={onEditar}>
-                Editar
-              </Button>
-            </div>
-            <dl className="grid gap-x-8 sm:grid-cols-2">
-              {r.resumen.map((item) => (
-                <div key={item.label} className="border-t py-3">
-                  <dt className="text-sm text-muted-foreground">{item.label}</dt>
-                  <dd className="text-base font-bold text-foreground">{item.valor}</dd>
-                </div>
-              ))}
-            </dl>
+          <Card className="relative overflow-hidden">
+            <Button
+              variant="tertiary"
+              onClick={onEditar}
+              className="absolute top-5 right-5 z-10 lg:top-6 lg:right-8"
+            >
+              Editar
+            </Button>
+            <Accordion type="single" collapsible defaultValue="resumen">
+              <AccordionItem value="resumen" className="border-0">
+                <AccordionTrigger className="px-6 py-5 pr-24 hover:no-underline lg:px-8 lg:py-6 lg:pr-28">
+                  <div className="text-left">
+                    <p className="text-sm font-bold tracking-wide text-muted-foreground uppercase">
+                      Qué consideramos
+                    </p>
+                    <h3 className="text-2xl font-bold text-foreground">Resumen de tu orientación</h3>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-6 lg:px-8 lg:pb-8">
+                  <dl className="grid gap-x-8 sm:grid-cols-2">
+                    {r.resumen.map((item) => (
+                      <div key={item.label} className="border-t py-3">
+                        <dt className="text-sm text-muted-foreground">{item.label}</dt>
+                        <dd className="text-base font-bold text-foreground">{item.valor}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </Card>
 
           <Card className="flex flex-col gap-4 p-6 lg:p-8">
