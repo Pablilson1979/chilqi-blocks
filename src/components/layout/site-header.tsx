@@ -309,6 +309,15 @@ export function SiteHeader({
                 </li>
               ))}
             </ul>
+            <label className="ch-touch flex items-center justify-between gap-ch-md rounded-card bg-background px-3">
+              <span className="text-[15px] font-semibold text-foreground">Modo emergencia</span>
+              <Switch
+                checked={emergencyMode}
+                onCheckedChange={setEmergencyMode}
+                aria-label="Activar modo emergencia"
+                className="data-[state=checked]:bg-primary data-[state=unchecked]:bg-input"
+              />
+            </label>
           </nav>
         )}
       </div>
