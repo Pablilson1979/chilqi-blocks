@@ -146,14 +146,6 @@ export function SiteHeader({
           <div className="flex shrink-0 items-center gap-2 sm:gap-4 lg:gap-6">
             {showSearch && (
               <div className="hidden items-center gap-2 lg:inline-flex">
-                <button
-                  type="button"
-                  aria-label="Buscar"
-                  className="ch-touch inline-flex items-center justify-center rounded-pill text-primary transition-colors hover:text-primary-hover"
-                >
-                  <Search className="size-6" strokeWidth={2.5} aria-hidden="true" />
-                </button>
-
                 <label className="inline-flex items-center gap-2 rounded-pill border border-border bg-background px-3 py-1.5">
                   <span className="text-sm font-semibold text-foreground">Modo emergencia</span>
                   <Switch
@@ -163,6 +155,14 @@ export function SiteHeader({
                     className="data-[state=checked]:bg-primary data-[state=unchecked]:bg-input"
                   />
                 </label>
+
+                <button
+                  type="button"
+                  aria-label="Buscar"
+                  className="ch-touch inline-flex items-center justify-center rounded-pill text-primary transition-colors hover:text-primary-hover"
+                >
+                  <Search className="size-6" strokeWidth={2.5} aria-hidden="true" />
+                </button>
               </div>
             )}
 
