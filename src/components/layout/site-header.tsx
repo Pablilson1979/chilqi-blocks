@@ -86,6 +86,9 @@ export interface SiteHeaderProps {
   loginLabel?: string;
   /** Texto destacado centrado entre la barra superior y la navegación. */
   tagline?: string;
+  /** Estado controlado del modo emergencia. */
+  emergencyMode?: boolean;
+  onEmergencyModeChange?: (value: boolean) => void;
   className?: string;
 }
 
@@ -100,11 +103,18 @@ export function SiteHeader({
   loginHref = "#",
   loginLabel = "Iniciar Sesión",
   tagline,
+  emergencyMode: emergencyModeProp,
+  onEmergencyModeChange,
   className,
 }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
   const [openPanel, setOpenPanel] = useState<string | null>(null);
-  const [emergencyMode, setEmergencyMode] = useState(false);
+  const [emergencyModeState, setEmergencyModeState] = useState(false);
+  const emergencyMode = emergencyModeProp ?? emergencyModeState;
+  const setEmergencyMode = (value: boolean) => {
+    setEmergencyModeState(value);
+    onEmergencyModeChange?.(value);
+  };
   const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -299,6 +309,15 @@ export function SiteHeader({
                 </li>
               ))}
             </ul>
+            <label className="ch-touch flex items-center justify-between gap-ch-md rounded-card bg-background px-3">
+              <span className="text-[15px] font-semibold text-foreground">Modo emergencia</span>
+              <Switch
+                checked={emergencyMode}
+                onCheckedChange={setEmergencyMode}
+                aria-label="Activar modo emergencia"
+                className="data-[state=checked]:bg-primary data-[state=unchecked]:bg-input"
+              />
+            </label>
           </nav>
         )}
       </div>
