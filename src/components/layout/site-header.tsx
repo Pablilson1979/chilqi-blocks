@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Search, Menu, X, ChevronDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
+import { Switch } from "@/components/ui/switch";
 
 export type MenuLink = {
   label: string;
@@ -103,6 +104,7 @@ export function SiteHeader({
 }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
   const [openPanel, setOpenPanel] = useState<string | null>(null);
+  const [emergencyMode, setEmergencyMode] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -143,13 +145,25 @@ export function SiteHeader({
 
           <div className="flex shrink-0 items-center gap-2 sm:gap-4 lg:gap-6">
             {showSearch && (
-              <button
-                type="button"
-                aria-label="Buscar"
-                className="ch-touch hidden items-center justify-center rounded-pill text-primary transition-colors hover:text-primary-hover lg:inline-flex"
-              >
-                <Search className="size-6" strokeWidth={2.5} aria-hidden="true" />
-              </button>
+              <div className="hidden items-center gap-2 lg:inline-flex">
+                <button
+                  type="button"
+                  aria-label="Buscar"
+                  className="ch-touch inline-flex items-center justify-center rounded-pill text-primary transition-colors hover:text-primary-hover"
+                >
+                  <Search className="size-6" strokeWidth={2.5} aria-hidden="true" />
+                </button>
+
+                <label className="inline-flex items-center gap-2 rounded-pill border border-border bg-background px-3 py-1.5">
+                  <span className="text-sm font-semibold text-foreground">Modo emergencia</span>
+                  <Switch
+                    checked={emergencyMode}
+                    onCheckedChange={setEmergencyMode}
+                    aria-label="Activar modo emergencia"
+                    className="data-[state=checked]:bg-primary data-[state=unchecked]:bg-input"
+                  />
+                </label>
+              </div>
             )}
 
             {loginHref && (
