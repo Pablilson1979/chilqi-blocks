@@ -124,6 +124,7 @@ export const CASOS: Caso[] = [
     hito: "espera",
     tiempos: { informado: "Hoy · 12:20", espera: "Hoy · 12:41" },
     ventana: "16:40 – 17:20",
+    etrEstado: "ajustado",
     enCola: 2,
     reasignado: true,
   },
