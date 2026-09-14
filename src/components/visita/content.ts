@@ -111,7 +111,9 @@ export const CASOS: Caso[] = [
       espera: "Hoy · 14:05",
       en_camino: "Hoy · 15:12",
     },
-    etr: "25 minutos",
+    etr: "20 – 30 minutos",
+    etrEstado: "confirmado",
+    ubicacionActualizada: "15:38",
     movil: { nombre: "Móvil SAT 42", patente: "KJHT-56", x: 38, y: 44 },
   },
   {
