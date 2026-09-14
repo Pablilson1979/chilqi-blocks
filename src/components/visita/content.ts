@@ -80,9 +80,16 @@ export interface Caso {
   ventana?: string;
   /** Órdenes por delante en la cola de la cuadrilla. */
   enCola?: number;
-  /** Tiempo estimado de reparación comunicado al cliente. */
+  /** Tiempo estimado (rango) comunicado al cliente. */
   etr?: string;
   etrConfirmado?: boolean;
+  /**
+   * Estado de la estimación: confirmada por terreno, ajustada respecto de la
+   * anterior, o todavía no disponible.
+   */
+  etrEstado?: "confirmado" | "ajustado" | "pendiente";
+  /** Hora en que se actualizó por última vez la posición del móvil. */
+  ubicacionActualizada?: string;
   movil?: Movil;
   /** La cola se reordenó por una prioridad (ej. electrodependiente). */
   reasignado?: boolean;
