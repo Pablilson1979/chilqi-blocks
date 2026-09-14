@@ -23,20 +23,16 @@ export function MapaMovil({
         role="img"
         aria-label={`Posición aproximada del ${movil.nombre} respecto de ${direccion}`}
       >
-        {/* Trama de calles referencial */}
-        <svg className="absolute inset-0 size-full" aria-hidden>
-          <defs>
-            <pattern id="calles" width="48" height="48" patternUnits="userSpaceOnUse">
-              <path
-                d="M48 0H0v48"
-                fill="none"
-                className="stroke-border"
-                strokeWidth="2"
-              />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#calles)" />
-        </svg>
+        {/* Cartografía real de la Quinta Región (prototipo, sin interacción) */}
+        <iframe
+          title="Mapa de la Quinta Región"
+          aria-hidden
+          tabIndex={-1}
+          loading="lazy"
+          className="pointer-events-none absolute inset-0 size-full border-0"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-71.6600%2C-33.1050%2C-71.4700%2C-32.9600&layer=mapnik"
+        />
+
 
         {/* Domicilio */}
         <span
