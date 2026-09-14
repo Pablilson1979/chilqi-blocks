@@ -48,7 +48,10 @@ export function BuscarVisita({ onBuscar, error }: BuscarVisitaProps) {
               value={valor}
               onChange={(e) => setValor(e.target.value.replace(/\D/g, "").slice(0, 10))}
               state={error ? "error" : "default"}
-              message={error ?? "Ingresa el número sin el dígito verificador."}
+              message={
+                error ??
+                "Puedes usar cualquiera de los dos: solo números, sin puntos ni guion."
+              }
             />
             <button
               type="button"
