@@ -155,16 +155,6 @@ export function SiteHeader({
           <div className="flex shrink-0 items-center gap-2 sm:gap-4 lg:gap-6">
             {showSearch && (
               <div className="hidden items-center gap-2 lg:inline-flex">
-                <label className="inline-flex items-center gap-2 rounded-pill bg-background px-3 py-1.5">
-                  <span className="text-sm font-semibold text-foreground">Modo emergencia</span>
-                  <Switch
-                    checked={emergencyMode}
-                    onCheckedChange={setEmergencyMode}
-                    aria-label="Activar modo emergencia"
-                    className="data-[state=checked]:bg-primary data-[state=unchecked]:bg-input"
-                  />
-                </label>
-
                 <button
                   type="button"
                   aria-label="Buscar"
