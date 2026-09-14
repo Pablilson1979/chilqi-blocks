@@ -184,8 +184,8 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
             {caso.hito === "en_camino" ? (
               <StatusMessage
                 tone="warning"
-                title="Quédate en el domicilio"
-                description="Necesitamos que alguien reciba al técnico y esté atento al teléfono. Si no hay nadie, la orden se cierra y la visita debe reagendarse."
+                title="Que alguien mayor de edad reciba al técnico"
+                description="El técnico necesita acceso al medidor y contacto en el domicilio. Mantén el teléfono a mano: si al llegar no hay nadie, la visita se cierra sin reposición y tendrás que reagendarla."
               />
             ) : null}
 
