@@ -1,0 +1,98 @@
+import * as React from "react";
+import { HelpCircle, MapPin, Search } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
+import { Field } from "@/components/chilquinta/field";
+import { CASOS } from "@/components/visita/content";
+
+export interface BuscarVisitaProps {
+  onBuscar: (valor: string) => void;
+  error?: string | null;
+}
+
+/**
+ * Ingreso al seguimiento: número de orden o número de cliente.
+ * Un solo campo para bajar la carga cognitiva del paso de entrada.
+ */
+export function BuscarVisita({ onBuscar, error }: BuscarVisitaProps) {
+  const [valor, setValor] = React.useState("");
+  const [ayuda, setAyuda] = React.useState(false);
+  const puede = valor.replace(/\D/g, "").length >= 6;
+
+  return (
+    <div className="mx-auto flex w-full max-w-[560px] flex-col gap-ch-lg">
+      <section className="rounded-[1.5rem] bg-card p-ch-lg shadow-card sm:p-ch-xl">
+        <div className="flex items-start gap-ch-md rounded-card bg-info-soft p-ch-base">
+          <MapPin className="mt-0.5 size-5 shrink-0 text-info" aria-hidden />
+          <p className="text-sm leading-relaxed text-foreground">
+            Sigue en línea el avance de tu visita técnica: en qué etapa va, dónde está el
+            móvil y cuánto falta para reponer tu suministro.
+          </p>
+        </div>
+
+        <form
+          className="mt-ch-lg flex flex-col gap-ch-base"
+          onSubmit={(e) => {
+            e.preventDefault();
+            if (puede) onBuscar(valor);
+          }}
+        >
+          <div className="flex items-start gap-ch-sm">
+            <Field
+              id="orden"
+              label="N° de orden o N° de cliente"
+              placeholder="Ej: 11234412"
+              inputMode="numeric"
+              autoComplete="off"
+              className="flex-1"
+              value={valor}
+              onChange={(e) => setValor(e.target.value.replace(/\D/g, "").slice(0, 10))}
+              state={error ? "error" : "default"}
+              message={error ?? "Ingresa el número sin el dígito verificador."}
+            />
+            <button
+              type="button"
+              aria-label="¿Dónde encuentro estos números?"
+              aria-expanded={ayuda}
+              onClick={() => setAyuda((v) => !v)}
+              className="mt-[30px] flex size-11 shrink-0 items-center justify-center rounded-full bg-info/10 text-info transition-colors hover:bg-info/20"
+            >
+              <HelpCircle className="size-5" aria-hidden />
+            </button>
+          </div>
+
+          {ayuda ? (
+            <p className="rounded-card bg-muted p-ch-md text-sm leading-relaxed text-foreground">
+              El número de orden llega cuando reportas tu corte por la web, WhatsApp o
+              teléfono. El número de cliente aparece en la parte superior de tu boleta.
+            </p>
+          ) : null}
+
+          <Button type="submit" size="lg" disabled={!puede} className="w-full">
+            <Search aria-hidden />
+            Ver estado de mi visita
+          </Button>
+        </form>
+      </section>
+
+      <section className="rounded-card bg-muted/40 p-ch-base">
+        <p className="text-sm font-bold text-foreground">Ejemplos para probar la maqueta</p>
+        <ul className="mt-ch-sm flex flex-wrap gap-2">
+          {CASOS.map((c) => (
+            <li key={c.orden}>
+              <button
+                type="button"
+                onClick={() => onBuscar(c.orden)}
+                className="ch-touch rounded-pill border border-border-strong bg-surface px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:text-primary"
+              >
+                {c.orden}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  );
+}
+
+export default BuscarVisita;

@@ -1,0 +1,189 @@
+/**
+ * Seguimiento de visita técnica — modelo de datos de la maqueta.
+ *
+ * Los hitos visibles siguen el blueprint v2 (acuerdos 08-09-2026):
+ * ASSIGNED y DISPATCHED se muestran como un solo hito, se incorpora LLEGÓ
+ * ("Técnico en el lugar") y el cierre se diferencia entre reposición y
+ * casa cerrada. No se muestra el nombre del técnico: solo la patente/móvil.
+ */
+
+export type HitoId =
+  | "informado"
+  | "espera"
+  | "en_camino"
+  | "en_lugar"
+  | "trabajando"
+  | "cierre";
+
+export interface HitoDef {
+  id: HitoId;
+  titulo: string;
+  /** Qué significa para el cliente, en lenguaje simple. */
+  detalle: string;
+}
+
+export const HITOS: HitoDef[] = [
+  {
+    id: "informado",
+    titulo: "Corte de suministro informado",
+    detalle: "Recibimos tu reporte y confirmamos la dirección del suministro.",
+  },
+  {
+    id: "espera",
+    titulo: "Solicitud validada, en espera de móvil",
+    detalle:
+      "Tu solicitud está validada y a la espera de la disponibilidad del móvil.",
+  },
+  {
+    id: "en_camino",
+    titulo: "Móvil en camino",
+    detalle:
+      "El móvil se dirige a tu dirección. Permanece en el domicilio y atento al teléfono.",
+  },
+  {
+    id: "en_lugar",
+    titulo: "Técnico en el lugar",
+    detalle: "El técnico llegó, revisa la instalación y confirma el tiempo de reparación.",
+  },
+  {
+    id: "trabajando",
+    titulo: "Trabajando en la reposición",
+    detalle: "Se están ejecutando las maniobras para reponer el suministro.",
+  },
+  {
+    id: "cierre",
+    titulo: "Trabajo finalizado",
+    detalle: "Cerramos la orden en terreno.",
+  },
+];
+
+export type Cierre = "restablecido" | "casa_cerrada";
+
+export interface Movil {
+  /** Identificación genérica del móvil: nunca el nombre del técnico. */
+  nombre: string;
+  patente: string;
+  /** Posición relativa dentro del mapa de la maqueta (0-100). */
+  x: number;
+  y: number;
+}
+
+export interface Caso {
+  orden: string;
+  cliente: string;
+  direccion: string;
+  comuna: string;
+  hito: HitoId;
+  /** Marcas de tiempo de los hitos ya recorridos. */
+  tiempos: Partial<Record<HitoId, string>>;
+  /** Ventana estimada de atención (rango) para el tramo de espera. */
+  ventana?: string;
+  /** Órdenes por delante en la cola de la cuadrilla. */
+  enCola?: number;
+  /** Tiempo estimado de reparación comunicado al cliente. */
+  etr?: string;
+  etrConfirmado?: boolean;
+  movil?: Movil;
+  /** La cola se reordenó por una prioridad (ej. electrodependiente). */
+  reasignado?: boolean;
+  suspension?: string;
+  cierre?: Cierre;
+  /** Seguimiento no publicable: contingencia u orden de red. */
+  noDisponible?: string;
+}
+
+export const CASOS: Caso[] = [
+  {
+    orden: "11234412",
+    cliente: "3045128",
+    direccion: "Pasaje C1 223, Camino las Maravillas",
+    comuna: "Viña del Mar",
+    hito: "en_camino",
+    tiempos: {
+      informado: "Hoy · 13:50",
+      espera: "Hoy · 14:05",
+      en_camino: "Hoy · 15:12",
+    },
+    etr: "25 minutos",
+    movil: { nombre: "Móvil SAT 42", patente: "KJHT-56", x: 38, y: 44 },
+  },
+  {
+    orden: "20455301",
+    cliente: "4187903",
+    direccion: "Av. Libertad 1180, depto. 703",
+    comuna: "Viña del Mar",
+    hito: "espera",
+    tiempos: { informado: "Hoy · 12:20", espera: "Hoy · 12:41" },
+    ventana: "16:40 – 17:20",
+    enCola: 2,
+    reasignado: true,
+  },
+  {
+    orden: "30778120",
+    cliente: "5093344",
+    direccion: "Los Aromos 452",
+    comuna: "Quilpué",
+    hito: "trabajando",
+    tiempos: {
+      informado: "Hoy · 09:10",
+      espera: "Hoy · 09:32",
+      en_camino: "Hoy · 11:02",
+      en_lugar: "Hoy · 11:26",
+      trabajando: "Hoy · 11:34",
+    },
+    etr: "40 minutos",
+    etrConfirmado: true,
+    movil: { nombre: "Móvil SAT 17", patente: "LPBR-31", x: 62, y: 58 },
+  },
+  {
+    orden: "40990011",
+    cliente: "6120877",
+    direccion: "Calle Nueva 87",
+    comuna: "Villa Alemana",
+    hito: "cierre",
+    cierre: "casa_cerrada",
+    tiempos: {
+      informado: "Ayer · 17:05",
+      espera: "Ayer · 17:22",
+      en_camino: "Ayer · 18:40",
+      en_lugar: "Ayer · 19:02",
+      cierre: "Ayer · 19:10",
+    },
+  },
+  {
+    orden: "50110022",
+    cliente: "7233901",
+    direccion: "Pasaje El Sauce 14",
+    comuna: "Valparaíso",
+    hito: "cierre",
+    cierre: "restablecido",
+    tiempos: {
+      informado: "Hoy · 07:40",
+      espera: "Hoy · 07:55",
+      en_camino: "Hoy · 08:30",
+      en_lugar: "Hoy · 08:52",
+      trabajando: "Hoy · 09:01",
+      cierre: "Hoy · 09:48",
+    },
+  },
+  {
+    orden: "60220033",
+    cliente: "8340112",
+    direccion: "Camino Troncal 2200",
+    comuna: "Quilpué",
+    hito: "espera",
+    tiempos: { informado: "Hoy · 10:15" },
+    noDisponible:
+      "Tu corte forma parte de una falla que afecta a varios clientes del sector. En estos casos el seguimiento en tiempo real todavía no está disponible.",
+  },
+];
+
+export function buscarCaso(valor: string): Caso | undefined {
+  const q = valor.replace(/\D/g, "");
+  if (!q) return undefined;
+  return CASOS.find((c) => c.orden === q || c.cliente === q);
+}
+
+export function indiceHito(id: HitoId) {
+  return HITOS.findIndex((h) => h.id === id);
+}

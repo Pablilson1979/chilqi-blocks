@@ -64,10 +64,38 @@ const SERVICIO_AL_CLIENTE: MenuLink[] = [
   },
 ];
 
+const CORTES_Y_EMERGENCIAS: MenuLink[] = [
+  {
+    label: "Sigue tu visita técnica",
+    description:
+      "Revisa la etapa de tu visita, dónde está el móvil y cuánto falta para reponer tu luz",
+    href: "/sigue-tu-visita",
+    icon: "/icons/cortes.svg",
+  },
+  {
+    label: "Reportar corte",
+    description: "Informa una interrupción de suministro en tu domicilio",
+    href: "#",
+    icon: "/icons/emergencia/telefono.svg",
+  },
+  {
+    label: "Cortes programados",
+    description: "Consulta trabajos programados en tu sector",
+    href: "#",
+    icon: "/icons/cortes.svg",
+  },
+  {
+    label: "Electrodependientes",
+    description: "Atención prioritaria ante interrupciones de suministro",
+    href: "#",
+    icon: "/icons/emergencia/electro.svg",
+  },
+];
+
 export const CHILQUINTA_NAV: NavItem[] = [
   { label: "Boleta y facturación", href: "#" },
   { label: "Convenios y pagos", href: "#" },
-  { label: "Cortes y emergencias", href: "#" },
+  { label: "Cortes y emergencias", href: "#", panel: CORTES_Y_EMERGENCIAS },
   { label: "Consumo y lecturas", href: "#" },
   { label: "Servicio al cliente", href: "#", panel: SERVICIO_AL_CLIENTE },
   { label: "Cambios y trámites", href: "#" },
