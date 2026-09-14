@@ -18,40 +18,74 @@ import { HitosVisita } from "@/components/visita/hitos-visita";
 import { MapaMovil } from "@/components/visita/mapa-movil";
 import type { Caso } from "@/components/visita/content";
 
-/** Titular y tiempo destacado según el hito en curso. */
+/**
+ * Titular y tiempo destacado según el hito en curso. La etiqueta distingue
+ * siempre entre "cuándo llega el móvil" y "cuándo vuelve la luz", y aclara el
+ * estado de la estimación: confirmada, ajustada o aún no disponible.
+ */
 function destacado(caso: Caso) {
+  const nota =
+    caso.etrEstado === "confirmado"
+      ? "Estimación confirmada por el equipo en terreno"
+      : caso.etrEstado === "ajustado"
+        ? "Estimación ajustada respecto de la anterior"
+        : "Estimación referencial, puede cambiar";
+
   if (caso.noDisponible) {
-    return { titulo: "Seguimiento no disponible", dato: null as string | null, sub: null };
+    return {
+      titulo: "Seguimiento no disponible",
+      dato: null as string | null,
+      sub: null as string | null,
+      nota: null as string | null,
+    };
   }
   if (caso.suspension) {
     return {
       titulo: "Trabajo suspendido temporalmente",
       dato: caso.ventana ?? null,
-      sub: "Nueva ventana estimada",
+      sub: "Nueva ventana estimada de atención",
+      nota,
     };
   }
   if (caso.hito === "cierre") {
     return caso.cierre === "casa_cerrada"
-      ? { titulo: "No pudimos realizar la visita", dato: null, sub: null }
-      : { titulo: "Tu suministro fue restablecido", dato: caso.tiempos.cierre ?? null, sub: "Hora de cierre" };
+      ? { titulo: "No pudimos realizar la visita", dato: null, sub: null, nota: null }
+      : {
+          titulo: "Tu suministro fue restablecido",
+          dato: caso.tiempos.cierre ?? null,
+          sub: "Hora en que volvió la luz",
+          nota: null,
+        };
   }
   if (caso.hito === "trabajando") {
     return {
       titulo: "Trabajando en la reposición",
       dato: caso.etr ?? null,
-      sub: caso.etrConfirmado ? "Tiempo confirmado por el técnico" : "Tiempo estimado",
+      sub: "Cuánto falta para que vuelva la luz",
+      nota,
     };
   }
   if (caso.hito === "en_lugar") {
-    return { titulo: "El técnico está en el lugar", dato: caso.etr ?? null, sub: "Tiempo estimado" };
+    return {
+      titulo: "El técnico está en el lugar",
+      dato: caso.etr ?? null,
+      sub: "Cuánto falta para que vuelva la luz",
+      nota: caso.etr ? nota : "El técnico está revisando la instalación para estimar el tiempo",
+    };
   }
   if (caso.hito === "en_camino") {
-    return { titulo: "El móvil va en camino", dato: caso.etr ?? null, sub: "Tiempo estimado de llegada" };
+    return {
+      titulo: "El móvil va en camino",
+      dato: caso.etr ?? null,
+      sub: "Cuánto falta para que llegue el móvil",
+      nota: `${nota}. El tiempo de reparación se estima cuando el técnico revisa la instalación.`,
+    };
   }
   return {
     titulo: "Tu solicitud está validada",
     dato: caso.ventana ?? null,
-    sub: "Ventana estimada de atención",
+    sub: "Cuándo estimamos que llegue el móvil",
+    nota: caso.ventana ? nota : "Aún no tenemos una hora estimada de llegada",
   };
 }
 
