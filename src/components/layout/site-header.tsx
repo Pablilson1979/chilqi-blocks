@@ -66,29 +66,34 @@ const SERVICIO_AL_CLIENTE: MenuLink[] = [
 
 const CORTES_Y_EMERGENCIAS: MenuLink[] = [
   {
-    label: "Sigue tu visita técnica",
-    description:
-      "Revisa la etapa de tu visita, dónde está el móvil y cuánto falta para reponer tu luz",
-    href: "/sigue-tu-visita",
-    icon: "/icons/cortes.svg",
+    label: "Electrodependientes",
+    description: "Atención a nuestros clientes electrodependientes",
+    href: "#",
+    icon: "/icons/emergencia/electro-3.svg",
   },
   {
     label: "Reportar corte",
-    description: "Informa una interrupción de suministro en tu domicilio",
+    description: "Aquí podrás reportar cortes o incidentes",
     href: "#",
-    icon: "/icons/emergencia/telefono.svg",
+    icon: "/icons/emergencia/reportarcorte.svg",
   },
   {
-    label: "Cortes programados",
-    description: "Consulta trabajos programados en tu sector",
+    label: "Ver Cortes",
+    description: "Conoce los lugares que están con cortes de energía",
     href: "#",
-    icon: "/icons/cortes.svg",
+    icon: "/icons/emergencia/cortes-2.svg",
   },
   {
-    label: "Electrodependientes",
-    description: "Atención prioritaria ante interrupciones de suministro",
+    label: "Denuncia de hurto",
+    description: "Aquí podrás denunciar anónimamente el hurto de energía",
     href: "#",
-    icon: "/icons/emergencia/electro.svg",
+    icon: "/icons/emergencia/denunciahurto.svg",
+  },
+  {
+    label: "Estado de interrupción",
+    description: "Aquí puedes ver el estado de interrupción de suministro",
+    href: "/sigue-tu-visita",
+    icon: "/icons/emergencia/success.svg",
   },
 ];
 
