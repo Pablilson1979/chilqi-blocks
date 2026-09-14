@@ -30,14 +30,14 @@ export function MapaMovil({
           tabIndex={-1}
           loading="lazy"
           className="pointer-events-none absolute inset-0 size-full border-0"
-          src="https://www.openstreetmap.org/export/embed.html?bbox=-71.6600%2C-33.1050%2C-71.4700%2C-32.9600&layer=mapnik"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-71.5950%2C-33.0350%2C-71.5250%2C-32.9850&layer=mapnik"
         />
 
 
         {/* Domicilio */}
         <span
           className="absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center"
-          style={{ left: "72%", top: "34%" }}
+          style={{ left: "65%", top: "40%" }}
         >
           <span className="flex size-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-card">
             <Home className="size-5" aria-hidden />
