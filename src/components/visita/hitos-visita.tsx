@@ -1,4 +1,4 @@
-import { Check, Zap } from "lucide-react";
+import { Check } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { HITOS, indiceHito, type Caso } from "@/components/visita/content";
@@ -41,27 +41,32 @@ export function HitosVisita({ caso }: { caso: Caso }) {
               />
             ) : null}
 
-            <span
-              aria-hidden
-              className={cn(
-                "relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full",
-                fallido
-                  ? "bg-warning text-warning-foreground"
-                  : hecho
-                    ? "bg-success-soft text-success"
-                    : enCurso
-                      ? "bg-warning text-warning-foreground"
+            {enCurso ? (
+              <img
+                src="/icons/hito-activo.svg"
+                alt=""
+                aria-hidden
+                className="relative z-10 size-10 shrink-0"
+              />
+            ) : (
+              <span
+                aria-hidden
+                className={cn(
+                  "relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full",
+                  fallido
+                    ? "bg-warning text-warning-foreground"
+                    : hecho
+                      ? "bg-success-soft text-success"
                       : "bg-muted text-muted-foreground",
-              )}
-            >
-              {hecho ? (
-                <Check className="size-5" strokeWidth={3} />
-              ) : enCurso ? (
-                <Zap className="size-5 fill-current" strokeWidth={2} />
-              ) : (
-                <span className="size-2.5 rounded-full bg-current opacity-70" />
-              )}
-            </span>
+                )}
+              >
+                {hecho ? (
+                  <Check className="size-5" strokeWidth={3} />
+                ) : (
+                  <span className="size-2.5 rounded-full bg-current opacity-70" />
+                )}
+              </span>
+            )}
 
             <div className={cn("min-w-0 pb-ch-lg", ultimo && "pb-0")}>
               <p
