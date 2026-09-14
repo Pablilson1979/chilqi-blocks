@@ -56,9 +56,14 @@ export function MapaMovil({
           className="absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center"
           style={{ left: `${movil.x}%`, top: `${movil.y}%` }}
         >
-          <span className="relative flex size-11 items-center justify-center rounded-full bg-info text-info-foreground shadow-card">
-            <span className="absolute inline-flex size-11 animate-ping rounded-full bg-info/40" />
-            <Truck className="size-5" aria-hidden />
+          <span className="relative flex items-center justify-center">
+            <span className="absolute inline-flex size-14 animate-ping rounded-full bg-info/30" />
+            <img
+              src={camionetaAsset.url}
+              alt=""
+              aria-hidden
+              className="relative w-20 drop-shadow-md sm:w-24"
+            />
           </span>
           <span className="mt-1 rounded-pill bg-surface px-2 py-0.5 text-xs font-bold text-foreground shadow-card">
             {movil.patente}
@@ -66,7 +71,9 @@ export function MapaMovil({
         </span>
       </div>
       <p className="border-t border-border bg-surface px-ch-base py-ch-sm text-xs leading-relaxed text-muted-foreground">
-        Mostramos la posición del móvil, no su ruta. Se actualiza cada pocos minutos.
+        {actualizado
+          ? `Última posición registrada a las ${actualizado}. Mostramos el punto del móvil, no su ruta.`
+          : "Mostramos la posición del móvil, no su ruta. Se actualiza cada pocos minutos."}
       </p>
     </div>
   );
