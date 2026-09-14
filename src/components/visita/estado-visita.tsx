@@ -211,7 +211,11 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
                   <Truck className="size-5 text-primary" aria-hidden />
                   {caso.movil.nombre} · patente {caso.movil.patente}
                 </h2>
-                <MapaMovil movil={caso.movil} direccion={caso.direccion} />
+                <MapaMovil
+                  movil={caso.movil}
+                  direccion={caso.direccion}
+                  actualizado={caso.ubicacionActualizada}
+                />
               </section>
             ) : null}
 
