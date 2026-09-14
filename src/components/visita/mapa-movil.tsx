@@ -7,7 +7,15 @@ import type { Movil } from "@/components/visita/content";
  * Posición del móvil sobre la dirección georreferenciada de la solicitud.
  * No se dibuja trazado de ruta: el sistema de origen solo entrega el punto.
  */
-export function MapaMovil({ movil, direccion }: { movil: Movil; direccion: string }) {
+export function MapaMovil({
+  movil,
+  direccion,
+  actualizado,
+}: {
+  movil: Movil;
+  direccion: string;
+  actualizado?: string;
+}) {
   return (
     <div className="overflow-hidden rounded-card border border-border bg-muted">
       <div
