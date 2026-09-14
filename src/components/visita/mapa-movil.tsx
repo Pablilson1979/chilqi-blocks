@@ -30,7 +30,7 @@ export function MapaMovil({
           tabIndex={-1}
           loading="lazy"
           className="pointer-events-none absolute inset-0 size-full border-0"
-          src="https://www.openstreetmap.org/export/embed.html?bbox=-71.6600%2C-33.1050%2C-71.4700%2C-32.9600&layer=mapnik"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=-71.5950%2C-33.0350%2C-71.5250%2C-32.9850&layer=mapnik"
         />
 
 
