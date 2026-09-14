@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as IngresoDatosRouteImport } from './routes/ingreso-datos'
 import { Route as QuieroLuzRouteImport } from './routes/quiero-luz'
+import { Route as SigueTuVisitaRouteImport } from './routes/sigue-tu-visita'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +29,44 @@ const QuieroLuzRoute = QuieroLuzRouteImport.update({
   path: '/quiero-luz',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SigueTuVisitaRoute = SigueTuVisitaRouteImport.update({
+  id: '/sigue-tu-visita',
+  path: '/sigue-tu-visita',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ingreso-datos': typeof IngresoDatosRoute
   '/quiero-luz': typeof QuieroLuzRoute
+  '/sigue-tu-visita': typeof SigueTuVisitaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ingreso-datos': typeof IngresoDatosRoute
   '/quiero-luz': typeof QuieroLuzRoute
+  '/sigue-tu-visita': typeof SigueTuVisitaRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ingreso-datos': typeof IngresoDatosRoute
   '/quiero-luz': typeof QuieroLuzRoute
+  '/sigue-tu-visita': typeof SigueTuVisitaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ingreso-datos' | '/quiero-luz'
+  fullPaths: '/' | '/ingreso-datos' | '/quiero-luz' | '/sigue-tu-visita'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ingreso-datos' | '/quiero-luz'
-  id: '__root__' | '/' | '/ingreso-datos' | '/quiero-luz'
+  to: '/' | '/ingreso-datos' | '/quiero-luz' | '/sigue-tu-visita'
+  id: '__root__' | '/' | '/ingreso-datos' | '/quiero-luz' | '/sigue-tu-visita'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   IngresoDatosRoute: typeof IngresoDatosRoute
   QuieroLuzRoute: typeof QuieroLuzRoute
+  SigueTuVisitaRoute: typeof SigueTuVisitaRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +92,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof QuieroLuzRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sigue-tu-visita': {
+      id: '/sigue-tu-visita'
+      path: '/sigue-tu-visita'
+      fullPath: '/sigue-tu-visita'
+      preLoaderRoute: typeof SigueTuVisitaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   IngresoDatosRoute: IngresoDatosRoute,
   QuieroLuzRoute: QuieroLuzRoute,
+  SigueTuVisitaRoute: SigueTuVisitaRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
