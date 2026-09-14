@@ -1,4 +1,4 @@
-import { Check, Zap } from "lucide-react";
+import { Check } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { HITOS, indiceHito, type Caso } from "@/components/visita/content";
