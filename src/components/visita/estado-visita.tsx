@@ -121,7 +121,7 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
           </div>
         </>
       ) : (
-        <div className="grid gap-ch-lg lg:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="grid items-start gap-ch-lg lg:grid-cols-[minmax(0,1fr)_360px]">
           {/* Columna principal: avance */}
           <section className="rounded-[1.5rem] bg-card p-ch-lg shadow-card sm:p-ch-xl">
             <h2 className="text-lg font-bold text-foreground">Avance de tu visita</h2>
