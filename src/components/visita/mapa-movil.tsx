@@ -37,7 +37,7 @@ export function MapaMovil({
         {/* Domicilio */}
         <span
           className="absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center"
-          style={{ left: "72%", top: "34%" }}
+          style={{ left: "65%", top: "40%" }}
         >
           <span className="flex size-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-card">
             <Home className="size-5" aria-hidden />
