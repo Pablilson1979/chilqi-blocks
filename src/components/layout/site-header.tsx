@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { Search, Menu, X, ChevronDown } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { Switch } from "@/components/ui/switch";
 
 export type MenuLink = {
   label: string;
