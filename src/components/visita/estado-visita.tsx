@@ -26,10 +26,10 @@ import type { Caso } from "@/components/visita/content";
 function destacado(caso: Caso) {
   const nota =
     caso.etrEstado === "confirmado"
-      ? "Estimación confirmada por el equipo en terreno"
+      ? "Confirmada por el equipo en terreno"
       : caso.etrEstado === "ajustado"
-        ? "Estimación ajustada respecto de la anterior"
-        : "Estimación referencial, puede cambiar";
+        ? "Ajustada respecto de la anterior"
+        : "Referencial, puede cambiar";
 
   if (caso.noDisponible) {
     return {
@@ -70,7 +70,7 @@ function destacado(caso: Caso) {
       titulo: "El técnico está en el lugar",
       dato: caso.etr ?? null,
       sub: "Cuánto falta para que vuelva la luz",
-      nota: caso.etr ? nota : "El técnico está revisando la instalación para estimar el tiempo",
+      nota: caso.etr ? nota : "Calculando tiempo de reparación",
     };
   }
   if (caso.hito === "en_camino") {
@@ -78,7 +78,7 @@ function destacado(caso: Caso) {
       titulo: "El móvil va en camino",
       dato: caso.etr ?? null,
       sub: "Cuánto falta para que llegue el móvil",
-      nota: `${nota}. El tiempo de reparación se estima cuando el técnico revisa la instalación.`,
+      nota,
     };
   }
   return {
