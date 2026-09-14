@@ -14,7 +14,7 @@ export function MapaMovil({
 }: {
   movil: Movil;
   direccion: string;
-  actualizado?: string;
+  actualizado?: string | undefined;
 }) {
   return (
     <div className="overflow-hidden rounded-card border border-border bg-muted">
