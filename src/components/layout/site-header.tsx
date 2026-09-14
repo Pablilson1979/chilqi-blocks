@@ -85,9 +85,6 @@ export interface SiteHeaderProps {
   loginLabel?: string;
   /** Texto destacado centrado entre la barra superior y la navegación. */
   tagline?: string;
-  /** Estado controlado del modo emergencia. */
-  emergencyMode?: boolean;
-  onEmergencyModeChange?: (value: boolean) => void;
   className?: string;
 }
 
@@ -102,18 +99,10 @@ export function SiteHeader({
   loginHref = "#",
   loginLabel = "Iniciar Sesión",
   tagline,
-  emergencyMode: emergencyModeProp,
-  onEmergencyModeChange,
   className,
 }: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
   const [openPanel, setOpenPanel] = useState<string | null>(null);
-  const [emergencyModeState, setEmergencyModeState] = useState(false);
-  const emergencyMode = emergencyModeProp ?? emergencyModeState;
-  const setEmergencyMode = (value: boolean) => {
-    setEmergencyModeState(value);
-    onEmergencyModeChange?.(value);
-  };
   const navRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
