@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -6,7 +5,6 @@ import { Hero } from "@/components/home/hero";
 import { QuickAccess } from "@/components/home/quick-access";
 import { ConoceMas } from "@/components/home/conoce-mas";
 import { Plataformas } from "@/components/home/plataformas";
-import { EmergenciaHome } from "@/components/home/emergencia-home";
 
 const title = "Chilquinta | Servicios y trámites en línea";
 const description =
@@ -25,27 +23,15 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
-  const [emergencyMode, setEmergencyMode] = useState(false);
-
   return (
     <div className="flex min-h-screen flex-col bg-background font-sans">
-      <SiteHeader
-        tagline={emergencyMode ? "Emergencia climática en curso" : "¿Qué necesitas?"}
-        emergencyMode={emergencyMode}
-        onEmergencyModeChange={setEmergencyMode}
-      />
+      <SiteHeader tagline="¿Qué necesitas?" />
 
       <main className="flex-1">
-        {emergencyMode ? (
-          <EmergenciaHome />
-        ) : (
-          <>
-            <Hero />
-            <QuickAccess />
-            <ConoceMas />
-            <Plataformas />
-          </>
-        )}
+        <Hero />
+        <QuickAccess />
+        <ConoceMas />
+        <Plataformas />
       </main>
 
       <SiteFooter />
