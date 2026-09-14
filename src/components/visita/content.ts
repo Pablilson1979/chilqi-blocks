@@ -80,9 +80,16 @@ export interface Caso {
   ventana?: string;
   /** Órdenes por delante en la cola de la cuadrilla. */
   enCola?: number;
-  /** Tiempo estimado de reparación comunicado al cliente. */
+  /** Tiempo estimado (rango) comunicado al cliente. */
   etr?: string;
   etrConfirmado?: boolean;
+  /**
+   * Estado de la estimación: confirmada por terreno, ajustada respecto de la
+   * anterior, o todavía no disponible.
+   */
+  etrEstado?: "confirmado" | "ajustado" | "pendiente";
+  /** Hora en que se actualizó por última vez la posición del móvil. */
+  ubicacionActualizada?: string;
   movil?: Movil;
   /** La cola se reordenó por una prioridad (ej. electrodependiente). */
   reasignado?: boolean;
@@ -104,7 +111,9 @@ export const CASOS: Caso[] = [
       espera: "Hoy · 14:05",
       en_camino: "Hoy · 15:12",
     },
-    etr: "25 minutos",
+    etr: "20 – 30 minutos",
+    etrEstado: "confirmado",
+    ubicacionActualizada: "15:38",
     movil: { nombre: "Móvil SAT 42", patente: "KJHT-56", x: 38, y: 44 },
   },
   {
@@ -115,6 +124,7 @@ export const CASOS: Caso[] = [
     hito: "espera",
     tiempos: { informado: "Hoy · 12:20", espera: "Hoy · 12:41" },
     ventana: "16:40 – 17:20",
+    etrEstado: "ajustado",
     enCola: 2,
     reasignado: true,
   },
@@ -131,8 +141,10 @@ export const CASOS: Caso[] = [
       en_lugar: "Hoy · 11:26",
       trabajando: "Hoy · 11:34",
     },
-    etr: "40 minutos",
+    etr: "30 – 45 minutos",
     etrConfirmado: true,
+    etrEstado: "confirmado",
+    ubicacionActualizada: "11:52",
     movil: { nombre: "Móvil SAT 17", patente: "LPBR-31", x: 62, y: 58 },
   },
   {

@@ -18,40 +18,74 @@ import { HitosVisita } from "@/components/visita/hitos-visita";
 import { MapaMovil } from "@/components/visita/mapa-movil";
 import type { Caso } from "@/components/visita/content";
 
-/** Titular y tiempo destacado según el hito en curso. */
+/**
+ * Titular y tiempo destacado según el hito en curso. La etiqueta distingue
+ * siempre entre "cuándo llega el móvil" y "cuándo vuelve la luz", y aclara el
+ * estado de la estimación: confirmada, ajustada o aún no disponible.
+ */
 function destacado(caso: Caso) {
+  const nota =
+    caso.etrEstado === "confirmado"
+      ? "Estimación confirmada por el equipo en terreno"
+      : caso.etrEstado === "ajustado"
+        ? "Estimación ajustada respecto de la anterior"
+        : "Estimación referencial, puede cambiar";
+
   if (caso.noDisponible) {
-    return { titulo: "Seguimiento no disponible", dato: null as string | null, sub: null };
+    return {
+      titulo: "Seguimiento no disponible",
+      dato: null as string | null,
+      sub: null as string | null,
+      nota: null as string | null,
+    };
   }
   if (caso.suspension) {
     return {
       titulo: "Trabajo suspendido temporalmente",
       dato: caso.ventana ?? null,
-      sub: "Nueva ventana estimada",
+      sub: "Nueva ventana estimada de atención",
+      nota,
     };
   }
   if (caso.hito === "cierre") {
     return caso.cierre === "casa_cerrada"
-      ? { titulo: "No pudimos realizar la visita", dato: null, sub: null }
-      : { titulo: "Tu suministro fue restablecido", dato: caso.tiempos.cierre ?? null, sub: "Hora de cierre" };
+      ? { titulo: "No pudimos realizar la visita", dato: null, sub: null, nota: null }
+      : {
+          titulo: "Tu suministro fue restablecido",
+          dato: caso.tiempos.cierre ?? null,
+          sub: "Hora en que volvió la luz",
+          nota: null,
+        };
   }
   if (caso.hito === "trabajando") {
     return {
       titulo: "Trabajando en la reposición",
       dato: caso.etr ?? null,
-      sub: caso.etrConfirmado ? "Tiempo confirmado por el técnico" : "Tiempo estimado",
+      sub: "Cuánto falta para que vuelva la luz",
+      nota,
     };
   }
   if (caso.hito === "en_lugar") {
-    return { titulo: "El técnico está en el lugar", dato: caso.etr ?? null, sub: "Tiempo estimado" };
+    return {
+      titulo: "El técnico está en el lugar",
+      dato: caso.etr ?? null,
+      sub: "Cuánto falta para que vuelva la luz",
+      nota: caso.etr ? nota : "El técnico está revisando la instalación para estimar el tiempo",
+    };
   }
   if (caso.hito === "en_camino") {
-    return { titulo: "El móvil va en camino", dato: caso.etr ?? null, sub: "Tiempo estimado de llegada" };
+    return {
+      titulo: "El móvil va en camino",
+      dato: caso.etr ?? null,
+      sub: "Cuánto falta para que llegue el móvil",
+      nota: `${nota}. El tiempo de reparación se estima cuando el técnico revisa la instalación.`,
+    };
   }
   return {
     titulo: "Tu solicitud está validada",
     dato: caso.ventana ?? null,
-    sub: "Ventana estimada de atención",
+    sub: "Cuándo estimamos que llegue el móvil",
+    nota: caso.ventana ? nota : "Aún no tenemos una hora estimada de llegada",
   };
 }
 
@@ -88,13 +122,27 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
           </div>
 
           {info.dato ? (
-            <div className="shrink-0 rounded-card bg-primary-soft px-ch-lg py-ch-base text-center lg:min-w-[220px]">
+            <div className="shrink-0 rounded-card bg-primary-soft px-ch-lg py-ch-base text-center lg:min-w-[260px]">
               <p className="text-xs font-bold uppercase tracking-wide text-foreground">
                 {info.sub}
               </p>
               <p className="mt-1 flex items-center justify-center gap-2 text-2xl font-bold text-primary lg:text-3xl">
                 <Clock className="size-6" aria-hidden />
                 {info.dato}
+              </p>
+              {info.nota ? (
+                <p className="mt-ch-sm text-xs font-semibold leading-relaxed text-foreground">
+                  {info.nota}
+                </p>
+              ) : null}
+            </div>
+          ) : info.nota ? (
+            <div className="shrink-0 rounded-card bg-muted/60 px-ch-lg py-ch-base text-center lg:min-w-[260px]">
+              <p className="text-xs font-bold uppercase tracking-wide text-foreground">
+                {info.sub ?? "Tiempo estimado"}
+              </p>
+              <p className="mt-1 text-base font-bold leading-snug text-foreground">
+                {info.nota}
               </p>
             </div>
           ) : null}
@@ -136,8 +184,8 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
             {caso.hito === "en_camino" ? (
               <StatusMessage
                 tone="warning"
-                title="Quédate en el domicilio"
-                description="Necesitamos que alguien reciba al técnico y esté atento al teléfono. Si no hay nadie, la orden se cierra y la visita debe reagendarse."
+                title="Que alguien mayor de edad reciba al técnico"
+                description="El técnico necesita acceso al medidor y contacto en el domicilio. Mantén el teléfono a mano: si al llegar no hay nadie, la visita se cierra sin reposición y tendrás que reagendarla."
               />
             ) : null}
 
@@ -163,7 +211,11 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
                   <Truck className="size-5 text-primary" aria-hidden />
                   {caso.movil.nombre} · patente {caso.movil.patente}
                 </h2>
-                <MapaMovil movil={caso.movil} direccion={caso.direccion} />
+                <MapaMovil
+                  movil={caso.movil}
+                  direccion={caso.direccion}
+                  actualizado={caso.ubicacionActualizada}
+                />
               </section>
             ) : null}
 

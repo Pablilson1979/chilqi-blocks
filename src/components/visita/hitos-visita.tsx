@@ -1,12 +1,14 @@
-import { Check, Loader2 } from "lucide-react";
+import { Check, Zap } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { HITOS, indiceHito, type Caso } from "@/components/visita/content";
 
 /**
- * Línea de hitos visible al cliente. Verde = recorrido, ámbar = en curso,
- * gris = pendiente. El estado nunca se comunica solo con color: cada hito
- * lleva icono, título y hora.
+ * Línea de hitos visible al cliente, con el mismo lenguaje visual del
+ * seguimiento de reclamos de Chilquinta: círculo verde suave con check para
+ * las etapas completadas, círculo naranjo con rayo para la etapa en curso y
+ * círculo gris para las pendientes. El estado nunca se comunica solo con
+ * color: cada hito lleva icono, título, detalle y una marca de tiempo.
  */
 export function HitosVisita({ caso }: { caso: Caso }) {
   const actual = indiceHito(caso.hito);
@@ -17,70 +19,79 @@ export function HitosVisita({ caso }: { caso: Caso }) {
       {HITOS.map((hito, i) => {
         const hecho = i < actual || (cerrado && i === actual);
         const enCurso = i === actual && !cerrado;
-        const titulo =
-          hito.id === "cierre" && caso.cierre === "casa_cerrada"
-            ? "Visita no realizada: domicilio cerrado"
-            : hito.id === "cierre" && caso.cierre === "restablecido"
-              ? "Suministro restablecido"
-              : hito.titulo;
+        const fallido = hecho && hito.id === "cierre" && caso.cierre === "casa_cerrada";
+        const ultimo = i === HITOS.length - 1;
+        const titulo = fallido
+          ? "Visita no realizada: domicilio cerrado"
+          : hito.id === "cierre" && caso.cierre === "restablecido"
+            ? "Suministro restablecido"
+            : hito.titulo;
+        const hora = caso.tiempos[hito.id];
 
         return (
-          <li key={hito.id} className="flex gap-ch-base">
-            <div className="flex flex-col items-center">
+          <li key={hito.id} className="relative flex gap-ch-base">
+            {/* Conector vertical */}
+            {!ultimo ? (
               <span
                 aria-hidden
                 className={cn(
-                  "flex size-9 shrink-0 items-center justify-center rounded-full border-2",
-                  hecho && caso.cierre === "casa_cerrada" && hito.id === "cierre"
-                    ? "border-warning bg-warning text-warning-foreground"
-                    : hecho
-                      ? "border-success bg-success text-success-foreground"
-                      : enCurso
-                        ? "border-warning bg-warning-soft text-warning"
-                        : "border-border bg-muted text-muted-foreground",
+                  "absolute left-5 top-10 bottom-0 w-0.5 -translate-x-1/2",
+                  i < actual ? "bg-success" : "bg-border",
                 )}
-              >
-                {hecho ? (
-                  <Check className="size-5" strokeWidth={3} />
-                ) : enCurso ? (
-                  <Loader2 className="size-5 animate-spin" strokeWidth={3} />
-                ) : (
-                  <span className="size-2.5 rounded-full bg-current" />
-                )}
-              </span>
-              {i < HITOS.length - 1 ? (
-                <span
-                  aria-hidden
-                  className={cn(
-                    "my-1 w-0.5 flex-1",
-                    i < actual ? "bg-success" : "bg-border",
-                  )}
-                />
-              ) : null}
-            </div>
+              />
+            ) : null}
 
-            <div className={cn("pb-ch-lg", i === HITOS.length - 1 && "pb-0")}>
+            <span
+              aria-hidden
+              className={cn(
+                "relative z-10 flex size-10 shrink-0 items-center justify-center rounded-full",
+                fallido
+                  ? "bg-warning text-warning-foreground"
+                  : hecho
+                    ? "bg-success-soft text-success"
+                    : enCurso
+                      ? "bg-warning text-warning-foreground"
+                      : "bg-muted text-muted-foreground",
+              )}
+            >
+              {hecho ? (
+                <Check className="size-5" strokeWidth={3} />
+              ) : enCurso ? (
+                <Zap className="size-5 fill-current" strokeWidth={2} />
+              ) : (
+                <span className="size-2.5 rounded-full bg-current opacity-70" />
+              )}
+            </span>
+
+            <div className={cn("min-w-0 pb-ch-lg", ultimo && "pb-0")}>
               <p
                 className={cn(
-                  "text-base font-bold",
+                  "text-base font-bold leading-snug",
                   hecho || enCurso ? "text-foreground" : "text-muted-foreground",
                 )}
               >
                 {titulo}
-                {enCurso ? (
-                  <span className="ml-2 rounded-pill bg-warning-soft px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-foreground">
-                    en curso
-                  </span>
-                ) : null}
               </p>
-              {caso.tiempos[hito.id] ? (
-                <p className="text-sm font-semibold text-muted-foreground">
-                  {caso.tiempos[hito.id]}
-                </p>
-              ) : null}
-              {enCurso ? (
-                <p className="mt-1 max-w-prose text-sm leading-relaxed text-foreground">
-                  {hito.detalle}
+              <p className="mt-0.5 max-w-prose text-sm leading-relaxed text-muted-foreground">
+                {hito.detalle}
+              </p>
+
+              {hora ? (
+                <p
+                  className={cn(
+                    "mt-ch-sm inline-flex items-center gap-2 rounded-pill px-3 py-1.5 text-sm font-bold",
+                    fallido
+                      ? "bg-warning-soft text-foreground"
+                      : hecho
+                        ? "bg-success-soft text-success"
+                        : "bg-warning-soft text-foreground",
+                  )}
+                >
+                  {hecho && !fallido ? (
+                    <Check className="size-4" strokeWidth={3} aria-hidden />
+                  ) : null}
+                  {enCurso ? "En curso desde " : hecho ? "Completado " : ""}
+                  {hora}
                 </p>
               ) : null}
             </div>

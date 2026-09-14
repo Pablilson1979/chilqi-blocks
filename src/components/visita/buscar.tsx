@@ -48,7 +48,10 @@ export function BuscarVisita({ onBuscar, error }: BuscarVisitaProps) {
               value={valor}
               onChange={(e) => setValor(e.target.value.replace(/\D/g, "").slice(0, 10))}
               state={error ? "error" : "default"}
-              message={error ?? "Ingresa el número sin el dígito verificador."}
+              message={
+                error ??
+                "Puedes usar cualquiera de los dos: solo números, sin puntos ni guion."
+              }
             />
             <button
               type="button"
@@ -62,10 +65,19 @@ export function BuscarVisita({ onBuscar, error }: BuscarVisitaProps) {
           </div>
 
           {ayuda ? (
-            <p className="rounded-card bg-muted p-ch-md text-sm leading-relaxed text-foreground">
-              El número de orden llega cuando reportas tu corte por la web, WhatsApp o
-              teléfono. El número de cliente aparece en la parte superior de tu boleta.
-            </p>
+            <div className="rounded-card bg-muted p-ch-md text-sm leading-relaxed text-foreground">
+              <p>
+                <span className="font-bold">N° de orden (8 dígitos):</span> llega en el
+                mensaje que recibes al reportar tu corte por la web, WhatsApp o teléfono.
+              </p>
+              <p className="mt-ch-sm">
+                <span className="font-bold">N° de cliente (7 dígitos):</span> aparece en la
+                parte superior de tu boleta, sin el dígito verificador.
+              </p>
+              <p className="mt-ch-sm">
+                Con cualquiera de los dos puedes consultar el estado de tu visita.
+              </p>
+            </div>
           ) : null}
 
           <Button type="submit" size="lg" disabled={!puede} className="w-full">
