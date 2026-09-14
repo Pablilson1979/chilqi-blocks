@@ -122,13 +122,27 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
           </div>
 
           {info.dato ? (
-            <div className="shrink-0 rounded-card bg-primary-soft px-ch-lg py-ch-base text-center lg:min-w-[220px]">
+            <div className="shrink-0 rounded-card bg-primary-soft px-ch-lg py-ch-base text-center lg:min-w-[260px]">
               <p className="text-xs font-bold uppercase tracking-wide text-foreground">
                 {info.sub}
               </p>
               <p className="mt-1 flex items-center justify-center gap-2 text-2xl font-bold text-primary lg:text-3xl">
                 <Clock className="size-6" aria-hidden />
                 {info.dato}
+              </p>
+              {info.nota ? (
+                <p className="mt-ch-sm text-xs font-semibold leading-relaxed text-foreground">
+                  {info.nota}
+                </p>
+              ) : null}
+            </div>
+          ) : info.nota ? (
+            <div className="shrink-0 rounded-card bg-muted/60 px-ch-lg py-ch-base text-center lg:min-w-[260px]">
+              <p className="text-xs font-bold uppercase tracking-wide text-foreground">
+                {info.sub ?? "Tiempo estimado"}
+              </p>
+              <p className="mt-1 text-base font-bold leading-snug text-foreground">
+                {info.nota}
               </p>
             </div>
           ) : null}
