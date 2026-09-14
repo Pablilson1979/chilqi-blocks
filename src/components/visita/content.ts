@@ -141,8 +141,10 @@ export const CASOS: Caso[] = [
       en_lugar: "Hoy · 11:26",
       trabajando: "Hoy · 11:34",
     },
-    etr: "40 minutos",
+    etr: "30 – 45 minutos",
     etrConfirmado: true,
+    etrEstado: "confirmado",
+    ubicacionActualizada: "11:52",
     movil: { nombre: "Móvil SAT 17", patente: "LPBR-31", x: 62, y: 58 },
   },
   {
