@@ -1,5 +1,6 @@
-import { Home, Truck } from "lucide-react";
+import { Home } from "lucide-react";
 
+import camionetaAsset from "@/assets/camioneta.png.asset.json";
 import type { Movil } from "@/components/visita/content";
 
 /**
