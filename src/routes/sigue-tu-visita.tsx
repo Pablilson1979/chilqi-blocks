@@ -8,9 +8,9 @@ import { BuscarVisita } from "@/components/visita/buscar";
 import { EstadoVisita } from "@/components/visita/estado-visita";
 import { buscarCaso, type Caso } from "@/components/visita/content";
 
-const TITLE = "Sigue tu visita técnica | Estado de tu corte | Chilquinta";
+const TITLE = "Estado de interrupción | Chilquinta";
 const DESCRIPTION =
-  "Consulta en línea el estado de tu visita técnica: etapa actual, ubicación del móvil y tiempo estimado para reponer tu suministro.";
+  "Consulta en línea el estado de tu interrupción de suministro: etapa actual, ubicación del móvil y tiempo estimado de reposición.";
 
 export const Route = createFileRoute("/sigue-tu-visita")({
   head: () => ({
@@ -70,7 +70,7 @@ function SigueTuVisitaPage() {
             <>
               <div className="mx-auto max-w-[640px] text-center">
                 <h1 className="text-3xl font-bold text-foreground lg:text-4xl">
-                  Sigue tu visita técnica
+                  Estado de interrupción
                 </h1>
                 <p className="mt-ch-md text-base leading-relaxed text-muted-foreground">
                   Ingresa tu número de orden o de cliente y revisa en qué etapa está la
