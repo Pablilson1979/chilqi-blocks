@@ -19,7 +19,7 @@ export function MapaMovil({
   return (
     <div className="overflow-hidden rounded-card border border-border bg-muted">
       <div
-        className="relative h-56 w-full sm:h-64"
+        className="relative h-72 w-full sm:h-80"
         role="img"
         aria-label={`Posición aproximada del ${movil.nombre} respecto de ${direccion}`}
       >

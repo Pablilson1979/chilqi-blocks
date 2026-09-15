@@ -169,7 +169,7 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
           </div>
         </>
       ) : (
-        <div className="grid items-start gap-ch-lg lg:grid-cols-[minmax(0,1fr)_360px]">
+        <div className="grid items-start gap-ch-lg lg:grid-cols-[minmax(0,1fr)_440px]">
           {/* Columna principal: avance */}
           <section className="rounded-[1.5rem] bg-card p-ch-lg shadow-card sm:p-ch-xl lg:mr-[100px]">
             <h2 className="text-lg font-bold text-foreground">Avance de tu visita</h2>
@@ -179,8 +179,22 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
             <HitosVisita caso={caso} />
           </section>
 
-          {/* Columna lateral: contexto y acciones */}
+          {/* Columna lateral: el mapa primero, con protagonismo */}
           <div className="flex flex-col gap-ch-lg">
+            {mostrarMapa && caso.movil ? (
+              <section className="overflow-hidden rounded-[1.5rem] bg-card shadow-card">
+                <h2 className="mb-ch-md flex items-center gap-2 px-ch-base pt-ch-base text-base font-bold text-foreground">
+                  <Truck className="size-5 text-primary" aria-hidden />
+                  {caso.movil.nombre} · patente {caso.movil.patente}
+                </h2>
+                <MapaMovil
+                  movil={caso.movil}
+                  direccion={caso.direccion}
+                  actualizado={caso.ubicacionActualizada}
+                />
+              </section>
+            ) : null}
+
             {caso.hito === "en_camino" ? (
               <StatusMessage
                 tone="warning"
@@ -205,19 +219,6 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
               />
             ) : null}
 
-            {mostrarMapa && caso.movil ? (
-              <section className="rounded-[1.5rem] bg-card p-ch-base shadow-card">
-                <h2 className="mb-ch-md flex items-center gap-2 text-base font-bold text-foreground">
-                  <Truck className="size-5 text-primary" aria-hidden />
-                  {caso.movil.nombre} · patente {caso.movil.patente}
-                </h2>
-                <MapaMovil
-                  movil={caso.movil}
-                  direccion={caso.direccion}
-                  actualizado={caso.ubicacionActualizada}
-                />
-              </section>
-            ) : null}
 
             {caso.hito === "espera" && caso.enCola ? (
               <section className="rounded-card bg-muted/40 p-ch-base">
