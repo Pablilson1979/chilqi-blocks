@@ -45,14 +45,14 @@ function SigueTuVisitaPage() {
       <SiteHeader />
       <main className="flex-1 py-ch-xl lg:py-ch-2xl">
         <div className="ch-container flex flex-col gap-ch-lg">
-        {/* Encabezado de la funcionalidad: volver y título en la misma fila */}
-        <div className="flex items-center gap-ch-md">
+        {/* Encabezado: botón volver a la izquierda, título centrado con línea roja debajo */}
+        <div className="relative flex items-center">
           {caso ? (
             <button
               type="button"
               onClick={() => setCaso(null)}
               aria-label="Consultar otra orden"
-              className="ch-touch inline-flex shrink-0 items-center text-primary transition-colors hover:text-primary-hover"
+              className="ch-touch absolute left-0 inline-flex items-center text-primary transition-colors hover:text-primary-hover"
             >
               <ChevronLeft className="size-7" aria-hidden />
             </button>
@@ -60,15 +60,18 @@ function SigueTuVisitaPage() {
             <Link
               to="/"
               aria-label="Volver al sitio"
-              className="ch-touch inline-flex shrink-0 items-center text-primary transition-colors hover:text-primary-hover"
+              className="ch-touch absolute left-0 inline-flex items-center text-primary transition-colors hover:text-primary-hover"
             >
               <ChevronLeft className="size-7" aria-hidden />
             </Link>
           )}
 
-          <h1 className="text-3xl font-bold leading-tight text-foreground lg:text-4xl">
-            Estado de interrupción
-          </h1>
+          <div className="mx-auto flex flex-col items-center gap-ch-sm">
+            <h1 className="text-3xl font-bold leading-tight text-foreground lg:text-4xl">
+              Estado de interrupción
+            </h1>
+            <span aria-hidden className="h-1 w-16 rounded-full bg-primary" />
+          </div>
         </div>
 
         {caso ? <EstadoVisita caso={caso} onVolver={() => setCaso(null)} /> : <BuscarVisita onBuscar={buscar} error={error} />}
