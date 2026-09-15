@@ -169,9 +169,9 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
           </div>
         </>
       ) : (
-        <div className="grid items-start gap-ch-lg lg:grid-cols-[minmax(0,1fr)_510px]">
+        <div className="grid items-start gap-ch-lg lg:grid-cols-[minmax(0,1fr)_586px]">
           {/* Columna principal: avance */}
-          <section className="rounded-[1.5rem] bg-card p-ch-lg shadow-card sm:p-ch-xl lg:mr-[100px]">
+          <section className="rounded-[1.5rem] bg-card p-ch-lg shadow-card sm:p-ch-xl">
             <h2 className="text-lg font-bold text-foreground">Avance de tu visita</h2>
             <p className="mb-ch-lg mt-1 text-sm text-muted-foreground">
               Actualizamos cada etapa a medida que ocurre en terreno.
