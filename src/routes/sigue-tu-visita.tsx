@@ -45,41 +45,39 @@ function SigueTuVisitaPage() {
       <SiteHeader />
       <main className="flex-1 py-ch-xl lg:py-ch-2xl">
         <div className="ch-container flex flex-col gap-ch-lg">
+        {/* Encabezado de la funcionalidad: volver, título centrado y línea roja */}
+        <div className="flex flex-col gap-ch-md">
           {caso ? (
             <button
               type="button"
               onClick={() => setCaso(null)}
-              className="ch-touch inline-flex w-fit items-center gap-1 text-base font-bold text-primary hover:text-primary-hover"
+              aria-label="Consultar otra orden"
+              className="ch-touch inline-flex w-fit items-center text-primary transition-colors hover:text-primary-hover"
             >
-              <ChevronLeft className="size-5" aria-hidden />
-              Consultar otra orden
+              <ChevronLeft className="size-7" aria-hidden />
             </button>
           ) : (
             <Link
               to="/"
-              className="ch-touch inline-flex w-fit items-center gap-1 text-base font-bold text-primary hover:text-primary-hover"
+              aria-label="Volver al sitio"
+              className="ch-touch inline-flex w-fit items-center text-primary transition-colors hover:text-primary-hover"
             >
-              <ChevronLeft className="size-5" aria-hidden />
-              Volver al sitio
+              <ChevronLeft className="size-7" aria-hidden />
             </Link>
           )}
 
-          {caso ? (
-            <EstadoVisita caso={caso} onVolver={() => setCaso(null)} />
-          ) : (
-            <>
-              <div className="mx-auto max-w-[640px] text-center">
-                <h1 className="text-3xl font-bold text-foreground lg:text-4xl">
-                  Estado de interrupción
-                </h1>
-                <p className="mt-ch-md text-base leading-relaxed text-muted-foreground">
-                  Ingresa tu número de orden o de cliente y revisa en qué etapa está la
-                  reparación de tu corte.
-                </p>
-              </div>
-              <BuscarVisita onBuscar={buscar} error={error} />
-            </>
-          )}
+          <div className="text-center">
+            <h1 className="text-3xl font-bold leading-tight text-foreground lg:text-4xl">
+              Estado de interrupción
+            </h1>
+            <span
+              aria-hidden
+              className="mx-auto mt-ch-sm block h-1.5 w-20 rounded-pill bg-primary"
+            />
+          </div>
+        </div>
+
+        {caso ? <EstadoVisita caso={caso} onVolver={() => setCaso(null)} /> : <BuscarVisita onBuscar={buscar} error={error} />}
         </div>
       </main>
       <SiteFooter />

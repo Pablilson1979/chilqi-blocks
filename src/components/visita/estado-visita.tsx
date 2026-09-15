@@ -110,9 +110,9 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
             <p className="text-sm font-bold uppercase tracking-wide text-primary">
               Orden N° {caso.orden}
             </p>
-            <h1 className="mt-1 text-2xl font-bold leading-tight text-foreground lg:text-3xl">
+            <h2 className="mt-1 text-2xl font-bold leading-tight text-foreground lg:text-3xl">
               {info.titulo}
-            </h1>
+            </h2>
             <p className="mt-ch-sm flex items-start gap-2 text-sm font-semibold text-muted-foreground">
               <MapPin className="mt-0.5 size-4 shrink-0" aria-hidden />
               <span>
