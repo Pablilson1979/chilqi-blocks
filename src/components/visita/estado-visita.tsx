@@ -283,37 +283,85 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
             <section className="rounded-[1.5rem] bg-card p-ch-lg shadow-card">
               <h2 className="text-base font-bold text-foreground">¿Necesitas algo más?</h2>
               <div className="mt-ch-md flex flex-col gap-ch-md">
-                <Button
-                  variant="secondary"
-                  size="lg"
-                  onClick={() => setSinLuz(true)}
-                  disabled={sinLuz}
-                >
-                  <AlertTriangle aria-hidden />
-                  Sigo sin suministro
-                </Button>
-                {sinLuz ? (
-                  <p className="text-sm font-semibold text-success">
-                    Recibimos tu aviso. Revisaremos tu caso y volveremos a evaluar la orden.
-                  </p>
+                {caso.hito === "cierre" ? (
+                  <>
+                    <Button
+                      variant="secondary"
+                      size="lg"
+                      onClick={() => setSinLuz(true)}
+                      disabled={sinLuz}
+                    >
+                      <AlertTriangle aria-hidden />
+                      Sigo sin suministro
+                    </Button>
+                    {sinLuz ? (
+                      <p className="text-sm font-semibold text-success">
+                        Recibimos tu aviso. Revisaremos tu caso y volveremos a evaluar la
+                        orden.
+                      </p>
+                    ) : null}
+                  </>
                 ) : null}
 
-                <label className="flex cursor-pointer items-start gap-ch-md rounded-card bg-muted/40 p-ch-base">
-                  <input
-                    type="checkbox"
-                    checked={avisos}
-                    onChange={(e) => setAvisos(e.target.checked)}
-                    className="mt-0.5 size-5 shrink-0 accent-[var(--color-primary)]"
-                  />
-                  <span className="text-sm leading-relaxed text-foreground">
-                    <span className="flex items-center gap-2 font-bold">
-                      <BellRing className="size-4 text-primary" aria-hidden />
-                      Avisarme cuando cambie de etapa
+                <div className="rounded-card bg-muted/40">
+                  <button
+                    type="button"
+                    onClick={() => setAvisos((v) => !v)}
+                    aria-expanded={avisos}
+                    className="flex w-full items-start gap-ch-md p-ch-base text-left"
+                  >
+                    <BellRing className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden />
+                    <span className="flex-1 text-sm leading-relaxed text-foreground">
+                      <span className="block font-bold">Avisarme cuando cambie de etapa</span>
+                      Te enviaremos un mensaje al llegar el técnico y al restablecer el
+                      suministro.
                     </span>
-                    Te enviaremos un mensaje al llegar el técnico y al restablecer el
-                    suministro.
-                  </span>
-                </label>
+                    <ChevronDown
+                      className={cn(
+                        "mt-0.5 size-6 shrink-0 text-primary transition-transform",
+                        avisos && "rotate-180",
+                      )}
+                      aria-hidden
+                    />
+                  </button>
+
+                  {avisos ? (
+                    <div className="flex flex-col gap-ch-md border-t border-border px-ch-base pb-ch-base pt-ch-base">
+                      <Field label="Correo electrónico" htmlFor="aviso-email">
+                        <Input
+                          id="aviso-email"
+                          type="email"
+                          inputMode="email"
+                          placeholder="nombre@correo.cl"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                        />
+                      </Field>
+                      <Field label="Teléfono celular" htmlFor="aviso-fono">
+                        <Input
+                          id="aviso-fono"
+                          type="tel"
+                          inputMode="tel"
+                          placeholder="9 1234 5678"
+                          value={fono}
+                          onChange={(e) => setFono(e.target.value)}
+                        />
+                      </Field>
+                      <Button
+                        size="lg"
+                        disabled={!email && !fono}
+                        onClick={() => setAvisoOk(true)}
+                      >
+                        Activar avisos
+                      </Button>
+                      {avisoOk ? (
+                        <p className="text-sm font-semibold text-success">
+                          Listo, te avisaremos en cada cambio de etapa.
+                        </p>
+                      ) : null}
+                    </div>
+                  ) : null}
+                </div>
 
                 <Button variant="tertiary" size="lg" onClick={onVolver}>
                   <RefreshCw aria-hidden />
