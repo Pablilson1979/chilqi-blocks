@@ -68,7 +68,7 @@ export function MapaMovil({
       </div>
       <p className="border-t border-border bg-surface px-ch-base py-ch-sm text-xs leading-relaxed text-muted-foreground">
         {actualizado
-          ? `Última posición registrada a las ${actualizado}. Mostramos el punto del móvil, no su ruta.`
+          ? `Última ubicación a las ${actualizado}`
           : "Mostramos la posición del móvil, no su ruta. Se actualiza cada pocos minutos."}
       </p>
     </div>
