@@ -29,7 +29,7 @@ function HeroMobile() {
 
 /**
  * Hero del home: pago express a la izquierda y llamado a WhatsApp (Luz) sobre
- * la fotografía corporativa de invierno.
+ * la imagen de Fiestas Patrias con volantines.
  */
 export function Hero() {
   return (
