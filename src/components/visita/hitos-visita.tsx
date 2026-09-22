@@ -23,9 +23,7 @@ export function HitosVisita({ caso }: { caso: Caso }) {
         const ultimo = i === HITOS.length - 1;
         const titulo = fallido
           ? "Visita no realizada: domicilio cerrado"
-          : hito.id === "cierre" && caso.cierre === "restablecido"
-            ? "Suministro restablecido"
-            : hito.titulo;
+          : hito.titulo;
         const hora = caso.tiempos[hito.id];
 
         return (
