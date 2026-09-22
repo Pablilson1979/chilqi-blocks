@@ -308,6 +308,7 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
                   </>
                 ) : null}
 
+                {caso.hito !== "cierre" ? (
                 <div className="rounded-card bg-muted/40">
                   <button
                     type="button"
@@ -365,6 +366,7 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
                     </div>
                   ) : null}
                 </div>
+                ) : null}
 
                 <Button variant="tertiary" size="lg" onClick={onVolver}>
                   <RefreshCw aria-hidden />
