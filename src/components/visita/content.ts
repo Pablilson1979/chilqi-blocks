@@ -97,11 +97,14 @@ export interface Caso {
   cierre?: Cierre;
   /** Seguimiento no publicable: contingencia u orden de red. */
   noDisponible?: string;
+  /** Etiqueta del estado que ilustra este caso en la maqueta. */
+  ejemplo?: string;
 }
 
 export const CASOS: Caso[] = [
   {
     orden: "11234412",
+    ejemplo: "Técnico en camino",
     cliente: "3045128",
     direccion: "Pasaje C1 223, Camino las Maravillas",
     comuna: "Viña del Mar",
@@ -118,6 +121,7 @@ export const CASOS: Caso[] = [
   },
   {
     orden: "20455301",
+    ejemplo: "En espera de móvil",
     cliente: "4187903",
     direccion: "Av. Libertad 1180, depto. 703",
     comuna: "Viña del Mar",
@@ -130,6 +134,7 @@ export const CASOS: Caso[] = [
   },
   {
     orden: "30778120",
+    ejemplo: "Reparación en curso",
     cliente: "5093344",
     direccion: "Los Aromos 452",
     comuna: "Quilpué",
@@ -149,6 +154,7 @@ export const CASOS: Caso[] = [
   },
   {
     orden: "40990011",
+    ejemplo: "Cerrado: casa cerrada",
     cliente: "6120877",
     direccion: "Calle Nueva 87",
     comuna: "Villa Alemana",
@@ -164,6 +170,7 @@ export const CASOS: Caso[] = [
   },
   {
     orden: "50110022",
+    ejemplo: "Suministro restablecido",
     cliente: "7233901",
     direccion: "Pasaje El Sauce 14",
     comuna: "Valparaíso",
@@ -180,6 +187,7 @@ export const CASOS: Caso[] = [
   },
   {
     orden: "60220033",
+    ejemplo: "Sin seguimiento (falla masiva)",
     cliente: "8340112",
     direccion: "Camino Troncal 2200",
     comuna: "Quilpué",

@@ -89,15 +89,19 @@ export function BuscarVisita({ onBuscar, error }: BuscarVisitaProps) {
 
       <section className="rounded-card bg-muted/40 p-ch-base">
         <p className="text-sm font-bold text-foreground">Ejemplos para probar la maqueta</p>
-        <ul className="mt-ch-sm flex flex-wrap gap-2">
+        <p className="mt-1 text-sm text-muted-foreground">
+          Cada número muestra un estado distinto de la funcionalidad.
+        </p>
+        <ul className="mt-ch-sm flex flex-col gap-2">
           {CASOS.map((c) => (
             <li key={c.orden}>
               <button
                 type="button"
                 onClick={() => onBuscar(c.orden)}
-                className="ch-touch rounded-pill border border-border-strong bg-surface px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:border-primary hover:text-primary"
+                className="ch-touch flex w-full items-center justify-between gap-ch-md rounded-card border border-border-strong bg-surface px-4 py-3 text-left transition-colors hover:border-primary"
               >
-                {c.orden}
+                <span className="text-sm font-semibold text-foreground">{c.orden}</span>
+                <span className="text-sm text-muted-foreground">{c.ejemplo}</span>
               </button>
             </li>
           ))}
