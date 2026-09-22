@@ -8,9 +8,9 @@ import { BuscarVisita } from "@/components/visita/buscar";
 import { EstadoVisita } from "@/components/visita/estado-visita";
 import { buscarCaso, type Caso } from "@/components/visita/content";
 
-const TITLE = "Estado de interrupción | Chilquinta";
+const TITLE = "Seguimiento de mi corte | Chilquinta";
 const DESCRIPTION =
-  "Consulta en línea el estado de tu interrupción de suministro: etapa actual, ubicación del móvil y tiempo estimado de reposición.";
+  "Consulta en línea el seguimiento de tu corte de suministro: etapa actual, ubicación del móvil y tiempo estimado de reposición.";
 
 export const Route = createFileRoute("/sigue-tu-visita")({
   head: () => ({
@@ -68,7 +68,7 @@ function SigueTuVisitaPage() {
 
           <div className="mx-auto flex flex-col items-center gap-ch-sm">
             <h1 className="text-3xl font-bold leading-tight text-foreground lg:text-4xl">
-              Estado de interrupción
+              Seguimiento de mi corte
             </h1>
             <span aria-hidden className="h-1 w-16 rounded-full bg-primary" />
           </div>

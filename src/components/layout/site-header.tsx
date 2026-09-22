@@ -90,8 +90,8 @@ const CORTES_Y_EMERGENCIAS: MenuLink[] = [
     icon: "/icons/emergencia/denunciahurto.svg",
   },
   {
-    label: "Estado de interrupción",
-    description: "Aquí puedes ver el estado de interrupción de suministro",
+    label: "Seguimiento de mi corte",
+    description: "Aquí puedes ver el seguimiento de tu corte de suministro",
     href: "/sigue-tu-visita",
     icon: "/icons/emergencia/success.svg",
   },
