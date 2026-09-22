@@ -97,6 +97,8 @@ export interface Caso {
   cierre?: Cierre;
   /** Seguimiento no publicable: contingencia u orden de red. */
   noDisponible?: string;
+  /** Etiqueta del estado que ilustra este caso en la maqueta. */
+  ejemplo?: string;
 }
 
 export const CASOS: Caso[] = [
