@@ -99,6 +99,16 @@ export interface Caso {
   noDisponible?: string;
   /** Etiqueta del estado que ilustra este caso en la maqueta. */
   ejemplo?: string;
+  /** Teléfono informado en el reporte original, para no volver a pedirlo. */
+  telefono?: string;
+  /** Hasta qué hora se puede reabrir el reporte sin repetir el flujo. */
+  reabrirHasta?: string;
+  /** Este reporte ya nació de una reapertura. */
+  reabierto?: boolean;
+  /** Orden anterior vinculada. */
+  ordenPrevia?: string;
+  /** Ya se usó la reapertura: el siguiente paso es atención humana. */
+  reaperturaPrevia?: boolean;
 }
 
 export const CASOS: Caso[] = [
@@ -160,6 +170,7 @@ export const CASOS: Caso[] = [
     comuna: "Villa Alemana",
     hito: "cierre",
     cierre: "casa_cerrada",
+    telefono: "9 8123 4455",
     tiempos: {
       informado: "Ayer · 17:05",
       espera: "Ayer · 17:22",
@@ -183,6 +194,44 @@ export const CASOS: Caso[] = [
       en_lugar: "Hoy · 08:52",
       trabajando: "Hoy · 09:01",
       cierre: "Hoy · 09:48",
+    },
+    telefono: "9 7455 2210",
+    reabrirHasta: "11:48",
+  },
+  {
+    orden: "70330044",
+    ejemplo: "Cerrado y reabierto por el cliente",
+    cliente: "9451220",
+    direccion: "Las Acacias 330",
+    comuna: "Villa Alemana",
+    hito: "espera",
+    reabierto: true,
+    ordenPrevia: "70330044-1",
+    telefono: "9 6120 8877",
+    tiempos: { informado: "Hoy · 14:02", espera: "Hoy · 14:15" },
+    ventana: "17:10 – 18:00",
+    etrEstado: "pendiente",
+    enCola: 1,
+  },
+  {
+    orden: "80440055",
+    ejemplo: "Reabierto y vuelve a cerrarse",
+    cliente: "9670331",
+    direccion: "Serrano 1244",
+    comuna: "Valparaíso",
+    hito: "cierre",
+    cierre: "restablecido",
+    reabierto: true,
+    reaperturaPrevia: true,
+    ordenPrevia: "80440055-1",
+    telefono: "9 5332 1109",
+    tiempos: {
+      informado: "Hoy · 08:05",
+      espera: "Hoy · 08:20",
+      en_camino: "Hoy · 09:40",
+      en_lugar: "Hoy · 10:02",
+      trabajando: "Hoy · 10:10",
+      cierre: "Hoy · 10:55",
     },
   },
   {

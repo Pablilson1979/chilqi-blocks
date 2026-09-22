@@ -1,8 +1,6 @@
 import * as React from "react";
 import {
-  AlertTriangle,
   BellRing,
-  CalendarClock,
   ChevronDown,
   Clock,
   MapPin,
@@ -18,6 +16,7 @@ import { StatusMessage } from "@/components/chilquinta/status-message";
 import { Field } from "@/components/chilquinta/field";
 import { HitosVisita } from "@/components/visita/hitos-visita";
 import { MapaMovil } from "@/components/visita/mapa-movil";
+import { ReabrirReporte } from "@/components/visita/reabrir-reporte";
 import type { Caso } from "@/components/visita/content";
 
 /**
@@ -101,7 +100,6 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
   const [email, setEmail] = React.useState("");
   const [fono, setFono] = React.useState("");
   const [avisoOk, setAvisoOk] = React.useState(false);
-  const [sinLuz, setSinLuz] = React.useState(false);
   const [voto, setVoto] = React.useState<number | null>(null);
   const info = destacado(caso);
   const mostrarMapa = Boolean(caso.movil) && !caso.noDisponible && caso.hito !== "cierre";
@@ -237,18 +235,21 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
               </section>
             ) : null}
 
+            {caso.reabierto ? (
+              <StatusMessage
+                tone="info"
+                title="Este reporte fue reabierto"
+                description="Retomamos tu caso con prioridad porque seguías sin suministro después del cierre."
+                detail={`Vinculado a tu orden anterior ${caso.ordenPrevia ?? ""}`}
+              />
+            ) : null}
+
             {caso.cierre === "casa_cerrada" ? (
-              <>
-                <StatusMessage
-                  tone="warning"
-                  title="El técnico llegó y no había nadie"
-                  description="Por normativa, el técnico debe verificar la dirección en terreno. Al no poder acceder, la orden se cerró sin reposición y la visita debe reagendarse."
-                />
-                <Button size="lg">
-                  <CalendarClock aria-hidden />
-                  Reagendar mi visita
-                </Button>
-              </>
+              <StatusMessage
+                tone="warning"
+                title="El técnico llegó y no había nadie"
+                description="Por normativa, el técnico debe verificar la dirección en terreno. Al no poder acceder, la orden se cerró sin reposición y la visita debe reagendarse."
+              />
             ) : null}
 
             {caso.cierre === "restablecido" ? (
@@ -288,25 +289,7 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
             <section className="rounded-[1.5rem] bg-card p-ch-lg shadow-card">
               <h2 className="text-base font-bold text-foreground">¿Necesitas algo más?</h2>
               <div className="mt-ch-md flex flex-col gap-ch-md">
-                {caso.hito === "cierre" ? (
-                  <>
-                    <Button
-                      variant="secondary"
-                      size="lg"
-                      onClick={() => setSinLuz(true)}
-                      disabled={sinLuz}
-                    >
-                      <AlertTriangle aria-hidden />
-                      Sigo sin suministro
-                    </Button>
-                    {sinLuz ? (
-                      <p className="text-sm font-semibold text-success">
-                        Recibimos tu aviso. Revisaremos tu caso y volveremos a evaluar la
-                        orden.
-                      </p>
-                    ) : null}
-                  </>
-                ) : null}
+                {caso.hito === "cierre" ? <ReabrirReporte caso={caso} /> : null}
 
                 {caso.hito !== "cierre" ? (
                 <div className="rounded-card bg-muted/40">
