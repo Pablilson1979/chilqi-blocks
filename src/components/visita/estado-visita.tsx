@@ -97,7 +97,10 @@ export interface EstadoVisitaProps {
 }
 
 export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
-  const [avisos, setAvisos] = React.useState(true);
+  const [avisos, setAvisos] = React.useState(false);
+  const [email, setEmail] = React.useState("");
+  const [fono, setFono] = React.useState("");
+  const [avisoOk, setAvisoOk] = React.useState(false);
   const [sinLuz, setSinLuz] = React.useState(false);
   const [voto, setVoto] = React.useState<number | null>(null);
   const info = destacado(caso);
