@@ -98,11 +98,10 @@ export function HitosVisita({ caso }: { caso: Caso }) {
                 {hito.detalle}
               </p>
 
-              {/* Espera estimada solo de esta etapa, en amarillo claro */}
-              {enCurso && hito.id === "espera" && caso.ventana ? (
+              {etrChip ? (
                 <p className="mt-ch-sm inline-flex items-center gap-2 rounded-pill bg-warning-soft px-3 py-1.5 text-sm font-bold text-foreground">
                   <Clock className="size-4" aria-hidden />
-                  Tu técnico irá en ruta entre {caso.ventana}
+                  {etrChip}
                 </p>
               ) : null}
 
