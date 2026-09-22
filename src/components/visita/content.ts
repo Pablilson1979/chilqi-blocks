@@ -170,6 +170,7 @@ export const CASOS: Caso[] = [
     comuna: "Villa Alemana",
     hito: "cierre",
     cierre: "casa_cerrada",
+    telefono: "9 8123 4455",
     tiempos: {
       informado: "Ayer · 17:05",
       espera: "Ayer · 17:22",
