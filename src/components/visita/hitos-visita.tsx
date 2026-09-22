@@ -83,7 +83,7 @@ export function HitosVisita({ caso }: { caso: Caso }) {
               {enCurso && hito.id === "espera" && caso.ventana ? (
                 <p className="mt-ch-sm inline-flex items-center gap-2 rounded-pill bg-warning-soft px-3 py-1.5 text-sm font-bold text-foreground">
                   <Clock className="size-4" aria-hidden />
-                  Tiempo estimado de espera: {caso.ventana}
+                  Tu técnico irá en ruta entre {caso.ventana}
                 </p>
               ) : null}
 
