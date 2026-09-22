@@ -99,6 +99,16 @@ export interface Caso {
   noDisponible?: string;
   /** Etiqueta del estado que ilustra este caso en la maqueta. */
   ejemplo?: string;
+  /** Teléfono informado en el reporte original, para no volver a pedirlo. */
+  telefono?: string;
+  /** Hasta qué hora se puede reabrir el reporte sin repetir el flujo. */
+  reabrirHasta?: string;
+  /** Este reporte ya nació de una reapertura. */
+  reabierto?: boolean;
+  /** Orden anterior vinculada. */
+  ordenPrevia?: string;
+  /** Ya se usó la reapertura: el siguiente paso es atención humana. */
+  reaperturaPrevia?: boolean;
 }
 
 export const CASOS: Caso[] = [
