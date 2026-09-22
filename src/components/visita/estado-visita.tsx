@@ -26,7 +26,7 @@ import type { Caso } from "@/components/visita/content";
 function destacado(caso: Caso) {
   const nota =
     caso.etrEstado === "confirmado"
-      ? "Confirmada por el equipo en terreno"
+      ? null
       : caso.etrEstado === "ajustado"
         ? "Ajustada respecto de la anterior"
         : "Referencial, puede cambiar";
