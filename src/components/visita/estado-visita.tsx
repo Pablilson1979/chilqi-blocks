@@ -291,25 +291,7 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
             <section className="rounded-[1.5rem] bg-card p-ch-lg shadow-card">
               <h2 className="text-base font-bold text-foreground">¿Necesitas algo más?</h2>
               <div className="mt-ch-md flex flex-col gap-ch-md">
-                {caso.hito === "cierre" ? (
-                  <>
-                    <Button
-                      variant="secondary"
-                      size="lg"
-                      onClick={() => setSinLuz(true)}
-                      disabled={sinLuz}
-                    >
-                      <AlertTriangle aria-hidden />
-                      Sigo sin suministro
-                    </Button>
-                    {sinLuz ? (
-                      <p className="text-sm font-semibold text-success">
-                        Recibimos tu aviso. Revisaremos tu caso y volveremos a evaluar la
-                        orden.
-                      </p>
-                    ) : null}
-                  </>
-                ) : null}
+                {caso.hito === "cierre" ? <ReabrirReporte caso={caso} /> : null}
 
                 {caso.hito !== "cierre" ? (
                 <div className="rounded-card bg-muted/40">
