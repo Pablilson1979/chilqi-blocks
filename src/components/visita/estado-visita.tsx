@@ -310,7 +310,7 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
                       <BellRing className="size-4 text-primary" aria-hidden />
                       Avisarme cuando cambie de etapa
                     </span>
-                    Te enviaremos un mensaje al llegar el móvil y al restablecer el
+                    Te enviaremos un mensaje al llegar el técnico y al restablecer el
                     suministro.
                   </span>
                 </label>
