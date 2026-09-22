@@ -51,11 +51,14 @@ function IngresoDatosPage() {
               <ChevronLeft className="size-4" aria-hidden />
               Volver
             </Link>
-            <div className="mx-auto flex flex-col items-center gap-ch-sm">
+            <div className="mx-auto flex max-w-[560px] flex-col items-center gap-ch-sm text-center">
               <h1 className="text-3xl font-bold leading-tight text-foreground lg:text-4xl">
-                {info.titulo}
+                Valida tus datos
               </h1>
               <span aria-hidden className="h-1 w-16 rounded-full bg-primary" />
+              <p className="mt-1 text-base leading-relaxed text-muted-foreground">
+                Para continuar con {info.contexto}, necesitamos confirmar tu identidad.
+              </p>
             </div>
           </div>
 
