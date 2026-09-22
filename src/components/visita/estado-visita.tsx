@@ -237,18 +237,21 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
               </section>
             ) : null}
 
+            {caso.reabierto ? (
+              <StatusMessage
+                tone="info"
+                title="Este reporte fue reabierto"
+                description="Retomamos tu caso con prioridad porque seguías sin suministro después del cierre."
+                detail={`Vinculado a tu orden anterior ${caso.ordenPrevia ?? ""}`}
+              />
+            ) : null}
+
             {caso.cierre === "casa_cerrada" ? (
-              <>
-                <StatusMessage
-                  tone="warning"
-                  title="El técnico llegó y no había nadie"
-                  description="Por normativa, el técnico debe verificar la dirección en terreno. Al no poder acceder, la orden se cerró sin reposición y la visita debe reagendarse."
-                />
-                <Button size="lg">
-                  <CalendarClock aria-hidden />
-                  Reagendar mi visita
-                </Button>
-              </>
+              <StatusMessage
+                tone="warning"
+                title="El técnico llegó y no había nadie"
+                description="Por normativa, el técnico debe verificar la dirección en terreno. Al no poder acceder, la orden se cerró sin reposición y la visita debe reagendarse."
+              />
             ) : null}
 
             {caso.cierre === "restablecido" ? (
