@@ -1,7 +1,7 @@
 import { MessageCircle } from "lucide-react";
 
 import { PayExpressCard } from "@/components/home/pay-express-card";
-import luzWinter from "@/assets/luz-winter.jpg.asset.json";
+import bannerFiestas from "@/assets/banner-fiestas-patrias.png.asset.json";
 
 /** Versión mobile: banner arriba y pago express expandido debajo. */
 function HeroMobile() {
@@ -9,7 +9,7 @@ function HeroMobile() {
     <section aria-label="Pago express y atención por WhatsApp" className="lg:hidden">
       <div
         className="relative flex h-[300px] items-center justify-center bg-cover bg-[position:65%_center]"
-        style={{ backgroundImage: `url(${luzWinter.url})` }}
+        style={{ backgroundImage: `url(${bannerFiestas.url})` }}
       >
         <h1 className="px-ch-lg text-center text-3xl font-bold leading-tight text-primary-foreground drop-shadow-md">
           ¿Trámites? Escríbele a Luz por WhatsApp
@@ -29,7 +29,7 @@ function HeroMobile() {
 
 /**
  * Hero del home: pago express a la izquierda y llamado a WhatsApp (Luz) sobre
- * la fotografía corporativa de invierno.
+ * la imagen de Fiestas Patrias con volantines.
  */
 export function Hero() {
   return (
@@ -43,7 +43,7 @@ export function Hero() {
       <div
         aria-hidden
         className="absolute inset-0 -z-10 bg-cover bg-[position:65%_center] lg:bg-right"
-        style={{ backgroundImage: `url(${luzWinter.url})` }}
+        style={{ backgroundImage: `url(${bannerFiestas.url})` }}
       />
 
       <div className="ch-container">
