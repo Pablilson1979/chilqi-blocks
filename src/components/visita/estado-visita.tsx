@@ -15,6 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { StatusMessage } from "@/components/chilquinta/status-message";
+import { Field } from "@/components/chilquinta/field";
 import { HitosVisita } from "@/components/visita/hitos-visita";
 import { MapaMovil } from "@/components/visita/mapa-movil";
 import type { Caso } from "@/components/visita/content";
