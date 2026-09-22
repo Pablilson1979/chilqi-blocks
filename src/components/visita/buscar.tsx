@@ -25,8 +25,8 @@ export function BuscarVisita({ onBuscar, error }: BuscarVisitaProps) {
         <div className="flex items-start gap-ch-md rounded-card bg-info-soft p-ch-base">
           <MapPin className="mt-0.5 size-5 shrink-0 text-info" aria-hidden />
           <p className="text-sm leading-relaxed text-foreground">
-            Sigue en línea el avance de tu visita técnica: en qué etapa va, dónde está el
-            móvil y cuánto falta para reponer tu suministro.
+            Sigue en línea el avance de tu visita técnica: en qué etapa va, dónde va el
+            técnico y cuánto falta para reponer tu suministro.
           </p>
         </div>
 

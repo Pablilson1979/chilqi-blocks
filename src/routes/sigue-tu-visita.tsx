@@ -10,7 +10,7 @@ import { buscarCaso, type Caso } from "@/components/visita/content";
 
 const TITLE = "Seguimiento de mi corte | Chilquinta";
 const DESCRIPTION =
-  "Consulta en línea el seguimiento de tu corte de suministro: etapa actual, ubicación del móvil y tiempo estimado de reposición.";
+  "Consulta en línea el seguimiento de tu corte de suministro: etapa actual, ubicación del técnico y tiempo estimado de reposición.";
 
 export const Route = createFileRoute("/sigue-tu-visita")({
   head: () => ({
