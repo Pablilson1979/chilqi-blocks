@@ -68,7 +68,7 @@ function SigueTuVisitaPage() {
 
           <div className="mx-auto flex flex-col items-center gap-ch-sm">
             <h1 className="text-3xl font-bold leading-tight text-foreground lg:text-4xl">
-              Estado de interrupción
+              Seguimiento de mi corte
             </h1>
             <span aria-hidden className="h-1 w-16 rounded-full bg-primary" />
           </div>
