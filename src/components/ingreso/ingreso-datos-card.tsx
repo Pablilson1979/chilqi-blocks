@@ -109,13 +109,13 @@ export function IngresoDatosCard({ servicio, className }: IngresoDatosCardProps)
         </div>
 
         <Button type="submit" size="lg" disabled={!puedeEnviar} className="mt-ch-sm w-full">
-          Ingresar
+          Continuar con {servicio}
         </Button>
 
         {enviado ? (
           <p className="flex items-center justify-center gap-2 text-sm font-semibold text-success">
             <Lock className="size-4" aria-hidden />
-            Datos verificados. Continuaremos a {servicio.toLowerCase()}.
+            Identidad confirmada. Continuamos a {servicio}.
           </p>
         ) : null}
       </form>
