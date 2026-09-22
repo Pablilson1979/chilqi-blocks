@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChevronLeft, FileText } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -43,7 +43,7 @@ function IngresoDatosPage() {
 
       <main className="flex-1">
         <div className="ch-container py-ch-xl">
-          <div className="relative mb-ch-lg flex items-center justify-center">
+          <div className="relative mb-ch-lg flex items-center">
             <Link
               to="/"
               className="absolute left-0 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:text-primary-hover hover:underline"
@@ -51,10 +51,12 @@ function IngresoDatosPage() {
               <ChevronLeft className="size-4" aria-hidden />
               Volver
             </Link>
-            <h1 className="flex items-center gap-ch-md text-2xl font-bold text-foreground sm:text-3xl">
-              <FileText className="size-7 text-primary" aria-hidden />
-              {info.titulo}
-            </h1>
+            <div className="mx-auto flex flex-col items-center gap-ch-sm">
+              <h1 className="text-3xl font-bold leading-tight text-foreground lg:text-4xl">
+                {info.titulo}
+              </h1>
+              <span aria-hidden className="h-1 w-16 rounded-full bg-primary" />
+            </div>
           </div>
 
           <IngresoDatosCard servicio={info.contexto} />
