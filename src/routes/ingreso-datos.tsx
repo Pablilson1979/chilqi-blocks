@@ -5,9 +5,9 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { IngresoDatosCard } from "@/components/ingreso/ingreso-datos-card";
 
-const TITLE = "Ingresa tus datos | Boletas y convenios | Chilquinta";
+const TITLE = "Valida tus datos | Chilquinta";
 const DESCRIPTION =
-  "Verifica tu identidad con tu RUT y número de cliente para revisar tus boletas o tu convenio de pago en Chilquinta.";
+  "Confirma tu identidad con tu RUT y número de cliente para continuar con tus boletas o tu convenio de pago en Chilquinta.";
 
 type Servicio = "boletas" | "convenio";
 
