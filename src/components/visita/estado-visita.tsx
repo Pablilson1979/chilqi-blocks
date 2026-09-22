@@ -198,8 +198,8 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
             {caso.hito === "en_camino" ? (
               <StatusMessage
                 tone="warning"
-                title="Que alguien mayor de edad reciba al técnico"
-                description="El técnico necesita acceso al medidor y contacto en el domicilio. Mantén el teléfono a mano: si al llegar no hay nadie, la visita se cierra sin reposición y tendrás que reagendarla."
+                title="Aviso: Necesitamos un adulto en tu dirección"
+                description="Un mayor de edad debe recibir al técnico y dar acceso a tu domicilio. Si no hay nadie cuando llegue, cerramos la visita sin reponer la luz y tendrás que pedir una nueva."
               />
             ) : null}
 
