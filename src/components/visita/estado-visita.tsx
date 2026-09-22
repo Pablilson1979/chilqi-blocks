@@ -18,6 +18,7 @@ import { StatusMessage } from "@/components/chilquinta/status-message";
 import { Field } from "@/components/chilquinta/field";
 import { HitosVisita } from "@/components/visita/hitos-visita";
 import { MapaMovil } from "@/components/visita/mapa-movil";
+import { ReabrirReporte } from "@/components/visita/reabrir-reporte";
 import type { Caso } from "@/components/visita/content";
 
 /**
