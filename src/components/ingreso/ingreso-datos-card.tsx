@@ -47,8 +47,8 @@ export function IngresoDatosCard({ servicio, className }: IngresoDatosCardProps)
       <div className="flex items-start gap-ch-md rounded-card bg-info-soft p-ch-base">
         <ShieldCheck className="mt-0.5 size-5 shrink-0 text-info" aria-hidden />
         <p className="text-sm leading-relaxed text-foreground">
-          Para proteger tus datos necesitamos verificar tu identidad antes de mostrarte{" "}
-          <strong className="font-bold">{servicio}</strong>.
+          <strong className="font-bold">Tus datos están protegidos.</strong> Solo los usaremos para
+          identificar tu suministro.
         </p>
       </div>
 
@@ -109,13 +109,13 @@ export function IngresoDatosCard({ servicio, className }: IngresoDatosCardProps)
         </div>
 
         <Button type="submit" size="lg" disabled={!puedeEnviar} className="mt-ch-sm w-full">
-          Ingresar
+          Continuar con {servicio}
         </Button>
 
         {enviado ? (
           <p className="flex items-center justify-center gap-2 text-sm font-semibold text-success">
             <Lock className="size-4" aria-hidden />
-            Datos verificados. Continuaremos a {servicio.toLowerCase()}.
+            Identidad confirmada. Continuamos a {servicio}.
           </p>
         ) : null}
       </form>

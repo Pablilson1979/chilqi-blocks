@@ -5,9 +5,9 @@ import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { IngresoDatosCard } from "@/components/ingreso/ingreso-datos-card";
 
-const TITLE = "Ingresa tus datos | Boletas y convenios | Chilquinta";
+const TITLE = "Valida tus datos | Chilquinta";
 const DESCRIPTION =
-  "Verifica tu identidad con tu RUT y número de cliente para revisar tus boletas o tu convenio de pago en Chilquinta.";
+  "Confirma tu identidad con tu RUT y número de cliente para continuar con tus boletas o tu convenio de pago en Chilquinta.";
 
 type Servicio = "boletas" | "convenio";
 
@@ -51,11 +51,14 @@ function IngresoDatosPage() {
               <ChevronLeft className="size-4" aria-hidden />
               Volver
             </Link>
-            <div className="mx-auto flex flex-col items-center gap-ch-sm">
+            <div className="mx-auto flex max-w-[560px] flex-col items-center gap-ch-sm text-center">
               <h1 className="text-3xl font-bold leading-tight text-foreground lg:text-4xl">
-                {info.titulo}
+                Valida tus datos
               </h1>
               <span aria-hidden className="h-1 w-16 rounded-full bg-primary" />
+              <p className="mt-1 text-base leading-relaxed text-muted-foreground">
+                Para continuar con {info.contexto}, necesitamos confirmar tu identidad.
+              </p>
             </div>
           </div>
 
