@@ -82,10 +82,10 @@ function destacado(caso: Caso) {
     };
   }
   return {
-    titulo: "Tu solicitud está validada",
+    titulo: "Tu reporte está validado",
     dato: caso.ventana ?? null,
-    sub: "Cuándo estimamos que llegue el móvil",
-    nota: caso.ventana ? nota : "Aún no tenemos una hora estimada de llegada",
+    sub: "Tiempo estimado de espera para que tu técnico vaya en ruta",
+    nota: caso.ventana ? nota : "Aún no tenemos un tiempo estimado de espera",
   };
 }
 

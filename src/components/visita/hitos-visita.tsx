@@ -1,4 +1,4 @@
-import { Check } from "lucide-react";
+import { Check, Clock } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { HITOS, indiceHito, type Caso } from "@/components/visita/content";
@@ -78,6 +78,14 @@ export function HitosVisita({ caso }: { caso: Caso }) {
               <p className="mt-0.5 max-w-prose text-sm leading-relaxed text-muted-foreground">
                 {hito.detalle}
               </p>
+
+              {/* Espera estimada solo de esta etapa, en amarillo claro */}
+              {enCurso && hito.id === "espera" && caso.ventana ? (
+                <p className="mt-ch-sm inline-flex items-center gap-2 rounded-pill bg-warning-soft px-3 py-1.5 text-sm font-bold text-foreground">
+                  <Clock className="size-4" aria-hidden />
+                  Tiempo estimado de espera: {caso.ventana}
+                </p>
+              ) : null}
 
               {hora ? (
                 <p
