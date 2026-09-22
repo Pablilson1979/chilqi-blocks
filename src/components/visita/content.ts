@@ -25,20 +25,20 @@ export interface HitoDef {
 export const HITOS: HitoDef[] = [
   {
     id: "informado",
-    titulo: "Corte de suministro informado",
-    detalle: "Recibimos tu reporte y confirmamos la dirección del suministro.",
+    titulo: "Reporte recibido",
+    detalle: "Recibimos el reporte de tu corte de suministro.",
   },
   {
     id: "espera",
-    titulo: "Solicitud validada, en espera de móvil",
+    titulo: "Reporte validado",
     detalle:
-      "Tu solicitud está validada y a la espera de la disponibilidad del móvil.",
+      "Tu corte está validado y a la espera de la disponibilidad del móvil.",
   },
   {
     id: "en_camino",
-    titulo: "Móvil en camino",
+    titulo: "Técnico en camino",
     detalle:
-      "El móvil se dirige a tu dirección. Permanece en el domicilio y atento al teléfono.",
+      "El técnico se dirige a tu dirección. Permanece en el domicilio y atento al teléfono.",
   },
   {
     id: "en_lugar",
@@ -47,13 +47,13 @@ export const HITOS: HitoDef[] = [
   },
   {
     id: "trabajando",
-    titulo: "Trabajando en la reposición",
-    detalle: "Se están ejecutando las maniobras para reponer el suministro.",
+    titulo: "Reparación en curso",
+    detalle: "Estamos trabajando en terreno para reponer tu suministro.",
   },
   {
     id: "cierre",
     titulo: "Trabajo finalizado",
-    detalle: "Cerramos la orden en terreno.",
+    detalle: "Cerramos tu reporte. Si sigues sin luz, avísanos más abajo.",
   },
 ];
 
