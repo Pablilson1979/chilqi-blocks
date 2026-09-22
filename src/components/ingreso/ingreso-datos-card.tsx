@@ -47,8 +47,8 @@ export function IngresoDatosCard({ servicio, className }: IngresoDatosCardProps)
       <div className="flex items-start gap-ch-md rounded-card bg-info-soft p-ch-base">
         <ShieldCheck className="mt-0.5 size-5 shrink-0 text-info" aria-hidden />
         <p className="text-sm leading-relaxed text-foreground">
-          Para proteger tus datos necesitamos verificar tu identidad antes de mostrarte{" "}
-          <strong className="font-bold">{servicio}</strong>.
+          <strong className="font-bold">Tus datos están protegidos.</strong> Solo los usaremos para
+          identificar tu suministro.
         </p>
       </div>
 
