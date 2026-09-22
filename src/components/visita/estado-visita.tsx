@@ -75,9 +75,9 @@ function destacado(caso: Caso) {
   }
   if (caso.hito === "en_camino") {
     return {
-      titulo: "El móvil va en camino",
+      titulo: "El técnico va en camino",
       dato: caso.etr ?? null,
-      sub: "Cuánto falta para que llegue el móvil",
+      sub: "Llegada estimada",
       nota,
     };
   }
