@@ -327,26 +327,24 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
 
                   {avisos ? (
                     <div className="flex flex-col gap-ch-md border-t border-border px-ch-base pb-ch-base pt-ch-base">
-                      <Field label="Correo electrónico" htmlFor="aviso-email">
-                        <Input
-                          id="aviso-email"
-                          type="email"
-                          inputMode="email"
-                          placeholder="nombre@correo.cl"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                        />
-                      </Field>
-                      <Field label="Teléfono celular" htmlFor="aviso-fono">
-                        <Input
-                          id="aviso-fono"
-                          type="tel"
-                          inputMode="tel"
-                          placeholder="9 1234 5678"
-                          value={fono}
-                          onChange={(e) => setFono(e.target.value)}
-                        />
-                      </Field>
+                      <Field
+                        id="aviso-email"
+                        label="Correo electrónico"
+                        type="email"
+                        inputMode="email"
+                        placeholder="nombre@correo.cl"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                      <Field
+                        id="aviso-fono"
+                        label="Teléfono celular"
+                        type="tel"
+                        inputMode="tel"
+                        placeholder="9 1234 5678"
+                        value={fono}
+                        onChange={(e) => setFono(e.target.value)}
+                      />
                       <Button
                         size="lg"
                         disabled={!email && !fono}
