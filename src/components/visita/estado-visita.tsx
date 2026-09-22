@@ -26,7 +26,7 @@ import type { Caso } from "@/components/visita/content";
 function destacado(caso: Caso) {
   const nota =
     caso.etrEstado === "confirmado"
-      ? "Confirmada por el equipo en terreno"
+      ? null
       : caso.etrEstado === "ajustado"
         ? "Ajustada respecto de la anterior"
         : "Referencial, puede cambiar";
@@ -75,9 +75,9 @@ function destacado(caso: Caso) {
   }
   if (caso.hito === "en_camino") {
     return {
-      titulo: "El móvil va en camino",
+      titulo: "El técnico va en camino",
       dato: caso.etr ?? null,
-      sub: "Cuánto falta para que llegue el móvil",
+      sub: "Llegada estimada",
       nota,
     };
   }
