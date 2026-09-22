@@ -1,8 +1,6 @@
 import * as React from "react";
 import {
-  AlertTriangle,
   BellRing,
-  CalendarClock,
   ChevronDown,
   Clock,
   MapPin,
@@ -102,7 +100,6 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
   const [email, setEmail] = React.useState("");
   const [fono, setFono] = React.useState("");
   const [avisoOk, setAvisoOk] = React.useState(false);
-  const [sinLuz, setSinLuz] = React.useState(false);
   const [voto, setVoto] = React.useState<number | null>(null);
   const info = destacado(caso);
   const mostrarMapa = Boolean(caso.movil) && !caso.noDisponible && caso.hito !== "cierre";
