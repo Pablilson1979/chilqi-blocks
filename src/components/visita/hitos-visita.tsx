@@ -26,6 +26,25 @@ export function HitosVisita({ caso }: { caso: Caso }) {
           : hito.titulo;
         const hora = caso.tiempos[hito.id];
 
+        // ETR visible desde el paso 2 en adelante: ventana de ruta en espera,
+        // llegada estimada en camino y reposición estimada en el lugar y en
+        // reparación.
+        const etrChip = !enCurso
+          ? null
+          : hito.id === "espera"
+            ? caso.ventana
+              ? `Tu técnico irá en ruta entre ${caso.ventana}`
+              : null
+            : hito.id === "en_camino"
+              ? caso.etr
+                ? `Llegada estimada: ${caso.etr}`
+                : null
+              : hito.id === "en_lugar" || hito.id === "trabajando"
+                ? caso.etr
+                  ? `Reposición estimada: ${caso.etr}`
+                  : null
+                : null;
+
         return (
           <li key={hito.id} className="relative flex gap-ch-base">
             {/* Conector vertical */}
@@ -79,11 +98,10 @@ export function HitosVisita({ caso }: { caso: Caso }) {
                 {hito.detalle}
               </p>
 
-              {/* Espera estimada solo de esta etapa, en amarillo claro */}
-              {enCurso && hito.id === "espera" && caso.ventana ? (
+              {etrChip ? (
                 <p className="mt-ch-sm inline-flex items-center gap-2 rounded-pill bg-warning-soft px-3 py-1.5 text-sm font-bold text-foreground">
                   <Clock className="size-4" aria-hidden />
-                  Tu técnico irá en ruta entre {caso.ventana}
+                  {etrChip}
                 </p>
               ) : null}
 
