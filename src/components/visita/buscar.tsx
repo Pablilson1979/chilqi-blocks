@@ -93,19 +93,7 @@ export function BuscarVisita({ onBuscar, error }: BuscarVisitaProps) {
           Cada número muestra un estado distinto de la funcionalidad.
         </p>
         <ul className="mt-ch-sm flex flex-col gap-2">
-          {[CASOS.find((c) => c.orden === "20455301"), ...CASOS.filter((c) => c.orden !== "20455301")].map(
-            (c) => (
-            <li key={c.orden}>
-              <button
-                type="button"
-                onClick={() => onBuscar(c.orden)}
-                className="ch-touch flex w-full items-center justify-between gap-ch-md rounded-card border border-border-strong bg-surface px-4 py-3 text-left transition-colors hover:border-primary"
-              >
-                <span className="text-sm font-semibold text-foreground">{c.orden}</span>
-                <span className="text-sm text-muted-foreground">{c.ejemplo}</span>
-              </button>
-            </li>
-          ))}
+          <EjemplosOrdenados onBuscar={onBuscar} />
         </ul>
       </section>
     </div>
