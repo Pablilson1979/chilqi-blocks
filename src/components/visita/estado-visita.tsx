@@ -58,8 +58,8 @@ function destacado(caso: Caso) {
   if (caso.hito === "trabajando") {
     return {
       titulo: "Trabajando en la reposición",
-      dato: caso.etr ?? null,
-      sub: "Cuánto falta para que vuelva la luz",
+      dato: null as string | null,
+      sub: null as string | null,
       nota,
     };
   }
