@@ -225,30 +225,13 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
                 }
                 description={
                   caso.reasignado
-                    ? "Atendimos primero una emergencia de mayor prioridad en el sector, por eso tu horario estimado se corrió. Tu orden mantiene su lugar en la cola."
-                    : ""
+                    ? `Atendimos primero una emergencia de mayor prioridad en el sector, por eso tu horario estimado se corrió. Hay ${caso.enCola} ${caso.enCola === 1 ? "reporte" : "reportes"} antes del tuyo y tu orden mantiene su lugar en la cola.`
+                    : "El horario estimado considera esos trabajos y el traslado del técnico hasta tu dirección."
                 }
               >
-                {caso.hito === "espera" && caso.enCola && caso.reasignado ? (
-                  <div className="mt-2">
-                    <p className="text-sm font-bold text-foreground">
-                      Hay {caso.enCola} {caso.enCola === 1 ? "reporte" : "reportes"} antes del tuyo
-                    </p>
-                    <p className="mt-1 text-sm text-foreground/80">
-                      El horario estimado considera esos trabajos y el traslado del técnico hasta
-                      tu dirección.
-                    </p>
-                    <p className="mt-1 text-sm text-foreground/80">
-                      Si entra una emergencia más grave en el sector, el horario puede cambiar.
-                    </p>
-                  </div>
-                ) : caso.hito === "espera" && caso.enCola ? (
-                  <p className="text-sm text-foreground/80">
-                    El horario estimado considera esos trabajos y el traslado del técnico hasta tu
-                    dirección. Si entra una emergencia más grave en el sector, el horario puede
-                    cambiar.
-                  </p>
-                ) : null}
+                <p className="text-sm font-semibold text-foreground">
+                  Si entra una emergencia más grave en el sector, el horario puede cambiar.
+                </p>
               </StatusMessage>
             ) : null}
 
