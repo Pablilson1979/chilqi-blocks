@@ -1,7 +1,7 @@
 import { Check, Clock } from "lucide-react";
 
 import { cn } from "@/lib/utils";
-import { HITOS, indiceHito, type Caso } from "@/components/visita/content";
+import { HITOS, type Caso } from "@/components/visita/content";
 
 /**
  * Línea de hitos visible al cliente, con el mismo lenguaje visual del
