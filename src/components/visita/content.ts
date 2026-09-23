@@ -20,6 +20,8 @@ export interface HitoDef {
   titulo: string;
   /** Qué significa para el cliente, en lenguaje simple. */
   detalle: string;
+  /** Parte del detalle que se destaca con más peso visual. */
+  detalleFuerte?: string;
 }
 
 export const HITOS: HitoDef[] = [
@@ -31,8 +33,9 @@ export const HITOS: HitoDef[] = [
   {
     id: "espera",
     titulo: "Reporte validado",
-    detalle:
-      "Tu corte está validado. Tu técnico está terminando otros trabajos antes de ir a tu dirección.",
+    detalle: "Tu corte está validado.",
+    detalleFuerte:
+      "Tu técnico está terminando otros trabajos antes de ir a tu dirección.",
   },
   {
     id: "en_camino",
