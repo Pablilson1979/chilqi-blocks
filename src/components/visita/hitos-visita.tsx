@@ -101,6 +101,12 @@ export function HitosVisita({ caso }: { caso: Caso }) {
               </p>
               <p className="mt-0.5 max-w-prose text-sm leading-relaxed text-muted-foreground">
                 {hito.detalle}
+                {hito.detalleFuerte ? (
+                  <span className="font-semibold text-foreground">
+                    {" "}
+                    {hito.detalleFuerte}
+                  </span>
+                ) : null}
               </p>
 
               {etrChip ? (
