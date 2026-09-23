@@ -129,13 +129,13 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
             const nota = info.nota ?? (conRepo ? "Referencial, puede cambiar" : null);
             if (!items.length && !nota) return null;
             return (
-              <div className="w-full rounded-card bg-primary-soft px-ch-lg py-ch-base lg:w-auto lg:min-w-[380px]">
+              <div className="w-full rounded-card bg-primary-soft p-ch-lg lg:w-auto lg:min-w-[380px]">
                 {items.length ? (
-                  <dl className={`grid gap-ch-base ${items.length > 1 ? "grid-cols-2 divide-x divide-primary/15" : ""}`}>
+                  <dl className={`grid ${items.length > 1 ? "grid-cols-2 divide-x divide-primary/15" : ""}`}>
                     {items.map(({ Icon, label, valor }, i) => (
-                      <div key={label} className={i > 0 ? "pl-ch-base" : ""}>
+                      <div key={label} className={i > 0 ? "pl-ch-lg" : items.length > 1 ? "pr-ch-lg" : ""}>
                         <dt className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-foreground">
-                          <Icon className="size-4 text-primary" aria-hidden />
+                          <Icon className="size-4 shrink-0 text-primary" aria-hidden />
                           {label}
                         </dt>
                         <dd className="mt-1 text-xl font-bold leading-tight text-primary lg:text-2xl">{valor}</dd>
@@ -144,7 +144,7 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
                   </dl>
                 ) : null}
                 {nota ? (
-                  <p className={`${items.length ? "mt-ch-sm" : ""} text-sm font-semibold text-foreground`}>{nota}</p>
+                  <p className={`${items.length ? "mt-ch-md" : ""} text-sm font-semibold text-foreground`}>{nota}</p>
                 ) : null}
               </div>
             );
