@@ -11,16 +11,21 @@ import { HITOS, indiceHito, type Caso } from "@/components/visita/content";
  * color: cada hito lleva icono, título, detalle y una marca de tiempo.
  */
 export function HitosVisita({ caso }: { caso: Caso }) {
-  const actual = indiceHito(caso.hito);
+  // En cierres por domicilio cerrado no hubo reparación: se omite esa etapa.
+  const hitos =
+    caso.cierre === "casa_cerrada"
+      ? HITOS.filter((h) => h.id !== "trabajando")
+      : HITOS;
+  const actual = hitos.findIndex((h) => h.id === caso.hito);
   const cerrado = caso.hito === "cierre";
 
   return (
     <ol className="flex flex-col">
-      {HITOS.map((hito, i) => {
+      {hitos.map((hito, i) => {
         const hecho = i < actual || (cerrado && i === actual);
         const enCurso = i === actual && !cerrado;
         const fallido = hecho && hito.id === "cierre" && caso.cierre === "casa_cerrada";
-        const ultimo = i === HITOS.length - 1;
+        const ultimo = i === hitos.length - 1;
         const titulo = fallido
           ? "Visita no realizada: domicilio cerrado"
           : hito.titulo;
