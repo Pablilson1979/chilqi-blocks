@@ -125,50 +125,56 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
             </p>
           </div>
 
-          <div className="flex shrink-0 flex-col gap-ch-md sm:flex-row sm:items-stretch">
-          {info.dato ? (
-            <div className="rounded-card bg-primary-soft px-ch-lg py-ch-base text-center lg:min-w-[260px]">
-              <p className="text-xs font-bold uppercase tracking-wide text-foreground">
-                {info.sub}
-              </p>
-              <p className="mt-1 flex items-center justify-center gap-2 text-2xl font-bold text-primary lg:text-3xl">
-                <Clock className="size-6" aria-hidden />
-                {info.dato}
-              </p>
-              {info.nota ? (
+          <div className="w-full rounded-card bg-primary-soft px-ch-lg py-ch-base text-center lg:w-auto lg:min-w-[320px]">
+            {caso.reposicion && caso.hito !== "cierre" && !caso.noDisponible ? (
+              <>
+                <p className="text-xs font-bold uppercase tracking-wide text-foreground">
+                  Reposición estimada
+                </p>
+                <p className="mt-1 flex items-center justify-center gap-2 text-2xl font-bold text-primary lg:text-3xl">
+                  <Zap className="size-6" aria-hidden />
+                  {caso.reposicion}
+                </p>
                 <p className="mt-ch-sm text-xs font-semibold leading-relaxed text-foreground">
+                  {caso.hito === "espera" || caso.hito === "informado"
+                    ? "Referencial, se confirma en terreno"
+                    : caso.hito === "en_camino"
+                      ? "Se confirma cuando el técnico llegue"
+                      : "Hora en que debería volver la luz"}
+                </p>
+              </>
+            ) : null}
+            {info.dato ? (
+              <>
+                {caso.reposicion && caso.hito !== "cierre" && !caso.noDisponible ? (
+                  <div className="mx-auto my-ch-md h-px w-3/4 bg-primary/15" aria-hidden />
+                ) : null}
+                <p className="text-xs font-bold uppercase tracking-wide text-foreground">
+                  {info.sub}
+                </p>
+                <p className="mt-1 flex items-center justify-center gap-2 text-2xl font-bold text-primary lg:text-3xl">
+                  <Clock className="size-6" aria-hidden />
+                  {info.dato}
+                </p>
+                {info.nota ? (
+                  <p className="mt-ch-sm text-xs font-semibold leading-relaxed text-foreground">
+                    {info.nota}
+                  </p>
+                ) : null}
+              </>
+            ) : info.nota ? (
+              <>
+                {caso.reposicion && caso.hito !== "cierre" && !caso.noDisponible ? (
+                  <div className="mx-auto my-ch-md h-px w-3/4 bg-primary/15" aria-hidden />
+                ) : null}
+                <p className="text-xs font-bold uppercase tracking-wide text-foreground">
+                  {info.sub ?? "Tiempo estimado"}
+                </p>
+                <p className="mt-1 text-base font-bold leading-snug text-foreground">
                   {info.nota}
                 </p>
-              ) : null}
-            </div>
-          ) : info.nota ? (
-            <div className="rounded-card bg-muted/60 px-ch-lg py-ch-base text-center lg:min-w-[260px]">
-              <p className="text-xs font-bold uppercase tracking-wide text-foreground">
-                {info.sub ?? "Tiempo estimado"}
-              </p>
-              <p className="mt-1 text-base font-bold leading-snug text-foreground">
-                {info.nota}
-              </p>
-            </div>
-          ) : null}
-          {caso.reposicion && caso.hito !== "cierre" && !caso.noDisponible ? (
-            <div className="rounded-card border border-border bg-card px-ch-lg py-ch-base text-center lg:min-w-[220px]">
-              <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
-                Reposición estimada
-              </p>
-              <p className="mt-1 flex items-center justify-center gap-2 text-2xl font-bold text-foreground lg:text-3xl">
-                <Zap className="size-6 text-primary" aria-hidden />
-                {caso.reposicion}
-              </p>
-              <p className="mt-ch-sm text-xs font-semibold leading-relaxed text-foreground">
-                {caso.hito === "espera" || caso.hito === "informado"
-                  ? "Referencial, se confirma en terreno"
-                  : caso.hito === "en_camino"
-                    ? "Se confirma cuando el técnico llegue"
-                    : "Hora en que debería volver la luz"}
-              </p>
-            </div>
-          ) : null}
+              </>
+            ) : null}
           </div>
         </div>
       </section>
