@@ -85,7 +85,7 @@ function destacado(caso: Caso) {
   return {
     titulo: "Tu reporte está validado",
     dato: caso.ventana ?? null,
-    sub: "Tiempo estimado de espera para que tu técnico vaya en ruta",
+    sub: "Tu técnico estará en camino entre",
     nota: caso.ventana ? nota : "Aún no tenemos un tiempo estimado de espera",
   };
 }
