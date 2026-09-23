@@ -90,25 +90,20 @@ export function BuscarVisita({ onBuscar, error }: BuscarVisitaProps) {
       <section className="rounded-card bg-muted/40 p-ch-base">
         <p className="text-sm font-bold text-foreground">Ejemplos para probar la maqueta</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Cada número muestra un estado distinto de la funcionalidad.
+          Cada ejemplo muestra un estado distinto de la funcionalidad.
         </p>
-        <ul className="mt-ch-sm flex flex-col gap-2">
-          {[...CASOS]
-            .sort((a, b) =>
-              a.orden === "20455301" ? -1 : b.orden === "20455301" ? 1 : 0,
-            )
-            .map((c) => (
-              <li key={c.orden}>
-                <button
-                  type="button"
-                  onClick={() => onBuscar(c.orden)}
-                  className="ch-touch flex w-full items-center justify-between gap-ch-md rounded-card border border-border-strong bg-surface px-4 py-3 text-left transition-colors hover:border-primary"
-                >
-                  <span className="text-sm font-semibold text-foreground">{c.orden}</span>
-                  <span className="text-sm text-muted-foreground">{c.ejemplo}</span>
-                </button>
-              </li>
-            ))}
+        <ul className="mt-ch-sm grid grid-cols-1 gap-2 sm:grid-cols-2">
+          {ORDEN_EJEMPLOS.map((c) => (
+            <li key={c.orden}>
+              <button
+                type="button"
+                onClick={() => onBuscar(c.orden)}
+                className="ch-touch flex w-full items-center justify-center gap-ch-sm rounded-card border border-border-strong bg-surface px-4 py-3 text-center transition-colors hover:border-primary"
+              >
+                <span className="text-sm font-semibold text-foreground">{c.ejemplo}</span>
+              </button>
+            </li>
+          ))}
         </ul>
       </section>
     </div>
