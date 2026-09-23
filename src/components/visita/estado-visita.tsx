@@ -27,11 +27,7 @@ import type { Caso } from "@/components/visita/content";
  */
 function destacado(caso: Caso) {
   const nota =
-    caso.etrEstado === "confirmado"
-      ? null
-      : caso.etrEstado === "ajustado"
-        ? "El técnico está atendiendo otros cortes antes del tuyo"
-        : "Referencial, puede cambiar";
+    caso.etrEstado === "confirmado" ? null : "Referencial, puede cambiar";
 
   if (caso.noDisponible) {
     return {
