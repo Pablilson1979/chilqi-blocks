@@ -93,7 +93,7 @@ export function BuscarVisita({ onBuscar, error }: BuscarVisitaProps) {
           Cada número muestra un estado distinto de la funcionalidad.
         </p>
         <ul className="mt-ch-sm flex flex-col gap-2">
-          {CASOS.map((c) => (
+          {[...CASOS].sort((a, b) => (a.orden === "20455301" ? -1 : b.orden === "20455301" ? 1 : 0)).map((c) => (
             <li key={c.orden}>
               <button
                 type="button"
