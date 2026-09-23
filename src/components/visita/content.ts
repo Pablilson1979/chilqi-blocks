@@ -88,6 +88,8 @@ export interface Caso {
    * anterior, o todavía no disponible.
    */
   etrEstado?: "confirmado" | "ajustado" | "pendiente";
+  /** ETR: hora estimada de reposición del suministro (ej. "Hoy, 18:00 hrs"). */
+  reposicion?: string;
   /** Hora en que se actualizó por última vez la posición del móvil. */
   ubicacionActualizada?: string;
   movil?: Movil;
@@ -114,6 +116,7 @@ export interface Caso {
 export const CASOS: Caso[] = [
   {
     orden: "11234412",
+    reposicion: "Hoy, 17:00 hrs",
     ejemplo: "Técnico en camino",
     cliente: "3045128",
     direccion: "Pasaje C1 223, Camino las Maravillas",
@@ -131,6 +134,7 @@ export const CASOS: Caso[] = [
   },
   {
     orden: "20455301",
+    reposicion: "Hoy, 18:30 hrs",
     ejemplo: "En espera de móvil",
     cliente: "4187903",
     direccion: "Av. Libertad 1180, depto. 703",
@@ -144,6 +148,7 @@ export const CASOS: Caso[] = [
   },
   {
     orden: "30778120",
+    reposicion: "Hoy, 12:15 hrs",
     ejemplo: "Reparación en curso",
     cliente: "5093344",
     direccion: "Los Aromos 452",
@@ -200,6 +205,7 @@ export const CASOS: Caso[] = [
   },
   {
     orden: "70330044",
+    reposicion: "Hoy, 19:00 hrs",
     ejemplo: "Cerrado y reabierto por el cliente",
     cliente: "9451220",
     direccion: "Las Acacias 330",

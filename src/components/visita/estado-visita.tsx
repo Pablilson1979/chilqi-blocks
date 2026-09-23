@@ -8,6 +8,7 @@ import {
   RefreshCw,
   Star,
   Truck,
+  Zap,
 } from "lucide-react";
 
 import { cn } from "@/lib/utils";
@@ -124,8 +125,9 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
             </p>
           </div>
 
+          <div className="flex shrink-0 flex-col gap-ch-md sm:flex-row sm:items-stretch">
           {info.dato ? (
-            <div className="shrink-0 rounded-card bg-primary-soft px-ch-lg py-ch-base text-center lg:min-w-[260px]">
+            <div className="rounded-card bg-primary-soft px-ch-lg py-ch-base text-center lg:min-w-[260px]">
               <p className="text-xs font-bold uppercase tracking-wide text-foreground">
                 {info.sub}
               </p>
@@ -140,7 +142,7 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
               ) : null}
             </div>
           ) : info.nota ? (
-            <div className="shrink-0 rounded-card bg-muted/60 px-ch-lg py-ch-base text-center lg:min-w-[260px]">
+            <div className="rounded-card bg-muted/60 px-ch-lg py-ch-base text-center lg:min-w-[260px]">
               <p className="text-xs font-bold uppercase tracking-wide text-foreground">
                 {info.sub ?? "Tiempo estimado"}
               </p>
@@ -149,6 +151,25 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
               </p>
             </div>
           ) : null}
+          {caso.reposicion && caso.hito !== "cierre" && !caso.noDisponible ? (
+            <div className="rounded-card border border-border bg-card px-ch-lg py-ch-base text-center lg:min-w-[220px]">
+              <p className="text-xs font-bold uppercase tracking-wide text-muted-foreground">
+                Reposición estimada
+              </p>
+              <p className="mt-1 flex items-center justify-center gap-2 text-2xl font-bold text-foreground lg:text-3xl">
+                <Zap className="size-6 text-primary" aria-hidden />
+                {caso.reposicion}
+              </p>
+              <p className="mt-ch-sm text-xs font-semibold leading-relaxed text-foreground">
+                {caso.hito === "espera" || caso.hito === "informado"
+                  ? "Referencial, se confirma en terreno"
+                  : caso.hito === "en_camino"
+                    ? "Se confirma cuando el técnico llegue"
+                    : "Hora en que debería volver la luz"}
+              </p>
+            </div>
+          ) : null}
+          </div>
         </div>
       </section>
 
