@@ -105,16 +105,16 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
     <div className="flex flex-col gap-ch-lg">
       {/* Encabezado destacado: lo que el cliente vino a buscar */}
       <section className="overflow-hidden rounded-[1.5rem] bg-card shadow-card">
-        <div className="flex flex-col gap-ch-base p-ch-lg sm:p-ch-xl lg:flex-row lg:items-center lg:justify-between">
+        <div className="grid gap-ch-lg p-ch-lg sm:p-ch-xl lg:grid-cols-[minmax(0,1fr)_minmax(440px,0.9fr)] lg:items-center lg:gap-ch-xl">
           <div className="min-w-0">
             <p className="text-sm font-bold uppercase tracking-wide text-primary">
               Orden N° {caso.orden}
             </p>
-            <h2 className="mt-1 text-2xl font-bold leading-tight text-foreground lg:text-3xl">
+            <h2 className="mt-ch-sm text-3xl font-bold leading-tight text-foreground lg:text-4xl">
               {info.titulo}
             </h2>
-            <p className="mt-ch-sm flex items-start gap-2 text-sm font-semibold text-muted-foreground">
-              <MapPin className="mt-0.5 size-4 shrink-0" aria-hidden />
+            <p className="mt-ch-base flex items-start gap-ch-sm text-base font-medium leading-relaxed text-muted-foreground lg:text-lg">
+              <MapPin className="mt-0.5 size-5 shrink-0" aria-hidden />
               <span>
                 {caso.direccion}, {caso.comuna}
               </span>
@@ -122,29 +122,49 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
           </div>
 
           {(() => {
-            const conRepo = Boolean(caso.reposicion) && caso.hito !== "cierre" && !caso.noDisponible;
+            const reposicion = caso.hito !== "cierre" && !caso.noDisponible ? caso.reposicion : undefined;
             const items: { Icon: typeof Clock; label: string; valor: string }[] = [];
             if (info.dato) items.push({ Icon: Clock, label: info.sub ?? "Tiempo estimado", valor: info.dato });
-            if (conRepo) items.push({ Icon: Zap, label: "Reposición estimada", valor: caso.reposicion! });
-            const nota = info.nota ?? (conRepo ? "Referencial, puede cambiar" : null);
+            if (reposicion) items.push({ Icon: Zap, label: "Reposición estimada", valor: reposicion });
+            const nota = info.nota ?? (reposicion ? "Referencial, puede cambiar" : null);
             if (!items.length && !nota) return null;
             return (
-              <div className="w-full rounded-card bg-primary-soft p-ch-lg lg:w-auto lg:min-w-[380px]">
+              <div className="w-full rounded-[1.25rem] bg-primary-soft px-ch-lg py-ch-base sm:p-ch-lg">
                 {items.length ? (
-                  <dl className={`grid ${items.length > 1 ? "grid-cols-2 divide-x divide-primary/15" : ""}`}>
+                  <dl
+                    className={cn(
+                      "grid",
+                      items.length > 1 &&
+                        "divide-y divide-primary/15 lg:grid-cols-2 lg:divide-x lg:divide-y-0",
+                    )}
+                  >
                     {items.map(({ Icon, label, valor }, i) => (
-                      <div key={label} className={i > 0 ? "pl-ch-lg" : items.length > 1 ? "pr-ch-lg" : ""}>
-                        <dt className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-foreground">
-                          <Icon className="size-4 shrink-0 text-primary" aria-hidden />
+                      <div
+                        key={label}
+                        className={cn(
+                          "min-w-0",
+                          items.length > 1 && i === 0 && "pb-ch-lg lg:pb-0 lg:pr-ch-lg",
+                          items.length > 1 && i > 0 && "pt-ch-lg lg:pl-ch-lg lg:pt-0",
+                        )}
+                      >
+                        <dt className="flex items-start gap-ch-sm text-sm font-bold leading-snug text-foreground">
+                          <Icon className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden />
                           {label}
                         </dt>
-                        <dd className="mt-1 text-xl font-bold leading-tight text-primary lg:text-2xl">{valor}</dd>
+                        <dd className="mt-ch-sm text-3xl font-bold leading-none text-primary lg:text-2xl xl:text-3xl">
+                          {valor}
+                        </dd>
+                        {i === 0 && nota ? (
+                          <p className="mt-ch-sm text-base font-semibold leading-snug text-muted-foreground">
+                            {nota}
+                          </p>
+                        ) : null}
                       </div>
                     ))}
                   </dl>
                 ) : null}
-                {nota ? (
-                  <p className={`${items.length ? "mt-ch-md" : ""} text-sm font-semibold text-foreground`}>{nota}</p>
+                {!items.length && nota ? (
+                  <p className="text-base font-semibold text-foreground">{nota}</p>
                 ) : null}
               </div>
             );
