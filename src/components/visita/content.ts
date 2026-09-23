@@ -209,7 +209,7 @@ export const CASOS: Caso[] = [
   {
     orden: "70330044",
     reposicion: "Hoy, 19:00 hrs",
-    ejemplo: "Cerrado y reabierto por el cliente",
+    ejemplo: "Cerrado y reabierto",
     cliente: "9451220",
     direccion: "Las Acacias 330",
     comuna: "Villa Alemana",
