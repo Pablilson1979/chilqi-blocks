@@ -93,8 +93,11 @@ export function BuscarVisita({ onBuscar, error }: BuscarVisitaProps) {
           Cada número muestra un estado distinto de la funcionalidad.
         </p>
         <ul className="mt-ch-sm flex flex-col gap-2">
-          <EjemplosOrdenados onBuscar={onBuscar} />
-        </ul>
+          {[...CASOS]
+            .sort((a, b) =>
+              a.orden === PRIMERO ? -1 : b.orden === PRIMERO ? 1 : 0,
+            )
+            .map((c) => (
       </section>
     </div>
   );
