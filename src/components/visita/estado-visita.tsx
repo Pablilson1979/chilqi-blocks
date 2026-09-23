@@ -29,7 +29,7 @@ function destacado(caso: Caso) {
     caso.etrEstado === "confirmado"
       ? null
       : caso.etrEstado === "ajustado"
-        ? "Ajustada respecto de la anterior"
+        ? "El técnico está atendiendo otros cortes antes del tuyo"
         : "Referencial, puede cambiar";
 
   if (caso.noDisponible) {
