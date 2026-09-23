@@ -3,7 +3,19 @@ import { HelpCircle, MapPin, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/chilquinta/field";
-import { CASOS } from "@/components/visita/content";
+import { CASOS, type Caso } from "@/components/visita/content";
+
+/** Ejemplos ordenados según el flujo del reporte: en espera → en camino → en reparación → cierres → excepciones. */
+const ORDEN_EJEMPLOS: Caso[] = [
+  CASOS.find((c) => c.orden === "20455301")!,
+  CASOS.find((c) => c.orden === "11234412")!,
+  CASOS.find((c) => c.orden === "30778120")!,
+  CASOS.find((c) => c.orden === "40990011")!,
+  CASOS.find((c) => c.orden === "50110022")!,
+  CASOS.find((c) => c.orden === "70330044")!,
+  CASOS.find((c) => c.orden === "80440055")!,
+  CASOS.find((c) => c.orden === "60220033")!,
+];
 
 export interface BuscarVisitaProps {
   onBuscar: (valor: string) => void;
@@ -90,25 +102,20 @@ export function BuscarVisita({ onBuscar, error }: BuscarVisitaProps) {
       <section className="rounded-card bg-muted/40 p-ch-base">
         <p className="text-sm font-bold text-foreground">Ejemplos para probar la maqueta</p>
         <p className="mt-1 text-sm text-muted-foreground">
-          Cada número muestra un estado distinto de la funcionalidad.
+          Cada ejemplo muestra un estado distinto de la funcionalidad.
         </p>
-        <ul className="mt-ch-sm flex flex-col gap-2">
-          {[...CASOS]
-            .sort((a, b) =>
-              a.orden === "20455301" ? -1 : b.orden === "20455301" ? 1 : 0,
-            )
-            .map((c) => (
-              <li key={c.orden}>
-                <button
-                  type="button"
-                  onClick={() => onBuscar(c.orden)}
-                  className="ch-touch flex w-full items-center justify-between gap-ch-md rounded-card border border-border-strong bg-surface px-4 py-3 text-left transition-colors hover:border-primary"
-                >
-                  <span className="text-sm font-semibold text-foreground">{c.orden}</span>
-                  <span className="text-sm text-muted-foreground">{c.ejemplo}</span>
-                </button>
-              </li>
-            ))}
+        <ul className="mt-ch-sm grid grid-cols-1 gap-2 sm:grid-cols-2">
+          {ORDEN_EJEMPLOS.map((c) => (
+            <li key={c.orden}>
+              <button
+                type="button"
+                onClick={() => onBuscar(c.orden)}
+                className="ch-touch flex w-full items-center justify-center gap-ch-sm rounded-card border border-border-strong bg-surface px-4 py-3 text-center transition-colors hover:border-primary"
+              >
+                <span className="text-sm font-semibold text-foreground">{c.ejemplo}</span>
+              </button>
+            </li>
+          ))}
         </ul>
       </section>
     </div>
