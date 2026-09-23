@@ -214,25 +214,42 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
               />
             ) : null}
 
-            {caso.reasignado ? (
+            {/* Ajuste de ventana y cola de la cuadrilla, en un solo cuadro azul */}
+            {caso.reasignado || (caso.hito === "espera" && caso.enCola) ? (
               <StatusMessage
                 tone="info"
-                title="Tu ventana se ajustó"
-                description="Atendimos primero una emergencia de mayor prioridad en el sector, por eso tu horario estimado se corrió. Tu orden mantiene su lugar en la cola."
-              />
-            ) : null}
-
-
-            {caso.hito === "espera" && caso.enCola ? (
-              <section className="rounded-card bg-muted/40 p-ch-base">
-                <p className="text-sm font-bold text-foreground">
-                  {caso.enCola} {caso.enCola === 1 ? "orden" : "órdenes"} antes de la tuya
-                </p>
-                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-                  La ventana estimada considera el trabajo pendiente de la cuadrilla y los
-                  tiempos de traslado.
-                </p>
-              </section>
+                title={
+                  caso.reasignado
+                    ? "Tu ventana se ajustó"
+                    : `Hay ${caso.enCola} ${caso.enCola === 1 ? "reporte" : "reportes"} antes del tuyo`
+                }
+                description={
+                  caso.reasignado
+                    ? "Atendimos primero una emergencia de mayor prioridad en el sector, por eso tu horario estimado se corrió. Tu orden mantiene su lugar en la cola."
+                    : undefined
+                }
+              >
+                {caso.hito === "espera" && caso.enCola && caso.reasignado ? (
+                  <div className="mt-2">
+                    <p className="text-sm font-bold text-foreground">
+                      Hay {caso.enCola} {caso.enCola === 1 ? "reporte" : "reportes"} antes del tuyo
+                    </p>
+                    <p className="mt-1 text-sm text-foreground/80">
+                      El horario estimado considera esos trabajos y el traslado del técnico hasta
+                      tu dirección.
+                    </p>
+                    <p className="mt-1 text-sm text-foreground/80">
+                      Si entra una emergencia más grave en el sector, el horario puede cambiar.
+                    </p>
+                  </div>
+                ) : caso.hito === "espera" && caso.enCola ? (
+                  <p className="text-sm text-foreground/80">
+                    El horario estimado considera esos trabajos y el traslado del técnico hasta tu
+                    dirección. Si entra una emergencia más grave en el sector, el horario puede
+                    cambiar.
+                  </p>
+                ) : null}
+              </StatusMessage>
             ) : null}
 
             {caso.reabierto ? (
