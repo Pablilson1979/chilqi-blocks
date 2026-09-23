@@ -226,7 +226,7 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
                 description={
                   caso.reasignado
                     ? "Atendimos primero una emergencia de mayor prioridad en el sector, por eso tu horario estimado se corrió. Tu orden mantiene su lugar en la cola."
-                    : undefined
+                    : ""
                 }
               >
                 {caso.hito === "espera" && caso.enCola && caso.reasignado ? (
