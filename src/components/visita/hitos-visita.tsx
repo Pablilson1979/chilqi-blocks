@@ -110,21 +110,19 @@ export function HitosVisita({ caso }: { caso: Caso }) {
                 </p>
               ) : null}
 
-              {hora ? (
+              {!enCurso && hora ? (
                 <p
                   className={cn(
                     "mt-ch-sm inline-flex items-center gap-2 rounded-pill px-3 py-1.5 text-sm font-bold",
                     fallido
                       ? "bg-warning-soft text-foreground"
-                      : hecho
-                        ? "bg-success-soft text-success"
-                        : "bg-warning-soft text-foreground",
+                      : "bg-success-soft text-success",
                   )}
                 >
                   {hecho && !fallido ? (
                     <Check className="size-4" strokeWidth={3} aria-hidden />
                   ) : null}
-                  {enCurso ? "En curso desde " : hecho ? "Completado " : ""}
+                  {hecho ? "Completado " : ""}
                   {hora}
                 </p>
               ) : null}
