@@ -38,7 +38,7 @@ export function HitosVisita({ caso }: { caso: Caso }) {
           ? null
           : hito.id === "espera"
             ? caso.ventana
-              ? `Tu técnico irá en ruta entre ${caso.ventana}`
+              ? `Espera estimada: ${caso.ventana.replace(" – ", " a ")}`
               : null
             : hito.id === "en_camino"
               ? caso.etr
