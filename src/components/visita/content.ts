@@ -32,7 +32,7 @@ export const HITOS: HitoDef[] = [
     id: "espera",
     titulo: "Reporte validado",
     detalle:
-      "Tu corte está validado y a la espera de que el técnico vaya en ruta.",
+      "Tu corte está validado. Tu técnico está terminando otros trabajos antes de ir a tu dirección.",
   },
   {
     id: "en_camino",
