@@ -125,57 +125,34 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
             </p>
           </div>
 
-          <div className="w-full rounded-card bg-primary-soft px-ch-lg py-ch-base text-center lg:w-auto lg:min-w-[320px]">
-            {caso.reposicion && caso.hito !== "cierre" && !caso.noDisponible ? (
-              <>
-                <p className="text-xs font-bold uppercase tracking-wide text-foreground">
-                  Reposición estimada
-                </p>
-                <p className="mt-1 flex items-center justify-center gap-2 text-2xl font-bold text-primary lg:text-3xl">
-                  <Zap className="size-6" aria-hidden />
-                  {caso.reposicion}
-                </p>
-                <p className="mt-ch-sm text-xs font-semibold leading-relaxed text-foreground">
-                  {caso.hito === "espera" || caso.hito === "informado"
-                    ? "Referencial, se confirma en terreno"
-                    : caso.hito === "en_camino"
-                      ? "Se confirma cuando el técnico llegue"
-                      : "Hora en que debería volver la luz"}
-                </p>
-              </>
-            ) : null}
-            {info.dato ? (
-              <>
-                {caso.reposicion && caso.hito !== "cierre" && !caso.noDisponible ? (
-                  <div className="mx-auto my-ch-md h-px w-3/4 bg-primary/15" aria-hidden />
+          {(() => {
+            const conRepo = Boolean(caso.reposicion) && caso.hito !== "cierre" && !caso.noDisponible;
+            const items: { Icon: typeof Clock; label: string; valor: string }[] = [];
+            if (info.dato) items.push({ Icon: Clock, label: info.sub ?? "Tiempo estimado", valor: info.dato });
+            if (conRepo) items.push({ Icon: Zap, label: "Reposición estimada", valor: caso.reposicion! });
+            const nota = info.nota ?? (conRepo ? "Referencial, puede cambiar" : null);
+            if (!items.length && !nota) return null;
+            return (
+              <div className="w-full rounded-card bg-primary-soft px-ch-lg py-ch-base lg:w-auto lg:min-w-[380px]">
+                {items.length ? (
+                  <dl className={`grid gap-ch-base ${items.length > 1 ? "grid-cols-2 divide-x divide-primary/15" : ""}`}>
+                    {items.map(({ Icon, label, valor }, i) => (
+                      <div key={label} className={i > 0 ? "pl-ch-base" : ""}>
+                        <dt className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wide text-foreground">
+                          <Icon className="size-4 text-primary" aria-hidden />
+                          {label}
+                        </dt>
+                        <dd className="mt-1 text-xl font-bold leading-tight text-primary lg:text-2xl">{valor}</dd>
+                      </div>
+                    ))}
+                  </dl>
                 ) : null}
-                <p className="text-xs font-bold uppercase tracking-wide text-foreground">
-                  {info.sub}
-                </p>
-                <p className="mt-1 flex items-center justify-center gap-2 text-2xl font-bold text-primary lg:text-3xl">
-                  <Clock className="size-6" aria-hidden />
-                  {info.dato}
-                </p>
-                {info.nota ? (
-                  <p className="mt-ch-sm text-xs font-semibold leading-relaxed text-foreground">
-                    {info.nota}
-                  </p>
+                {nota ? (
+                  <p className={`${items.length ? "mt-ch-sm" : ""} text-sm font-semibold text-foreground`}>{nota}</p>
                 ) : null}
-              </>
-            ) : info.nota ? (
-              <>
-                {caso.reposicion && caso.hito !== "cierre" && !caso.noDisponible ? (
-                  <div className="mx-auto my-ch-md h-px w-3/4 bg-primary/15" aria-hidden />
-                ) : null}
-                <p className="text-xs font-bold uppercase tracking-wide text-foreground">
-                  {info.sub ?? "Tiempo estimado"}
-                </p>
-                <p className="mt-1 text-base font-bold leading-snug text-foreground">
-                  {info.nota}
-                </p>
-              </>
-            ) : null}
-          </div>
+              </div>
+            );
+          })()}
         </div>
       </section>
 
