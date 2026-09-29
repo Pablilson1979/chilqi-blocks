@@ -16,6 +16,8 @@ export function MapaMovil({
   direccion: string;
   actualizado?: string | undefined;
 }) {
+  /** El móvil ya llegó: ocupa el punto del domicilio con un solo marcador. */
+  const enDomicilio = Boolean(movil.enDomicilio);
   return (
     <div className="overflow-hidden rounded-card border border-border bg-muted">
       <div
