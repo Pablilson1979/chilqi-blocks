@@ -234,35 +234,54 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
               />
             ) : null}
 
-            {/* Ajuste de ventana y cola de la cuadrilla, en un solo cuadro azul */}
-            {caso.reasignado || (caso.hito === "espera" && caso.enCola) ? (
-              <StatusMessage
-                tone="info"
-                title={
-                  caso.reasignado
-                    ? "Tu ventana se ajustó"
-                    : `Hay ${caso.enCola} ${caso.enCola === 1 ? "reporte" : "reportes"} antes del tuyo`
-                }
-                description={
-                  caso.reasignado
-                    ? `Atendimos primero una emergencia de mayor prioridad en el sector, por eso tu horario estimado se corrió. Hay ${caso.enCola} ${caso.enCola === 1 ? "reporte" : "reportes"} antes del tuyo y tu orden mantiene su lugar en la cola.`
-                    : "El horario estimado considera esos trabajos y el traslado del técnico hasta tu dirección."
-                }
-              >
-                <p className="text-sm font-semibold text-foreground">
-                  Si entra una emergencia más grave en el sector, el horario puede cambiar.
-                </p>
-              </StatusMessage>
-            ) : null}
+            {/* Ajuste de ventana / cola y reapertura, en un solo cuadro azul */}
+            {(() => {
+              const hayCola = caso.reasignado || (caso.hito === "espera" && caso.enCola);
+              const colaTexto = `Hay ${caso.enCola ?? 1} ${(caso.enCola ?? 1) === 1 ? "reporte" : "reportes"} antes del tuyo`;
 
-            {caso.reabierto ? (
-              <StatusMessage
-                tone="info"
-                title="Este reporte fue reabierto"
-                description="Retomamos tu caso con prioridad porque seguías sin suministro después del cierre."
-                detail={`Vinculado a tu orden anterior ${caso.ordenPrevia ?? ""}`}
-              />
-            ) : null}
+              if (caso.reabierto && hayCola) {
+                return (
+                  <StatusMessage
+                    tone="info"
+                    title="Este reporte fue reabierto"
+                    description={`Retomamos tu caso con prioridad porque seguías sin suministro después del cierre. ${colaTexto}: el horario estimado considera esos trabajos y el traslado del técnico hasta tu dirección.`}
+                    detail={`Vinculado a tu orden anterior ${caso.ordenPrevia ?? ""}`}
+                  >
+                    <p className="text-sm font-semibold text-foreground">
+                      Si entra una emergencia más grave en el sector, el horario puede cambiar.
+                    </p>
+                  </StatusMessage>
+                );
+              }
+              if (caso.reabierto) {
+                return (
+                  <StatusMessage
+                    tone="info"
+                    title="Este reporte fue reabierto"
+                    description="Retomamos tu caso con prioridad porque seguías sin suministro después del cierre."
+                    detail={`Vinculado a tu orden anterior ${caso.ordenPrevia ?? ""}`}
+                  />
+                );
+              }
+              if (hayCola) {
+                return (
+                  <StatusMessage
+                    tone="info"
+                    title={caso.reasignado ? "Tu ventana se ajustó" : colaTexto}
+                    description={
+                      caso.reasignado
+                        ? `Atendimos primero una emergencia de mayor prioridad en el sector, por eso tu horario estimado se corrió. ${colaTexto} y tu orden mantiene su lugar en la cola.`
+                        : "El horario estimado considera esos trabajos y el traslado del técnico hasta tu dirección."
+                    }
+                  >
+                    <p className="text-sm font-semibold text-foreground">
+                      Si entra una emergencia más grave en el sector, el horario puede cambiar.
+                    </p>
+                  </StatusMessage>
+                );
+              }
+              return null;
+            })()}
 
             {caso.cierre === "restablecido" ? (
               <section className="rounded-[1.5rem] bg-card p-ch-lg shadow-card">
