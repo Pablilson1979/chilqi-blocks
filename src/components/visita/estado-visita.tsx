@@ -264,14 +264,6 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
               />
             ) : null}
 
-            {caso.cierre === "casa_cerrada" ? (
-              <StatusMessage
-                tone="warning"
-                title="El técnico llegó y no había nadie"
-                description="Por normativa, el técnico debe verificar la dirección en terreno. Al no poder acceder, la orden se cerró sin reposición y la visita debe reagendarse."
-              />
-            ) : null}
-
             {caso.cierre === "restablecido" ? (
               <section className="rounded-[1.5rem] bg-card p-ch-lg shadow-card">
                 <h2 className="text-base font-bold text-foreground">

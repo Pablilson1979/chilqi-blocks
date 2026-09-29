@@ -191,11 +191,11 @@ export function ReabrirReporte({ caso }: ReabrirReporteProps) {
         </span>
         <span className="min-w-0 flex-1">
           <span className="block text-base font-bold text-foreground">
-            {reagendar ? "Necesito una nueva visita" : "Sigo sin suministro"}
+            {reagendar ? "El técnico llegó y no había nadie" : "Sigo sin suministro"}
           </span>
           <span className="block text-sm leading-relaxed text-foreground">
             {reagendar
-              ? "Elige cuándo hay alguien en tu domicilio y reagendamos sin repetir el reporte."
+              ? "Para realizar la visita necesitamos que un adulto dé acceso al domicilio. Elige un horario con disponibilidad para reagendarla sin repetir el reporte."
               : `Puedes reabrir este reporte hasta las ${caso.reabrirHasta ?? "20:45"}, sin volver a ingresar tus datos.`}
           </span>
         </span>
@@ -209,7 +209,12 @@ export function ReabrirReporte({ caso }: ReabrirReporteProps) {
       </button>
 
       {abierto ? (
-        <div className="flex flex-col gap-ch-md border-t-2 border-warning/40 p-ch-base">
+        <div
+          className={cn(
+            "flex flex-col gap-ch-md border-t-2 border-warning/40 p-ch-base",
+            reagendar && "rounded-b-card bg-card",
+          )}
+        >
           {/* Dirección registrada: mismo patrón que "¿Es esta la dirección sin luz?" */}
           <div className="flex items-start gap-ch-md rounded-card border-2 border-primary bg-primary-soft p-ch-base">
             <span
@@ -304,12 +309,14 @@ export function ReabrirReporte({ caso }: ReabrirReporteProps) {
             <p className="self-end text-sm text-muted-foreground">{nota.length}/250</p>
           </div>
 
-          <div className="flex items-center gap-ch-md rounded-card border border-info bg-info-soft p-ch-base">
-            <ShieldCheck className="size-5 shrink-0 text-info" aria-hidden />
-            <p className="text-sm leading-relaxed text-foreground">
-              Recuerda que debe haber alguien mayor de edad en el lugar para dar acceso.
-            </p>
-          </div>
+          {!reagendar ? (
+            <div className="flex items-center gap-ch-md rounded-card border border-info bg-info-soft p-ch-base">
+              <ShieldCheck className="size-5 shrink-0 text-info" aria-hidden />
+              <p className="text-sm leading-relaxed text-foreground">
+                Recuerda que debe haber alguien mayor de edad en el lugar para dar acceso.
+              </p>
+            </div>
+          ) : null}
 
           <Button
             size="lg"
