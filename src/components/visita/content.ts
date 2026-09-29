@@ -69,6 +69,8 @@ export interface Movil {
   /** Posición relativa dentro del mapa de la maqueta (0-100). */
   x: number;
   y: number;
+  /** El móvil ya está detenido en el domicilio (ej. reparación en curso). */
+  enDomicilio?: boolean;
 }
 
 export interface Caso {
@@ -168,7 +170,7 @@ export const CASOS: Caso[] = [
     etrConfirmado: true,
     etrEstado: "confirmado",
     ubicacionActualizada: "11:52",
-    movil: { nombre: "Móvil SAT", patente: "LPBR-31", x: 62, y: 58 },
+    movil: { nombre: "Móvil SAT", patente: "LPBR-31", x: 65, y: 40, enDomicilio: true },
   },
   {
     orden: "40990011",
