@@ -36,23 +36,29 @@ export function MapaMovil({
         />
 
 
-        {/* Domicilio */}
-        <span
-          className="absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center"
-          style={{ left: "65%", top: "40%" }}
-        >
-          <span className="flex size-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-card">
-            <Home className="size-5" aria-hidden />
+        {/* Domicilio (se oculta cuando el móvil está detenido en el punto) */}
+        {!enDomicilio ? (
+          <span
+            className="absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center"
+            style={{ left: "65%", top: "40%" }}
+          >
+            <span className="flex size-11 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-card">
+              <Home className="size-5" aria-hidden />
+            </span>
+            <span className="mt-1 rounded-pill bg-surface px-2 py-0.5 text-xs font-bold text-foreground shadow-card">
+              Tu domicilio
+            </span>
           </span>
-          <span className="mt-1 rounded-pill bg-surface px-2 py-0.5 text-xs font-bold text-foreground shadow-card">
-            Tu domicilio
-          </span>
-        </span>
+        ) : null}
 
         {/* Móvil */}
         <span
           className="absolute flex -translate-x-1/2 -translate-y-1/2 flex-col items-center"
-          style={{ left: `${movil.x}%`, top: `${movil.y}%` }}
+          style={
+            enDomicilio
+              ? { left: "65%", top: "40%" }
+              : { left: `${movil.x}%`, top: `${movil.y}%` }
+          }
         >
           <span className="relative flex items-center justify-center">
             <span className="absolute inline-flex size-14 animate-ping rounded-full bg-info/30" />
