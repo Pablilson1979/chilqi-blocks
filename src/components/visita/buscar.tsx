@@ -7,15 +7,15 @@ import { CASOS, type Caso } from "@/components/visita/content";
 
 /** Ejemplos ordenados según el flujo del reporte: en espera → en camino → en reparación → cierres → excepciones. */
 const ORDEN_EJEMPLOS: Caso[] = [
-  CASOS.find((c) => c.orden === "20455301")!,
-  CASOS.find((c) => c.orden === "11234412")!,
-  CASOS.find((c) => c.orden === "30778120")!,
-  CASOS.find((c) => c.orden === "40990011")!,
-  CASOS.find((c) => c.orden === "50110022")!,
-  CASOS.find((c) => c.orden === "70330044")!,
-  CASOS.find((c) => c.orden === "80440055")!,
-  CASOS.find((c) => c.orden === "60220033")!,
-];
+  "20455301",
+  "11234412",
+  "30778120",
+  "40990011",
+  "50110022",
+  "60220033",
+]
+  .map((o) => CASOS.find((c) => c.orden === o))
+  .filter((c): c is Caso => Boolean(c));
 
 export interface BuscarVisitaProps {
   onBuscar: (valor: string) => void;
