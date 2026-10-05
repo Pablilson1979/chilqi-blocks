@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { causaVisible, estadoETR, type EstadoETR, type Hito, type Interrupcion } from "@/lib/interrupciones-data";
 import { AlertTriangle, Check, Clock, MapPin, Search, User, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 /* ---------------- Formatters ---------------- */
 
@@ -121,7 +122,7 @@ export function Tracker({ hitos, compact = false, currentLabel = "En curso" }: {
   const currentIdx = lastDone < steps.length - 1 ? lastDone + 1 : -1;
 
   return (
-    <ol className={`relative ${compact ? "space-y-2" : "space-y-3.5"} pl-1`}>
+    <ol className={`relative ${compact ? "space-y-4" : "space-y-3.5"} pl-1`}>
       {steps.map((s, k) => {
         const done = !!s.at;
         const isCurrent = k === currentIdx;
@@ -134,7 +135,7 @@ export function Tracker({ hitos, compact = false, currentLabel = "En curso" }: {
             : "bg-muted text-muted-foreground";
         const lineCls = done ? "bg-[color:var(--status-ok)]/50" : "bg-border";
         const textCls = done
-          ? "text-foreground"
+          ? compact ? "font-semibold text-success" : "text-foreground"
           : isCurrent
             ? "font-bold text-foreground"
             : "text-muted-foreground";
@@ -149,9 +150,9 @@ export function Tracker({ hitos, compact = false, currentLabel = "En curso" }: {
             </div>
             <div className={`min-w-0 flex-1 ${compact ? "pb-1" : "pb-1.5"}`}>
               <p className={`text-base leading-tight ${textCls}`}>{s.label}</p>
-              <p className="mt-0.5 text-sm text-muted-foreground">
+              {(!compact || !done) && <p className="mt-0.5 text-sm text-muted-foreground">
                 {done ? formatHora(s.at) : isCurrent ? currentLabel : "Pendiente"}
-              </p>
+              </p>}
             </div>
           </li>
         );
@@ -175,6 +176,7 @@ export type CorteCardProps = {
   className?: string;
   /** Muestra el link "Centrar" cuando la card no está activa (solo variante mapa) */
   showCentrar?: boolean;
+  onVerTodos?: () => void;
   onCentrar?: (e: React.MouseEvent) => void;
   /** Texto adicional bajo Nivel 3 (ej: aviso de recálculo) — cliente */
   extraNota?: React.ReactNode;
@@ -202,6 +204,7 @@ export function CorteCard({
   scrollOnActive = false,
   className = "",
   showCentrar = false,
+  onVerTodos,
   onCentrar,
   extraNota,
   hideTracker = false,
@@ -309,6 +312,46 @@ export function CorteCard({
   const kicker = kickerOverride === undefined ? kickerDefault : kickerOverride;
 
   const hitosFinal = hitosOverride ?? i.hitos;
+
+  if (!isCliente) {
+    const programado = i.tipo === "programado";
+    const colorEvento = programado ? "text-[color:var(--desconexiones)]" : "text-primary";
+    const botonAzul = programado
+      ? "border-[var(--desconexiones)] text-[color:var(--desconexiones)] hover:bg-[var(--desconexiones)] hover:text-primary-foreground"
+      : "";
+    return (
+      <section ref={secRef} className={`min-w-0 bg-card text-left ${className}`} aria-label={`Corte en ${i.sector}`}>
+        <div className="space-y-ch-lg px-ch-lg py-ch-lg">
+          {kicker && <p className={`flex items-start gap-ch-sm text-base font-bold uppercase ${est === "vigente" ? colorEvento : "text-status-expired"}`}>
+            <span aria-hidden className="mt-1.5 size-3 shrink-0 rounded-full bg-current" />
+            {programado ? "Desconexión programada" : est === "vigente" ? "Corte no programado" : kicker.label}
+          </p>}
+          {nivel2}
+          {contextoNode && <p className="text-base font-semibold leading-relaxed text-foreground">{contextoNode}</p>}
+          <div>
+            <p className="mb-ch-sm text-sm font-semibold uppercase text-muted-foreground">Sectores</p>
+            <p className="flex items-start gap-ch-sm text-base font-semibold leading-relaxed text-foreground">
+              <MapPin aria-hidden className={`mt-0.5 size-5 shrink-0 ${colorEvento}`} />
+              {toTitleCase(i.sector)}
+            </p>
+          </div>
+        </div>
+        {!hideTracker && <div className="border-t border-border px-ch-lg py-ch-lg">
+          <p className="mb-ch-base text-sm font-semibold uppercase text-muted-foreground">Estado de la reparación</p>
+          <Tracker hitos={hitosFinal} compact {...(trackerCurrentLabel ? { currentLabel: trackerCurrentLabel } : {})} />
+        </div>}
+        {(showCentrar || onVerTodos) && <div className="flex justify-end px-ch-lg pb-ch-lg pt-ch-sm">
+          <Button type="button" variant="secondary" className={`h-auto min-w-0 whitespace-normal text-base ${botonAzul}`} onClick={(e) => {
+            e.stopPropagation();
+            if (activo && onVerTodos) onVerTodos();
+            else { onCentrar?.(e); onClick?.(); }
+          }}>
+            {activo && onVerTodos ? programado ? "Ver todas las desconexiones" : "Ver todos los cortes" : "Ver en el mapa"}
+          </Button>
+        </div>}
+      </section>
+    );
+  }
 
   const content = (
     <div className={`p-4 ${isCliente ? "sm:p-5" : ""}`}>

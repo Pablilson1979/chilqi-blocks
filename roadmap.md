@@ -6,3 +6,4 @@
 - [x] Verify all prototype states and responsive map interactions.
 
 - [x] Match the map toolbar reference, remove filter/restored controls, and verify shared width and footer clearance.
+- [ ] Adapt outage/disconnection cards to the reference and verify the in-card return-to-all action.
