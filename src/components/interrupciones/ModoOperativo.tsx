@@ -88,12 +88,6 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
   }, [q, categoria]);
 
   const seleccionada = items.find((i) => i.nr_orden === sel) ?? null;
-  const verTodos = () => {
-    setSel(null);
-    setSelFromMap(false);
-    setQ("");
-    setMobileView("lista");
-  };
   const itemsLista = selFromMap && seleccionada ? [seleccionada] : items;
   const grouped = useMemo(() => agruparPorComuna(itemsLista), [itemsLista]);
 
@@ -216,7 +210,24 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
           {Object.keys(grouped).length === 0 && <ListaVacia />}
 
 
-          <div className="space-y-ch-base">
+          {selFromMap && seleccionada && (
+            <div className="mb-2 flex items-center justify-between rounded-card border border-primary/40 bg-primary/5 px-3 py-2 text-xs">
+              <span className="text-foreground">
+                Mostrando el corte seleccionado en el mapa
+              </span>
+              <button
+                onClick={() => {
+                  setSel(null);
+                  setSelFromMap(false);
+                }}
+                className="inline-flex items-center gap-1 rounded-pill px-2 py-1 font-semibold text-primary hover:bg-primary/10"
+              >
+                <X className="h-3 w-3" /> Ver todos
+              </button>
+            </div>
+          )}
+
+          <div className="space-y-2">
 
             {Object.entries(grouped)
               .sort((a, b) => b[1].length - a[1].length)
@@ -226,11 +237,11 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
                   comuna={comuna}
                   items={arr}
                   sel={sel}
-                  onVerTodos={verTodos}
                   onSelect={(id) => {
-                    setSel(id);
-                    setSelFromMap(true);
-                    setMobileView("mapa");
+                    const same = id === sel;
+                    setSel(same ? null : id);
+                    setSelFromMap(false);
+                    if (!same) setMobileView("mapa");
                   }}
                 />
               ))}
@@ -274,7 +285,7 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
               >
                 <X className="h-4 w-4" />
               </button>
-              <CorteCard i={seleccionada} variant="mapa" activo onVerTodos={verTodos} hideTracker={seleccionada.tipo === "programado"} className="rounded-card border border-border" />
+              <CorteCard i={seleccionada} variant="mapa" activo />
             </div>
           )}
           <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
@@ -316,13 +327,11 @@ function ComunaAccordion({
   items,
   sel,
   onSelect,
-  onVerTodos,
 }: {
   comuna: string;
   items: Interrupcion[];
   sel: string | null;
   onSelect: (id: string) => void;
-  onVerTodos: () => void;
 }) {
   const contieneSel = sel !== null && items.some((i) => i.nr_orden === sel);
   const [open, setOpen] = useState(contieneSel);
@@ -334,24 +343,22 @@ function ComunaAccordion({
   const vencidas = items.filter((i) => estadoETR(i) !== "vigente").length;
   const soloProgramadas = items.every((i) => i.tipo === "programado");
   return (
-    <section className={`overflow-hidden rounded-card border bg-card ${open ? soloProgramadas ? "border-[var(--desconexiones)]" : "border-primary" : "border-border"}`}>
-      <Button
-        type="button"
-        variant="ghost"
+    <section className="overflow-hidden rounded-card border border-border bg-card">
+      <button
         onClick={() => setOpen((o) => !o)}
-        className="h-auto w-full justify-start gap-ch-md whitespace-normal rounded-none px-ch-lg py-ch-base text-left"
+        className="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-muted/50"
         aria-expanded={open}
       >
         <span
-           className={`inline-flex size-11 shrink-0 items-center justify-center rounded-full text-base font-bold text-primary-foreground ${
+          className={`inline-flex h-9 min-w-9 items-center justify-center rounded-full px-2 text-sm font-bold text-primary-foreground ${
             soloProgramadas ? "bg-[var(--desconexiones)]" : "bg-primary"
           }`}
         >
           {items.length}
         </span>
         <div className="min-w-0 flex-1">
-          <h2 className="text-lg font-bold text-foreground">{comuna}</h2>
-          <p className="mt-1 text-base font-normal leading-snug text-muted-foreground">
+          <h2 className="truncate text-sm font-bold text-foreground">{comuna}</h2>
+          <p className="truncate text-sm text-muted-foreground">
             {items.length} {soloProgramadas ? (items.length === 1 ? "desconexión" : "desconexiones") : (items.length === 1 ? "interrupción" : "interrupciones")}
             {!soloProgramadas && <> · {afectados.toLocaleString("es-CL")} clientes afectados</>}
             {!soloProgramadas && vencidas > 0 && (
@@ -369,9 +376,9 @@ function ComunaAccordion({
             open ? "rotate-180" : ""
           }`}
         />
-      </Button>
+      </button>
       {open && (
-        <div className="divide-y divide-border border-t border-border">
+        <div className="space-y-2 border-t border-border bg-background/40 p-3">
           {items.map((i) => (
             <CorteCard
               key={i.nr_orden}
@@ -380,7 +387,6 @@ function ComunaAccordion({
               activo={sel === i.nr_orden}
               onClick={() => onSelect(i.nr_orden)}
               showCentrar
-              onVerTodos={onVerTodos}
               scrollOnActive
               hideTracker={i.tipo === "programado"}
             />
