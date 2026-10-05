@@ -157,7 +157,8 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
                 }
               }}
               placeholder="Buscar por comuna o sector..."
-              className="min-w-0 !h-11 !min-h-0 !py-0 rounded-pill border-border pl-11 pr-12 text-base md:text-sm"
+              style={{ height: 44, minHeight: 44 }}
+              className="min-w-0 py-0 rounded-pill border-border pl-11 pr-12 text-base md:text-sm"
             />
             {q && (
               <Button variant="ghost" size="icon" aria-label="Limpiar búsqueda" className="absolute right-1.5 top-1/2 size-7 -translate-y-1/2 rounded-full" onClick={() => { setQ(""); setSel(null); setSelFromMap(false); }}>
