@@ -101,11 +101,11 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
 
   return (
     <div className="ch-container min-w-0 py-ch-lg">
-      <section aria-label="Consulta de cortes" className="mb-ch-lg min-w-0 border border-border rounded-card bg-muted/50 p-ch-base sm:p-ch-lg">
+      <section aria-label="Consulta de cortes" className="mb-ch-lg min-w-0 border border-border rounded-card bg-[#F5F6F8] p-ch-base">
         <div className="mb-ch-base flex justify-center lg:justify-end" data-tour="toggle">
           {viewToggle}
         </div>
-        <div className="mb-ch-base grid min-w-0 gap-ch-md text-base text-muted-foreground lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+        <div className="mb-ch-base grid min-w-0 gap-ch-sm text-sm text-muted-foreground lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
           <div aria-live="polite" className="flex min-w-0 flex-wrap items-center gap-x-ch-lg gap-y-ch-sm">
             <span key={tick} title={`Actualizado ${haceCuanto(ULTIMA_ACTUALIZACION)}`}>Datos en línea</span>
             <span className="inline-flex items-center gap-ch-sm">
