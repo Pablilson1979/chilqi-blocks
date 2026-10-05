@@ -1,38 +1,31 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { ReactNode } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   INTERRUPCIONES,
-  REPUESTOS,
   ULTIMA_ACTUALIZACION,
   totales as totalesGlobales,
   agruparPorComuna,
   buscarPorNIS,
   estadoETR,
   type Interrupcion,
-  type EstadoETR,
-  type TipoCorte,
 } from "@/lib/interrupciones-data";
 import ClientOnlyMap from "./ClientOnlyMap";
 import { CorteCard, ListaVacia, haceCuanto } from "./shared";
 import TendenciaAfectados from "./TendenciaAfectados";
-import { Users, X, ChevronDown, Search, RefreshCw, CheckCircle2, SlidersHorizontal } from "lucide-react";
-
-const TIPOS: TipoCorte[] = ["no_programado", "programado"];
-const ESTADOS: EstadoETR[] = ["vigente", "vencida", "investigacion"];
+import { Users, X, ChevronDown, Hash } from "lucide-react";
 
 type CategoriaMapa = "interrupciones" | "desconexiones";
 
-export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
+export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () => void; viewToggle: ReactNode }) {
   const [categoria, setCategoria] = useState<CategoriaMapa>("interrupciones");
   const [q, setQ] = useState("");
-  const [comunas, setComunas] = useState<Set<string>>(new Set());
-  const [tipos, setTipos] = useState<Set<TipoCorte>>(new Set());
-  const [estados, setEstados] = useState<Set<EstadoETR>>(new Set());
   const [sel, setSel] = useState<string | null>(null);
   const [selFromMap, setSelFromMap] = useState(false);
   const [mobileView, setMobileView] = useState<"lista" | "mapa">(
     typeof window !== "undefined" && window.innerWidth < 1024 ? "mapa" : "lista",
   );
-  const [showRepuestos, setShowRepuestos] = useState(false);
   const tGlobal = useMemo(() => totalesGlobales(), []);
   const [tick, setTick] = useState(0);
   useEffect(() => {
@@ -67,11 +60,6 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
 
 
 
-  const listaComunas = useMemo(
-    () => Array.from(new Set(INTERRUPCIONES.map((i) => i.comuna))).sort(),
-    [],
-  );
-
   const items = useMemo(() => {
     const clean = q.trim();
     const coincideCategoria = (i: Interrupcion) =>
@@ -83,18 +71,12 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
         return INTERRUPCIONES.filter((i) => {
           if (!coincideCategoria(i)) return false;
           if (i.nr_orden !== r.i.nr_orden) return false;
-          if (comunas.size && !comunas.has(i.comuna)) return false;
-          if (tipos.size && !tipos.has(i.tipo)) return false;
-          if (estados.size && !estados.has(estadoETR(i))) return false;
           return true;
         });
       }
     }
     return INTERRUPCIONES.filter((i) => {
       if (!coincideCategoria(i)) return false;
-      if (comunas.size && !comunas.has(i.comuna)) return false;
-      if (tipos.size && !tipos.has(i.tipo)) return false;
-      if (estados.size && !estados.has(estadoETR(i))) return false;
       if (clean) {
         const s = clean.toLowerCase();
         if (!(i.nr_orden.toLowerCase().includes(s) || i.sector.toLowerCase().includes(s) || i.comuna.toLowerCase().includes(s))) {
@@ -103,7 +85,7 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
       }
       return true;
     });
-  }, [q, comunas, tipos, estados, categoria]);
+  }, [q, categoria]);
 
   const seleccionada = items.find((i) => i.nr_orden === sel) ?? null;
   const itemsLista = selFromMap && seleccionada ? [seleccionada] : items;
@@ -117,182 +99,73 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
     [items],
   );
 
-  function toggle<T>(set: Set<T>, v: T, setter: (n: Set<T>) => void) {
-    const n = new Set(set);
-    if (n.has(v)) n.delete(v);
-    else n.add(v);
-    setter(n);
-  }
-
   return (
-    <div className="mx-auto w-full max-w-[1400px] px-4 py-6">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <div
-          aria-live="polite"
-          className="hidden flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground lg:flex"
-        >
-          <span className="inline-flex items-center gap-1.5" key={tick}>
-            <RefreshCw className="h-3 w-3" /> Actualizado {haceCuanto(ULTIMA_ACTUALIZACION)}
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <span className="h-2 w-2 rounded-full bg-[color:var(--status-active)]" />
-            {tGlobal.activos} corte{tGlobal.activos === 1 ? "" : "s"} activos
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <Users className="h-3 w-3" /> {tGlobal.afectados.toLocaleString("es-CL")} afectados
-          </span>
+    <div className="ch-container min-w-0 py-ch-lg">
+      <section aria-label="Consulta de cortes" className="mb-ch-lg min-w-0 border border-border rounded-card bg-muted/50 p-ch-base sm:p-ch-lg">
+        <div className="mb-ch-base flex justify-center lg:justify-end" data-tour="toggle">
+          {viewToggle}
         </div>
-        <p className="text-xs text-muted-foreground">
-          <strong className="text-foreground">{totales.cortes}</strong> cortes filtrados ·{" "}
-          <strong className="text-foreground">{totales.afectados.toLocaleString("es-CL")}</strong>{" "}
-          clientes
-        </p>
-      </div>
-
-      {/* Tabs + buscador + Ver repuestos */}
-      <div className="sticky top-0 z-20 -mx-4 mb-4 border-b border-border bg-background/80 px-4 py-3 backdrop-blur">
-        <div className="mb-3 flex items-center gap-1 rounded-pill bg-muted p-1 sm:w-fit" role="tablist" aria-label="Tipo de evento">
-          <button
-            type="button"
-            role="tab"
-            aria-selected={categoria === "interrupciones"}
-            onClick={() => {
-              setCategoria("interrupciones");
-              setSel(null);
-              setSelFromMap(false);
-            }}
-            className={`flex-1 rounded-pill px-4 py-2 text-xs font-bold transition sm:flex-none ${
-              categoria === "interrupciones" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            Interrupciones
-          </button>
-          <button
-            type="button"
-            role="tab"
-            aria-selected={categoria === "desconexiones"}
-            onClick={() => {
-              setCategoria("desconexiones");
-              setSel(null);
-              setSelFromMap(false);
-            }}
-            className={`flex-1 rounded-pill px-4 py-2 text-xs font-bold transition sm:flex-none ${
-              categoria === "desconexiones"
-                ? "bg-[color:var(--status-scheduled)] text-primary-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            Desconexiones
-          </button>
+        <div className="mb-ch-base grid min-w-0 gap-ch-md text-base text-muted-foreground lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+          <div aria-live="polite" className="flex min-w-0 flex-wrap items-center gap-x-ch-lg gap-y-ch-sm">
+            <span key={tick} title={`Actualizado ${haceCuanto(ULTIMA_ACTUALIZACION)}`}>Datos en línea</span>
+            <span className="inline-flex items-center gap-ch-sm">
+              <span aria-hidden className="size-3 shrink-0 rounded-full bg-status-active" />
+              {tGlobal.activos} cortes activos
+            </span>
+            <span className="inline-flex items-center gap-ch-sm">
+              <Users className="size-5 shrink-0" aria-hidden /> {tGlobal.afectados.toLocaleString("es-CL")} afectados
+            </span>
+          </div>
+          <p className="min-w-0 lg:text-right">
+            <strong className="text-foreground">{totales.cortes}</strong> cortes filtrados ·{" "}
+            <strong className="text-foreground">{totales.afectados.toLocaleString("es-CL")}</strong> clientes
+          </p>
         </div>
-        <div className="flex flex-wrap items-center gap-2" data-tour="buscador">
-          <div className="relative flex-1 min-w-[220px]">
-            <Search className="pointer-events-none absolute left-3.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
-            <input
+        <div className="grid min-w-0 gap-ch-md lg:grid-cols-[auto_minmax(0,1fr)] lg:items-center">
+          <div className="grid min-w-0 grid-cols-2 gap-1 rounded-pill bg-muted p-1" role="tablist" aria-label="Tipo de evento">
+            {(["interrupciones", "desconexiones"] as const).map((tipo) => (
+              <Button
+                key={tipo}
+                type="button"
+                role="tab"
+                aria-selected={categoria === tipo}
+                variant={categoria === tipo ? "primary" : "ghost"}
+                className="min-w-0 rounded-pill px-3 text-base sm:px-5"
+                onClick={() => {
+                  setCategoria(tipo);
+                  setSel(null);
+                  setSelFromMap(false);
+                }}
+              >
+                {tipo === "interrupciones" ? "Interrupciones" : "Desconexiones"}
+              </Button>
+            ))}
+          </div>
+          <div className="relative min-w-0" data-tour="buscador">
+            <Hash className="pointer-events-none absolute left-4 top-1/2 size-5 -translate-y-1/2 text-muted-foreground" aria-hidden />
+            <Input
               value={q}
+              aria-label="Buscar cortes por comuna, sector, cliente u orden"
               onChange={(e) => {
                 const v = e.target.value;
                 setQ(v);
-                // Enfocar automáticamente el corte de un N° cliente válido
                 const clean = v.trim();
                 if (/^\d{5,8}$/.test(clean)) {
                   const r = buscarPorNIS(clean);
                   if (r.kind === "masiva") setSel(r.i.nr_orden);
                 }
               }}
-              placeholder="Buscar por N° de cliente, N° de orden, sector o comuna..."
-              className="h-10 w-full rounded-pill border border-border bg-card pl-9 pr-4 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+              placeholder="Buscar por comuna o sector..."
+              className="min-w-0 rounded-pill border-border pl-11 pr-14 md:text-base"
             />
+            {q && (
+              <Button variant="ghost" size="icon" aria-label="Limpiar búsqueda" className="absolute right-2 top-1/2 -translate-y-1/2" onClick={() => { setQ(""); setSel(null); setSelFromMap(false); }}>
+                <X aria-hidden />
+              </Button>
+            )}
           </div>
-
-          {categoria === "interrupciones" && <button
-            type="button"
-            data-tour="repuestos"
-            onClick={() => setShowRepuestos((v) => !v)}
-            aria-pressed={showRepuestos}
-            className={`inline-flex h-10 items-center gap-2 rounded-pill border px-3.5 text-xs font-semibold transition ${
-              showRepuestos
-                ? "border-[color:var(--status-ok)] bg-[color-mix(in_oklab,var(--status-ok)_12%,transparent)] text-[color:var(--status-ok)]"
-                : "border-border bg-card text-foreground hover:bg-muted"
-            }`}
-            title="Muestra en el mapa los servicios repuestos en las últimas 24h"
-          >
-            <CheckCircle2 className="h-3.5 w-3.5" />
-            {showRepuestos ? "Ocultando repuestos" : "Ver repuestos"}
-            <span
-              className={`inline-flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-sm font-bold ${
-                showRepuestos
-                  ? "bg-[color:var(--status-ok)] text-primary-foreground"
-                  : "bg-muted text-muted-foreground"
-              }`}
-            >
-              {REPUESTOS.length}
-            </span>
-          </button>}
-
-          {q ? (
-            <button
-              onClick={() => setQ("")}
-              className="inline-flex items-center gap-1 rounded-pill px-3 py-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground"
-            >
-              <X className="h-3 w-3" /> Limpiar
-            </button>
-          ) : null}
         </div>
-
-        <details className="mt-3 rounded-card border border-border bg-card">
-          <summary className="ch-touch flex cursor-pointer list-none items-center justify-between gap-ch-sm px-ch-base py-ch-sm text-base font-semibold text-foreground">
-            <span className="inline-flex items-center gap-ch-sm">
-              <SlidersHorizontal className="size-4 text-primary" aria-hidden />
-              Filtrar resultados
-            </span>
-            <span className="text-sm font-medium text-muted-foreground">
-              {comunas.size + tipos.size + estados.size > 0
-                ? `${comunas.size + tipos.size + estados.size} activos`
-                : "Sin filtros"}
-            </span>
-          </summary>
-          <div className="grid gap-ch-base border-t border-border p-ch-base lg:grid-cols-3">
-            <FilterGroup title="Comuna">
-              {listaComunas.map((comuna) => (
-                <FilterButton
-                  key={comuna}
-                  selected={comunas.has(comuna)}
-                  onClick={() => toggle(comunas, comuna, setComunas)}
-                >
-                  {comuna}
-                </FilterButton>
-              ))}
-            </FilterGroup>
-            <FilterGroup title="Tipo de corte">
-              {TIPOS.map((tipo) => (
-                <FilterButton
-                  key={tipo}
-                  selected={tipos.has(tipo)}
-                  onClick={() => toggle(tipos, tipo, setTipos)}
-                >
-                  {tipo === "programado" ? "Programado" : "No programado"}
-                </FilterButton>
-              ))}
-            </FilterGroup>
-            <FilterGroup title="Reposición estimada">
-              {ESTADOS.map((estado) => (
-                <FilterButton
-                  key={estado}
-                  selected={estados.has(estado)}
-                  onClick={() => toggle(estados, estado, setEstados)}
-                >
-                  {estado === "vigente"
-                    ? "Con hora vigente"
-                    : estado === "vencida"
-                      ? "Hora en actualización"
-                      : "En investigación"}
-                </FilterButton>
-              ))}
-            </FilterGroup>
-          </div>
-        </details>
-      </div>
+      </section>
 
       <TendenciaAfectados afectadosActuales={tGlobal.afectados} />
 
@@ -372,13 +245,13 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
         <div
           data-tour="mapa"
           ref={mapaWrapRef}
-          className={`min-w-0 lg:sticky lg:top-24 lg:h-[calc(100vh-8rem)] ${
+          className={`min-w-0 lg:sticky lg:top-24 lg:self-start ${
             mobileView === "lista" ? "hidden lg:block" : ""
           }`}
         >
 
           <div
-            className={`lg:h-full ${
+            className={`lg:h-[min(65vh,640px)] ${
               seleccionada ? "h-[48svh]" : "h-[calc(100vh-14rem)]"
             }`}
           >
@@ -390,7 +263,6 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
                 setSel(id);
                 setSelFromMap(true);
               }}
-              {...(showRepuestos ? { repuestos: REPUESTOS } : {})}
               height="100%"
             />
           </div>
@@ -413,20 +285,18 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
             <LegendDot color="var(--status-active)" label="Falla imprevista con hora estimada" />
             <LegendDot color="var(--status-scheduled)" label="Trabajo programado" />
             <LegendDot color="var(--status-expired)" label="Sin hora confirmada" />
-            {showRepuestos && (
-              <LegendDot color="var(--status-ok)" label="Repuesto (últimas 24h)" />
-            )}
           </div>
-          <button
+          <Button
             type="button"
+            variant="secondary"
             onClick={() => {
               onVolver();
               window.setTimeout(() => document.querySelector("#reportar")?.scrollIntoView({ behavior: "smooth" }), 100);
             }}
-            className="mt-4 flex min-h-11 w-full items-center justify-center rounded-pill border border-primary bg-card px-5 py-2.5 text-center text-sm font-bold text-primary transition hover:bg-primary/5"
+            className="mt-ch-base h-auto w-full min-w-0 whitespace-normal px-ch-base py-ch-md text-center text-base"
           >
             Reportar un corte que no aparece en el mapa
-          </button>
+          </Button>
         </div>
       </div>
     </div>
@@ -516,40 +386,6 @@ function LegendDot({ color, label }: { color: string; label: string }) {
       />
       {label}
     </span>
-  );
-}
-
-function FilterGroup({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <fieldset>
-      <legend className="mb-ch-sm text-sm font-bold text-foreground">{title}</legend>
-      <div className="flex flex-wrap gap-ch-sm">{children}</div>
-    </fieldset>
-  );
-}
-
-function FilterButton({
-  selected,
-  onClick,
-  children,
-}: {
-  selected: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      aria-pressed={selected}
-      onClick={onClick}
-      className={`ch-touch rounded-pill border px-ch-md py-ch-sm text-sm font-semibold transition-colors ${
-        selected
-          ? "border-info bg-info-soft text-info"
-          : "border-border bg-surface text-foreground hover:border-info"
-      }`}
-    >
-      {children}
-    </button>
   );
 }
 

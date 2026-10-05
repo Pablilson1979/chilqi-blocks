@@ -88,15 +88,17 @@ function InterrupcionesPage() {
             </Button>
           </div>
 
-          <div className="mt-ch-lg flex justify-center lg:justify-end" data-tour="toggle">
-            <ViewToggle vista={vista} onChange={cambiarVista} />
-          </div>
+          {vista === "cliente" && (
+            <div className="mt-ch-lg flex justify-center lg:justify-end" data-tour="toggle">
+              <ViewToggle vista={vista} onChange={cambiarVista} />
+            </div>
+          )}
         </div>
 
         {vista === "cliente" ? (
           <ModoCliente onIrOperativo={() => cambiarVista("operativa")} />
         ) : (
-          <ModoOperativo onVolver={() => cambiarVista("cliente")} />
+          <ModoOperativo onVolver={() => cambiarVista("cliente")} viewToggle={<ViewToggle vista={vista} onChange={cambiarVista} />} />
         )}
       </main>
       <SiteFooter />
