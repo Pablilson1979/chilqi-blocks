@@ -114,10 +114,35 @@ export default function MapaCortes({
       layerRef.current = null;
     }
     markersById.current.clear();
+    tipoPorMarcador.current.clear();
+
+    const iconCreateFunction = (cluster: {
+      getChildCount: () => number;
+      getAllChildMarkers: () => L.CircleMarker[];
+    }) => {
+      const n = cluster.getChildCount();
+      const sizeClass =
+        n < 10 ? "marker-cluster-small" : n < 100 ? "marker-cluster-medium" : "marker-cluster-large";
+      const size = n < 10 ? 40 : n < 100 ? 50 : 60;
+      const markers = cluster.getAllChildMarkers() ?? [];
+      const allProgramado =
+        markers.length > 0 &&
+        markers.every((m) => tipoPorMarcador.current.get(m) === "programado");
+      return L.divIcon({
+        html: `<div class="marker-cluster ${sizeClass}${allProgramado ? " desconexiones" : ""}"><span>${n}</span></div>`,
+        className: "marker-cluster-icon",
+        iconSize: [size, size],
+      });
+    };
 
     const group = cluster
-      ? (L as unknown as { markerClusterGroup: (o?: unknown) => L.LayerGroup })
-          .markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 })
+      ? (L as unknown as {
+          markerClusterGroup: (o?: unknown) => L.LayerGroup;
+        }).markerClusterGroup({
+          showCoverageOnHover: false,
+          maxClusterRadius: 45,
+          iconCreateFunction,
+        })
       : L.layerGroup();
 
     items.forEach((it) => {
@@ -129,6 +154,7 @@ export default function MapaCortes({
         fillColor: color,
         fillOpacity: 0.95,
       });
+      tipoPorMarcador.current.set(marker, it.tipo);
       marker.bindTooltip(
         `<strong>${it.sector}</strong><br/>${it.comuna} · ${it.cant_clientes} clientes`,
         { direction: "top", offset: [0, -6] },
