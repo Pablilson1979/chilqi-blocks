@@ -115,7 +115,7 @@ function InterrupcionesPage() {
 
 function ViewToggle({ vista, onChange }: { vista: Vista; onChange: (vista: Vista) => void }) {
   return (
-    <div className="inline-flex rounded-pill bg-muted p-1" role="tablist" aria-label="Vista de cortes">
+    <div className="inline-flex rounded-pill bg-tab-track p-1" role="tablist" aria-label="Vista de cortes">
       <Button
         type="button"
         size="sm"

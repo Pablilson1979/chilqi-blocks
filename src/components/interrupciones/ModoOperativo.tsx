@@ -122,7 +122,7 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
           </p>
         </div>
         <div className="grid min-w-0 gap-ch-md lg:grid-cols-[auto_minmax(0,1fr)] lg:items-center">
-          <div className="grid min-w-0 grid-cols-2 gap-1 rounded-pill bg-muted p-1" role="tablist" aria-label="Tipo de evento">
+          <div className="grid min-w-0 grid-cols-2 gap-1 rounded-pill bg-tab-track p-1" role="tablist" aria-label="Tipo de evento">
             {(["interrupciones", "desconexiones"] as const).map((tipo) => (
               <Button
                 key={tipo}
