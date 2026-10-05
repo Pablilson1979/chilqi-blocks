@@ -127,9 +127,9 @@ export default function ModoCliente({ onIrOperativo: _ }: { onIrOperativo: () =>
         <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-normal text-muted-foreground">
           <Zap className="h-3.5 w-3.5 text-primary" /> Estado de tu suministro
         </div>
-        <h1 className="text-2xl font-bold leading-tight text-foreground sm:text-[28px]">
+        <h2 className="text-2xl font-bold leading-tight text-foreground sm:text-[28px]">
           ¿Tu luz está cortada?
-        </h1>
+        </h2>
         <p className="mt-1 text-sm text-muted-foreground">
           Consulta por <strong>N° de cliente</strong>, <strong>dirección</strong> o <strong>N° de orden</strong>.
         </p>
