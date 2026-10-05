@@ -148,7 +148,7 @@ export default function ModoCliente({
           ¿Estás sin luz?
         </h2>
         <p className="mt-1 text-base text-muted-foreground">
-          Consulta por <strong>N° de cliente</strong>, <strong>dirección</strong> o <strong>N° de orden</strong>.
+          Consulta por <strong>N° de cliente</strong>, <strong>dirección</strong> o <strong>N° de solicitud</strong>.
         </p>
 
         {/* Tabs */}
@@ -157,7 +157,7 @@ export default function ModoCliente({
             [
               { id: "nis", label: "N° cliente", icon: Hash },
               { id: "direccion", label: "Dirección", icon: Home },
-              { id: "orden", label: "N° de orden", icon: ClipboardList },
+              { id: "orden", label: "N° de solicitud", icon: ClipboardList },
             ] as const
           ).map(({ id, label, icon: Icon }) => (
             <button
@@ -231,7 +231,7 @@ export default function ModoCliente({
 
         {tab === "orden" && (
           <form onSubmit={onBuscarOrden} className="mt-4">
-            <label htmlFor="orden" className="sr-only">N° de orden</label>
+            <label htmlFor="orden" className="sr-only">N° de solicitud</label>
             <div className="flex flex-col gap-2 sm:flex-row">
               <div className="relative flex-1">
                 <ClipboardList className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />

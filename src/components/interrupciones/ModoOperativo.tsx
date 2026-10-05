@@ -311,7 +311,7 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
             }}
             className="mt-ch-base h-auto w-full min-w-0 whitespace-normal px-ch-base py-ch-md text-center text-base"
           >
-            Reportar un corte que no aparece en el mapa
+            Reportar un corte
           </Button>
         </div>
       </div>
