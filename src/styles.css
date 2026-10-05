@@ -166,6 +166,9 @@
   --status-expired: var(--muted-foreground);
   --status-ok: var(--success);
 
+  /* Pista de tabs: gris más oscuro que el fondo para que el tab se lea como tal */
+  --tab-track: oklch(0.9235 0.0044 286.35); /* ≈ #E7E7EA */
+
   --border: oklch(0.8867 0 0); /* #D9D9D9 */
   --border-strong: oklch(0.8429 0.0113 274.87);
   --input: oklch(0.8429 0.0113 274.87);
@@ -237,6 +240,8 @@
   --status-scheduled: var(--info);
   --status-expired: var(--muted-foreground);
   --status-ok: var(--success);
+
+  --tab-track: oklch(0.36 0.023 264.2);
 
 
   --border: oklch(1 0 0 / 12%);
