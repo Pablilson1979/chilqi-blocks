@@ -253,7 +253,6 @@ export default function ModoCliente({
             </p>
           </form>
         )}
-      </div>
 
       {/* Resultado dentro de la card, bajo el formulario */}
       {escenario && (
