@@ -143,7 +143,7 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
             ))}
           </div>
           <div className="relative min-w-0" data-tour="buscador">
-            <Hash className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+            <Hash className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
             <Input
               value={q}
               aria-label="Buscar cortes por comuna, sector, cliente u orden"
@@ -157,10 +157,10 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
                 }
               }}
               placeholder="Buscar por comuna o sector..."
-              className="min-w-0 h-11 rounded-pill border-border pl-10 pr-12 text-base md:text-sm"
+              className="min-w-0 h-11 rounded-pill border-border pl-11 pr-12 text-base md:text-sm"
             />
             {q && (
-              <Button variant="ghost" size="icon" aria-label="Limpiar búsqueda" className="absolute right-2 top-1/2 -translate-y-1/2" onClick={() => { setQ(""); setSel(null); setSelFromMap(false); }}>
+              <Button variant="ghost" size="icon" aria-label="Limpiar búsqueda" className="absolute right-1.5 top-1/2 size-7 -translate-y-1/2 rounded-full" onClick={() => { setQ(""); setSel(null); setSelFromMap(false); }}>
                 <X aria-hidden />
               </Button>
             )}
