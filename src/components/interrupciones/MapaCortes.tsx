@@ -45,6 +45,8 @@ export default function MapaCortes({
   const layerRef = useRef<L.LayerGroup | null>(null);
   const polyRef = useRef<L.Polygon | null>(null);
   const markersById = useRef<Map<string, L.CircleMarker>>(new Map());
+  // Marca cada círculo del mapa con su tipo, para pintar los clusters de desconexiones en azul
+  const tipoPorMarcador = useRef<Map<L.CircleMarker, string>>(new Map());
   const hintTimer = useRef<number | null>(null);
   const [showHint, setShowHint] = useState(false);
   const isMac =
