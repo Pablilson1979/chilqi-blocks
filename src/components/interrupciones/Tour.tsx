@@ -49,6 +49,12 @@ const ALL_STEPS: Step[] = [
   },
 ];
 
+const FALLBACK_STEP: Step = {
+  selector: '[data-tour="toggle"]',
+  title: "Cambia de vista cuando quieras",
+  body: "Elige la información que necesitas consultar.",
+};
+
 type Rect = { top: number; left: number; width: number; height: number };
 
 export default function Tour({
@@ -62,7 +68,7 @@ export default function Tour({
 }) {
   const STEPS = vistaActual === "cliente" ? ALL_STEPS.slice(0, 1) : ALL_STEPS;
   const [i, setI] = useState(0);
-  const step = STEPS[i];
+  const step = STEPS[i] ?? FALLBACK_STEP;
   const [rect, setRect] = useState<Rect | null>(null);
   const [vh, setVh] = useState(0);
   const [vw, setVw] = useState(0);

@@ -44,7 +44,10 @@ export default function TendenciaAfectados({ afectadosActuales }: { afectadosAct
   // Delta última hora vs ahora (prototipo): diferencia entre los dos últimos puntos.
   const delta = useMemo(() => {
     if (datos.length < 2) return 0;
-    return datos[datos.length - 1].afectados - datos[datos.length - 2].afectados;
+    const ultimo = datos.at(-1);
+    const anterior = datos.at(-2);
+    if (!ultimo || !anterior) return 0;
+    return ultimo.afectados - anterior.afectados;
   }, [datos]);
   const subiendo = delta > 0;
 

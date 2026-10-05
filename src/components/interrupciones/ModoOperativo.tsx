@@ -337,7 +337,7 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
                 setSel(id);
                 setSelFromMap(true);
               }}
-              repuestos={showRepuestos ? REPUESTOS : undefined}
+              {...(showRepuestos ? { repuestos: REPUESTOS } : {})}
               height="100%"
             />
           </div>

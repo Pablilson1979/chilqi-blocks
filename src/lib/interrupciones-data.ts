@@ -182,7 +182,7 @@ function build(): Interrupcion[] {
       const lat = d.lat + jitterLat;
       const lng = d.lng + jitterLng;
 
-      const sector = d.sectores[k % d.sectores.length];
+      const sector = d.sectores[k % d.sectores.length] ?? d.comuna;
       const numero = Math.floor(100 + R() * 8999);
       const calles = ["Av. Principal", "Calle Bellavista", "Calle España", "Los Carrera", "San Martín", "Pedro Montt", "Av. Argentina", "Calle Blanco"];
       const calle = calles[Math.floor(R() * calles.length)];

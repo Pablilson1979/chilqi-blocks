@@ -47,10 +47,13 @@ const ESCENARIOS: Array<{ id: EscenarioId; label: string }> = [
 const NIS_DEMO = "1234567";
 
 function pickBase(): Interrupcion {
-  return (
+  const selected =
     INTERRUPCIONES.find((i) => i.tipo !== "programado" && estadoETR(i) === "vigente") ??
-    INTERRUPCIONES[0]
-  );
+    INTERRUPCIONES[0];
+  if (!selected) {
+    throw new Error("No hay interrupciones disponibles para el prototipo");
+  }
+  return selected;
 }
 
 function isoMinusMin(m: number): string {

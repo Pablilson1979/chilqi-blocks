@@ -100,9 +100,9 @@ function derive5Steps(hitos: Hito[]): Array<{ label: string; at: string | null }
   hitos.forEach((h) => (map[h.key] = h.at));
   // "revision" se marca cuando ya hay reposición; si terreno está hecho y repuesto no, queda como en curso (at: null).
   let revisionAt: string | null = null;
-  if (map.repuesto && map.terreno) {
-    const t = new Date(map.terreno).getTime();
-    const r = new Date(map.repuesto).getTime();
+  if (map["repuesto"] && map["terreno"]) {
+    const t = new Date(map["terreno"]).getTime();
+    const r = new Date(map["repuesto"]).getTime();
     revisionAt = new Date(t + (r - t) / 2).toISOString();
   }
   return OFFICIAL_STEPS.map(({ key, label }) => {
@@ -366,7 +366,11 @@ export function CorteCard({
           <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
             Estado de la reparación
           </p>
-          <Tracker hitos={hitosFinal} compact={compactTracker} currentLabel={trackerCurrentLabel} />
+          <Tracker
+            hitos={hitosFinal}
+            compact={compactTracker}
+            {...(trackerCurrentLabel ? { currentLabel: trackerCurrentLabel } : {})}
+          />
         </div>
       )}
 
