@@ -157,6 +157,9 @@
   --info-soft: oklch(0.9556 0.0164 233); /* #E3F2FD */
   --info-tint: oklch(0.8963 0.0463 228); /* azul claro para iconos */
 
+  --desconexiones: #0080C3; /* azul del modo desconexiones (tab activo, círculos del mapa) */
+  --desconexiones-strong: #006DA9; /* sombra del azul para hover del tab activo */
+
   --warning: oklch(0.772 0.1738 64.55); /* #FF9900 */
   --warning-foreground: oklch(0.3899 0.0366 264.01);
   --warning-soft: oklch(0.9683 0.0246 87); /* #FFF3E0 */
@@ -241,6 +244,9 @@
   --status-scheduled: var(--info);
   --status-expired: var(--muted-foreground);
   --status-ok: var(--success);
+
+  --desconexiones: #0080C3;
+  --desconexiones-strong: #006DA9;
 
   --tab-track: oklch(0.36 0.023 264.2);
 
