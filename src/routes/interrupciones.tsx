@@ -78,6 +78,7 @@ function InterrupcionesPage() {
               <span aria-hidden className="h-1 w-16 rounded-pill bg-primary" />
             </div>
           </div>
+        </div>
 
         {vista === "cliente" ? (
           <ModoCliente
