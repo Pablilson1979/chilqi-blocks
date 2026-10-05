@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import {
   buscarPorNIS,
   buscarPorDireccion,
@@ -81,7 +81,13 @@ function hitosForzados(avance: number): Hito[] {
 
 type TabId = "nis" | "direccion" | "orden";
 
-export default function ModoCliente({ onIrOperativo: _ }: { onIrOperativo: () => void }) {
+export default function ModoCliente({
+  onIrOperativo: _,
+  viewToggle,
+}: {
+  onIrOperativo: () => void;
+  viewToggle: ReactNode;
+}) {
   const [tab, setTab] = useState<TabId>("nis");
   const [nis, setNis] = useState("");
   const [dir, setDir] = useState("");
