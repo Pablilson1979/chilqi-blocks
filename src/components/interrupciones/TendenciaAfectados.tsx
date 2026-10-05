@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { ChevronDown, TrendingDown, TrendingUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import {
   Area,
   AreaChart,
