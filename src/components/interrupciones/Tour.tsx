@@ -40,13 +40,7 @@ const ALL_STEPS: Step[] = [
     mobileView: "mapa",
     padding: 6,
   },
-  {
-    selector: '[data-tour="repuestos"]',
-    title: "Mira los repuestos recientes",
-    body: "Activa “Ver repuestos” para mostrar en el mapa los servicios que ya volvieron en las últimas 24 horas.",
-    vista: "operativa",
-    padding: 8,
-  },
+
 ];
 
 const FALLBACK_STEP: Step = {
