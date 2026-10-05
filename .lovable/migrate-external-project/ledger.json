@@ -1,0 +1,17 @@
+{
+  "source_project": "Emergency Response Hub",
+  "capabilities": [
+    {"capability":"application code","source":"Emergency Response Hub snapshot","outcome":"migrate Mi suministro and Mapa de cortes into /interrupciones","status":"in_progress","next_action":"copy and adapt feature modules"},
+    {"capability":"schema","source":"none detected","outcome":"not applicable","status":"verified","next_action":"none"},
+    {"capability":"records","source":"deterministic prototype data in source code","outcome":"migrate prototype records","status":"in_progress","next_action":"verify all scenarios"},
+    {"capability":"authentication and identities","source":"none detected","outcome":"not applicable","status":"verified","next_action":"none"},
+    {"capability":"authorization","source":"none detected","outcome":"not applicable","status":"verified","next_action":"none"},
+    {"capability":"uploaded file bytes","source":"no feature assets required","outcome":"not applicable","status":"verified","next_action":"none"},
+    {"capability":"external providers","source":"OpenStreetMap tile service","outcome":"preserve","status":"in_progress","next_action":"verify tiles load"},
+    {"capability":"public endpoints and callbacks","source":"none detected","outcome":"not applicable","status":"verified","next_action":"none"},
+    {"capability":"schedules","source":"none detected","outcome":"not applicable","status":"verified","next_action":"none"},
+    {"capability":"secrets","source":"none required","outcome":"not applicable","status":"verified","next_action":"none"},
+    {"capability":"cutover","source":"home and navigation placeholders","outcome":"route Cortes and Ver Cortes to /interrupciones","status":"in_progress","next_action":"verify navigation"},
+    {"capability":"verification","source":"responsive feature flows","outcome":"desktop and mobile browser validation","status":"pending","next_action":"test after implementation"}
+  ]
+}
