@@ -349,7 +349,11 @@ function ComunaAccordion({
         className="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-muted/50"
         aria-expanded={open}
       >
-        <span className="inline-flex h-9 min-w-9 items-center justify-center rounded-full bg-primary px-2 text-sm font-bold text-primary-foreground">
+        <span
+          className={`inline-flex h-9 min-w-9 items-center justify-center rounded-full px-2 text-sm font-bold text-primary-foreground ${
+            soloProgramadas ? "bg-[var(--desconexiones)]" : "bg-primary"
+          }`}
+        >
           {items.length}
         </span>
         <div className="min-w-0 flex-1">
