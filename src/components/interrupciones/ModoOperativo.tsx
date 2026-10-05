@@ -14,7 +14,7 @@ import {
 import ClientOnlyMap from "./ClientOnlyMap";
 import { CorteCard, ListaVacia, haceCuanto } from "./shared";
 import TendenciaAfectados from "./TendenciaAfectados";
-import { Users, X, ChevronDown, Search, RefreshCw, CheckCircle2 } from "lucide-react";
+import { Users, X, ChevronDown, Search, RefreshCw, CheckCircle2, SlidersHorizontal } from "lucide-react";
 
 const TIPOS: TipoCorte[] = ["no_programado", "programado"];
 const ESTADOS: EstadoETR[] = ["vigente", "vencida", "investigacion"];
@@ -239,6 +239,59 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
             </button>
           ) : null}
         </div>
+
+        <details className="mt-3 rounded-card border border-border bg-card">
+          <summary className="ch-touch flex cursor-pointer list-none items-center justify-between gap-ch-sm px-ch-base py-ch-sm text-base font-semibold text-foreground">
+            <span className="inline-flex items-center gap-ch-sm">
+              <SlidersHorizontal className="size-4 text-primary" aria-hidden />
+              Filtrar resultados
+            </span>
+            <span className="text-sm font-medium text-muted-foreground">
+              {comunas.size + tipos.size + estados.size > 0
+                ? `${comunas.size + tipos.size + estados.size} activos`
+                : "Sin filtros"}
+            </span>
+          </summary>
+          <div className="grid gap-ch-base border-t border-border p-ch-base lg:grid-cols-3">
+            <FilterGroup title="Comuna">
+              {listaComunas.map((comuna) => (
+                <FilterButton
+                  key={comuna}
+                  selected={comunas.has(comuna)}
+                  onClick={() => toggle(comunas, comuna, setComunas)}
+                >
+                  {comuna}
+                </FilterButton>
+              ))}
+            </FilterGroup>
+            <FilterGroup title="Tipo de corte">
+              {TIPOS.map((tipo) => (
+                <FilterButton
+                  key={tipo}
+                  selected={tipos.has(tipo)}
+                  onClick={() => toggle(tipos, tipo, setTipos)}
+                >
+                  {tipo === "programado" ? "Programado" : "No programado"}
+                </FilterButton>
+              ))}
+            </FilterGroup>
+            <FilterGroup title="Reposición estimada">
+              {ESTADOS.map((estado) => (
+                <FilterButton
+                  key={estado}
+                  selected={estados.has(estado)}
+                  onClick={() => toggle(estados, estado, setEstados)}
+                >
+                  {estado === "vigente"
+                    ? "Con hora vigente"
+                    : estado === "vencida"
+                      ? "Hora en actualización"
+                      : "En investigación"}
+                </FilterButton>
+              ))}
+            </FilterGroup>
+          </div>
+        </details>
       </div>
 
       <TendenciaAfectados afectadosActuales={tGlobal.afectados} />
@@ -463,6 +516,40 @@ function LegendDot({ color, label }: { color: string; label: string }) {
       />
       {label}
     </span>
+  );
+}
+
+function FilterGroup({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <fieldset>
+      <legend className="mb-ch-sm text-sm font-bold text-foreground">{title}</legend>
+      <div className="flex flex-wrap gap-ch-sm">{children}</div>
+    </fieldset>
+  );
+}
+
+function FilterButton({
+  selected,
+  onClick,
+  children,
+}: {
+  selected: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      aria-pressed={selected}
+      onClick={onClick}
+      className={`ch-touch rounded-pill border px-ch-md py-ch-sm text-sm font-semibold transition-colors ${
+        selected
+          ? "border-info bg-info-soft text-info"
+          : "border-border bg-surface text-foreground hover:border-info"
+      }`}
+    >
+      {children}
+    </button>
   );
 }
 
