@@ -198,8 +198,8 @@ function build(): Interrupcion[] {
         sector,
         direccion: `${calle} •• ${numero}, ${d.comuna}`,
         causa: esProgramado
-          ? CAUSAS_P[Math.floor(R() * CAUSAS_P.length)]
-          : CAUSAS_NP[Math.floor(R() * CAUSAS_NP.length)],
+          ? (CAUSAS_P[Math.floor(R() * CAUSAS_P.length)] ?? "Mantención programada de redes")
+          : (CAUSAS_NP[Math.floor(R() * CAUSAS_NP.length)] ?? "Falla en investigación"),
         lat,
         lng,
         poligono: ring(lat, lng, 0.004 + R() * 0.004),
