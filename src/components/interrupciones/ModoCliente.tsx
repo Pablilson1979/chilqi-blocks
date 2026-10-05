@@ -11,6 +11,7 @@ import {
 } from "@/lib/interrupciones-data";
 import { CorteCard, formatHora } from "./shared";
 import ClientOnlyMap from "./ClientOnlyMap";
+import { Button } from "@/components/ui/button";
 import {
   Zap,
   Hash,
@@ -254,11 +255,7 @@ export default function ModoCliente({
         )}
       </div>
 
-      <div className="mx-auto w-full max-w-2xl">
-      {/* Chips de prueba — se eliminan en producción */}
-      <EscenariosChips escenario={escenario} onSelect={aplicarEscenario} onReset={reset} />
-
-      {/* Escenario forzado (prototipo) */}
+      {/* Resultado dentro de la card, bajo el formulario */}
       {escenario && (
         <div className="mt-4">
           <EscenarioCard id={escenario} />
@@ -267,7 +264,7 @@ export default function ModoCliente({
 
       {/* Resultados reales de búsqueda */}
       {!escenario && res?.kind === "no_encontrado" && (
-        <div className="mt-4 rounded-card border border-border bg-card p-5 text-sm text-muted-foreground">
+        <div className="mt-4 rounded-card border border-border bg-muted/40 p-5 text-base text-muted-foreground">
           No encontramos suministros con esos datos. Revisa y vuelve a intentar.
         </div>
       )}
@@ -292,6 +289,11 @@ export default function ModoCliente({
           <EscenarioCard id="individual" nisReal={res.nis} folio={res.solicitud.orden} />
         </div>
       )}
+      </div>
+
+      {/* Escenarios del prototipo — al final, fuera de la card */}
+      <div className="mx-auto mt-4 w-full max-w-2xl">
+        <EscenariosChips escenario={escenario} onSelect={aplicarEscenario} onReset={reset} />
       </div>
     </div>
   );
@@ -319,6 +321,15 @@ function EscenarioCard({
       <Bell className="h-3.5 w-3.5" />
       {id === "reprogramando" ? "Avísame cuando haya nueva hora" : "Recibir actualizaciones"}
     </button>
+  );
+
+  const btnReportar = (
+    <Button asChild variant="secondary" size="lg" className="w-full sm:w-auto">
+      <a href="#reportar">
+        <img src="/icons/emergencia/reportarcorte.svg" alt="" aria-hidden className="size-5" />
+        Reportar corte
+      </a>
+    </Button>
   );
 
   if (id === "sin_corte") {
