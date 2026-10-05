@@ -16,7 +16,7 @@ const items: Item[] = [
     to: "/ingreso-datos",
     search: { servicio: "boletas" },
   },
-  { label: "Cortes", src: "/icons/cortes.svg" },
+  { label: "Cortes", src: "/icons/cortes.svg", to: "/interrupciones" },
   { label: "Medios\nde pago", src: "/icons/medios_de_pago.svg" },
   {
     label: "Convenio\nde pago",
@@ -60,7 +60,11 @@ export function QuickAccess() {
               key={label}
               className="w-[6.5rem] shrink-0 snap-start sm:w-auto"
             >
-              {to && search ? (
+              {to === "/interrupciones" ? (
+                <Link to="/interrupciones" className={classes}>
+                  {inner}
+                </Link>
+              ) : to && search ? (
                 <Link to="/ingreso-datos" search={search} className={classes}>
                   {inner}
                 </Link>

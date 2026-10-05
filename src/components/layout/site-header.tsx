@@ -80,7 +80,7 @@ const CORTES_Y_EMERGENCIAS: MenuLink[] = [
   {
     label: "Ver Cortes",
     description: "Conoce los lugares que están con cortes de energía",
-    href: "#",
+    href: "/interrupciones",
     icon: "/icons/emergencia/cortes-2.svg",
   },
   {
