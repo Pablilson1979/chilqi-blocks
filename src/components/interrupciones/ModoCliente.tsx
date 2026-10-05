@@ -128,15 +128,25 @@ export default function ModoCliente({
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-4 pb-16 pt-6">
-      <div id="reportar" className="rounded-card bg-card p-5 shadow-sm sm:p-7">
+    <div className="ch-container pb-16 pt-ch-lg">
+      {/* Franja superior con el selector: misma posición que en Mapa de cortes */}
+      <section
+        aria-label="Selector de vista"
+        className="mb-ch-lg min-w-0 border border-border rounded-card bg-[#F5F6F8] p-ch-base"
+      >
+        <div className="flex justify-center lg:justify-end" data-tour="toggle">
+          {viewToggle}
+        </div>
+      </section>
+
+      <div id="reportar" className="min-w-0 rounded-card bg-card p-5 shadow-sm sm:p-7">
         <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-normal text-muted-foreground">
           <Zap className="h-3.5 w-3.5 text-primary" /> Estado de tu suministro
         </div>
-        <h2 className="text-2xl font-bold leading-tight text-foreground sm:text-[28px]">
-          ¿Tu luz está cortada?
+        <h2 className="text-3xl font-bold leading-tight text-foreground sm:text-4xl">
+          ¿Estás sin luz?
         </h2>
-        <p className="mt-1 text-sm text-muted-foreground">
+        <p className="mt-1 text-base text-muted-foreground">
           Consulta por <strong>N° de cliente</strong>, <strong>dirección</strong> o <strong>N° de orden</strong>.
         </p>
 
