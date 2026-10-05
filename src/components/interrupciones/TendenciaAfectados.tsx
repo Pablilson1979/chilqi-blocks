@@ -41,15 +41,6 @@ export default function TendenciaAfectados({ afectadosActuales }: { afectadosAct
   const [rango, setRango] = useState<Rango>("24h");
   const datos = useMemo(() => serie(rango, afectadosActuales), [rango, afectadosActuales]);
 
-  // Delta última hora vs ahora (prototipo): diferencia entre los dos últimos puntos.
-  const delta = useMemo(() => {
-    if (datos.length < 2) return 0;
-    const ultimo = datos.at(-1);
-    const anterior = datos.at(-2);
-    if (!ultimo || !anterior) return 0;
-    return ultimo.afectados - anterior.afectados;
-  }, [datos]);
-  const subiendo = delta > 0;
 
   return (
     <section
@@ -64,24 +55,6 @@ export default function TendenciaAfectados({ afectadosActuales }: { afectadosAct
         <div className="flex items-center gap-3">
           <span className="text-sm font-semibold text-foreground">
             Tendencia de clientes afectados
-          </span>
-          <span
-            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-sm font-bold ${
-              subiendo
-                ? "bg-[color:var(--status-active)]/10 text-[color:var(--status-active)]"
-                : "bg-emerald-500/10 text-emerald-600"
-            }`}
-          >
-            {subiendo ? (
-              <TrendingUp className="h-3 w-3" />
-            ) : (
-              <TrendingDown className="h-3 w-3" />
-            )}
-            {subiendo ? "+" : ""}
-            {delta.toLocaleString("es-CL")} última hora
-          </span>
-          <span className="hidden text-sm text-muted-foreground xl:inline">
-            Actualizado 09:30
           </span>
         </div>
         <ChevronDown
