@@ -14,9 +14,9 @@ L.Icon.Default.mergeOptions({
 
 function colorPorEstado(i: Interrupcion): string {
   const est = estadoETR(i);
-  if (est === "investigacion" || est === "vencida") return "#7a7a82";
-  if (i.tipo === "programado") return "#2f6bd6";
-  return "#DA291C";
+  if (est === "investigacion" || est === "vencida") return "var(--status-expired)";
+  if (i.tipo === "programado") return "var(--status-scheduled)";
+  return "var(--status-active)";
 }
 
 interface Props {
@@ -74,7 +74,9 @@ export default function MapaCortes({
       if (isTouch) return;
       if (ev.ctrlKey || ev.metaKey) {
         ev.preventDefault();
-        const rect = containerRef.current!.getBoundingClientRect();
+        const container = containerRef.current;
+        if (!container) return;
+        const rect = container.getBoundingClientRect();
         const point = L.point(ev.clientX - rect.left, ev.clientY - rect.top);
         const latlng = map.containerPointToLatLng(point);
         const delta = ev.deltaY < 0 ? 1 : -1;
@@ -120,7 +122,7 @@ export default function MapaCortes({
       const color = colorPorEstado(it);
       const marker = L.circleMarker([it.lat, it.lng], {
         radius: 10,
-        color: "#fff",
+        color: "var(--surface)",
         weight: 2,
         fillColor: color,
         fillOpacity: 0.95,
@@ -189,10 +191,10 @@ export default function MapaCortes({
         className: "",
         html: `<div style="
           width:24px;height:24px;border-radius:50%;
-          background:#1f9d55;border:2px solid #fff;
+          background:var(--status-ok);border:2px solid var(--surface);
           box-shadow:0 1px 4px rgba(0,0,0,0.35);
           display:flex;align-items:center;justify-content:center;
-          color:#fff;font-weight:900;font-size:14px;line-height:1;
+          color:var(--success-foreground);font-weight:900;font-size:14px;line-height:1;
           opacity:0.85;
         ">✓</div>`,
         iconSize: [24, 24],
@@ -218,7 +220,7 @@ export default function MapaCortes({
     <div
       ref={wrapperRef}
       style={{ height, width: "100%", position: "relative" }}
-      className="rounded-card overflow-hidden border border-border bg-muted"
+      className="overflow-hidden rounded-card border border-border bg-muted"
     >
       <div
         ref={containerRef}
@@ -234,8 +236,8 @@ export default function MapaCortes({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "rgba(23, 23, 30, 0.45)",
-          color: "#fff",
+           background: "color-mix(in oklab, var(--foreground) 70%, transparent)",
+           color: "var(--surface)",
           fontFamily: "inherit",
           fontSize: 15,
           fontWeight: 600,
@@ -257,8 +259,8 @@ export default function MapaCortes({
             position: "absolute",
             right: 10,
             bottom: 10,
-            background: "rgba(255,255,255,0.9)",
-            color: "#373B53",
+             background: "color-mix(in oklab, var(--surface) 90%, transparent)",
+             color: "var(--foreground)",
             fontSize: 11,
             fontWeight: 500,
             padding: "4px 8px",

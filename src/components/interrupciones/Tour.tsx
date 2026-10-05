@@ -175,8 +175,8 @@ export default function Tour({
             left: box.left,
             width: box.width,
             height: box.height,
-            boxShadow: "0 0 0 9999px rgba(15, 18, 32, 0.66)",
-            outline: "3px solid #DA291C",
+            boxShadow: "0 0 0 9999px color-mix(in oklab, var(--foreground) 66%, transparent)",
+            outline: "3px solid var(--primary)",
             outlineOffset: 2,
           }}
         />
@@ -194,25 +194,25 @@ export default function Tour({
 
       {/* Tooltip card */}
       <div
-        className="absolute rounded-card bg-surface p-4 shadow-2xl ring-1 ring-black/5"
+        className="absolute rounded-card bg-surface p-4 shadow-modal ring-1 ring-border"
         style={{ top: tipTop, left: tipLeft, width: tooltipW }}
       >
         <div className="flex items-start gap-2">
           <div className="flex-1">
-            <p className="text-sm font-bold uppercase tracking-normal text-[#DA291C]">
+            <p className="text-sm font-bold uppercase text-primary">
               Paso {i + 1} de {STEPS.length}
             </p>
-            <h3 className="mt-1 text-base font-extrabold text-[#373B53]">
+            <h3 className="mt-1 text-base font-extrabold text-foreground">
               {step.title}
             </h3>
-            <p className="mt-1.5 text-sm leading-snug text-[#373B53]/80">
+            <p className="mt-1.5 text-base leading-snug text-muted-foreground">
               {step.body}
             </p>
           </div>
           <button
             onClick={onClose}
             aria-label="Cerrar"
-            className="shrink-0 rounded-full p-1 text-[#373B53]/60 hover:bg-neutral-100"
+            className="ch-touch shrink-0 rounded-full p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
           >
             <X className="h-4 w-4" />
           </button>
@@ -224,7 +224,7 @@ export default function Tour({
             <span
               key={k}
               className={`h-1.5 flex-1 rounded-full transition ${
-                k <= i ? "bg-[#DA291C]" : "bg-neutral-200"
+                k <= i ? "bg-primary" : "bg-border"
               }`}
             />
           ))}
@@ -233,7 +233,7 @@ export default function Tour({
         <div className="mt-3 flex items-center justify-between">
           <button
             onClick={onClose}
-            className="text-xs font-semibold text-[#373B53]/60 hover:text-[#373B53]"
+            className="ch-touch text-sm font-semibold text-muted-foreground hover:text-foreground"
           >
             Saltar
           </button>
@@ -241,14 +241,14 @@ export default function Tour({
             {i > 0 && (
               <button
                 onClick={prev}
-                className="rounded-pill border border-neutral-200 px-3 py-1.5 text-xs font-bold text-[#373B53] hover:bg-neutral-50"
+                className="ch-touch rounded-pill border border-border px-3 py-1.5 text-sm font-bold text-foreground hover:bg-muted"
               >
                 Atrás
               </button>
             )}
             <button
               onClick={next}
-              className="inline-flex items-center gap-1.5 rounded-pill bg-[#DA291C] px-4 py-1.5 text-xs font-bold uppercase tracking-normal text-primary-foreground hover:brightness-110"
+              className="ch-touch inline-flex items-center gap-1.5 rounded-pill bg-primary px-4 py-1.5 text-sm font-bold uppercase text-primary-foreground hover:bg-primary-hover"
             >
               {i === STEPS.length - 1 ? (
                 <>
