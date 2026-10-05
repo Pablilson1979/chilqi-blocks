@@ -113,7 +113,7 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
               {tGlobal.activos} cortes activos
             </span>
             <span className="inline-flex items-center gap-ch-sm">
-              <Users className="size-5 shrink-0" aria-hidden /> {tGlobal.afectados.toLocaleString("es-CL")} afectados
+              <Users className="size-4 shrink-0" aria-hidden /> {tGlobal.afectados.toLocaleString("es-CL")} afectados
             </span>
           </div>
           <p className="min-w-0 lg:text-right">
