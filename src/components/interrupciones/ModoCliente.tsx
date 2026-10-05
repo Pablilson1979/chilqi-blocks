@@ -357,11 +357,8 @@ function EscenarioCard({
         hideTracker
         notaFinal={
           <>
-            ¿Estás sin luz igual? Puede ser una falla interna o un corte muy reciente.{" "}
-            <a href="#reportar" className="font-semibold text-primary hover:underline">
-              Repórtalo y lo revisamos
-            </a>
-            .
+            ¿Estás sin luz igual? Puede ser una falla interna o un corte muy reciente.
+            <div className="mt-4">{btnReportar}</div>
           </>
         }
       />
@@ -501,11 +498,8 @@ function EscenarioCard({
       hideNoReporte
       notaFinal={
         <>
-          ¿Sigues sin luz? Puede ser una falla interna de tu instalación.{" "}
-          <a href="#reportar" className="font-semibold text-primary hover:underline">
-            Repórtalo aquí
-          </a>
-          .
+          ¿Sigues sin luz? Puede ser una falla interna de tu instalación.
+          <div className="mt-4">{btnReportar}</div>
         </>
       }
     />
