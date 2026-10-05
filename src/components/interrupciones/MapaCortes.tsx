@@ -15,7 +15,7 @@ L.Icon.Default.mergeOptions({
 function colorPorEstado(i: Interrupcion): string {
   const est = estadoETR(i);
   if (est === "investigacion" || est === "vencida") return "var(--status-expired)";
-  if (i.tipo === "programado") return "var(--status-scheduled)";
+  if (i.tipo === "programado") return "var(--desconexiones)";
   return "var(--status-active)";
 }
 
@@ -45,6 +45,8 @@ export default function MapaCortes({
   const layerRef = useRef<L.LayerGroup | null>(null);
   const polyRef = useRef<L.Polygon | null>(null);
   const markersById = useRef<Map<string, L.CircleMarker>>(new Map());
+  // Marca cada círculo del mapa con su tipo, para pintar los clusters de desconexiones en azul
+  const tipoPorMarcador = useRef<Map<L.CircleMarker, string>>(new Map());
   const hintTimer = useRef<number | null>(null);
   const [showHint, setShowHint] = useState(false);
   const isMac =
@@ -112,10 +114,34 @@ export default function MapaCortes({
       layerRef.current = null;
     }
     markersById.current.clear();
+    tipoPorMarcador.current.clear();
+
+    const iconCreateFunction = (cluster: {
+      getChildCount: () => number;
+      getAllChildMarkers: () => L.CircleMarker[];
+    }) => {
+      const n = cluster.getChildCount();
+      const sizeClass =
+        n < 10 ? "marker-cluster-small" : n < 100 ? "marker-cluster-medium" : "marker-cluster-large";
+      const markers = cluster.getAllChildMarkers() ?? [];
+      const allProgramado =
+        markers.length > 0 &&
+        markers.every((m) => tipoPorMarcador.current.get(m) === "programado");
+      return L.divIcon({
+        html: `<div><span>${n}</span></div>`,
+        className: `marker-cluster ${sizeClass}${allProgramado ? " desconexiones" : ""}`,
+        iconSize: [40, 40],
+      });
+    };
 
     const group = cluster
-      ? (L as unknown as { markerClusterGroup: (o?: unknown) => L.LayerGroup })
-          .markerClusterGroup({ showCoverageOnHover: false, maxClusterRadius: 45 })
+      ? (L as unknown as {
+          markerClusterGroup: (o?: unknown) => L.LayerGroup;
+        }).markerClusterGroup({
+          showCoverageOnHover: false,
+          maxClusterRadius: 45,
+          iconCreateFunction,
+        })
       : L.layerGroup();
 
     items.forEach((it) => {
@@ -127,6 +153,7 @@ export default function MapaCortes({
         fillColor: color,
         fillOpacity: 0.95,
       });
+      tipoPorMarcador.current.set(marker, it.tipo);
       marker.bindTooltip(
         `<strong>${it.sector}</strong><br/>${it.comuna} · ${it.cant_clientes} clientes`,
         { direction: "top", offset: [0, -6] },

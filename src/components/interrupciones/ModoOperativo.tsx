@@ -131,7 +131,12 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
                 aria-selected={categoria === tipo}
                 size="sm"
                 variant={categoria === tipo ? "primary" : "ghost"}
-                className="min-w-0 rounded-pill px-4"
+                className={
+                  `min-w-0 rounded-pill px-4` +
+                  (categoria === tipo && tipo === "desconexiones"
+                    ? " bg-[var(--desconexiones)] hover:bg-[var(--desconexiones-strong)]"
+                    : "")
+                }
                 onClick={() => {
                   setCategoria(tipo);
                   setSel(null);
@@ -284,9 +289,18 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
             </div>
           )}
           <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-            <LegendDot color="var(--status-active)" label="Falla imprevista con hora estimada" />
-            <LegendDot color="var(--status-scheduled)" label="Trabajo programado" />
-            <LegendDot color="var(--status-expired)" label="Sin hora confirmada" />
+            {categoria === "desconexiones" ? (
+              <>
+                <LegendDot color="var(--desconexiones)" label="Desconexión programada" />
+                <LegendDot color="var(--status-expired)" label="Desconexión cancelada" />
+              </>
+            ) : (
+              <>
+                <LegendDot color="var(--status-active)" label="Falla imprevista con hora estimada" />
+                <LegendDot color="var(--status-scheduled)" label="Trabajo programado" />
+                <LegendDot color="var(--status-expired)" label="Sin hora confirmada" />
+              </>
+            )}
           </div>
           <Button
             type="button"
@@ -335,7 +349,11 @@ function ComunaAccordion({
         className="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-muted/50"
         aria-expanded={open}
       >
-        <span className="inline-flex h-9 min-w-9 items-center justify-center rounded-full bg-primary px-2 text-sm font-bold text-primary-foreground">
+        <span
+          className={`inline-flex h-9 min-w-9 items-center justify-center rounded-full px-2 text-sm font-bold text-primary-foreground ${
+            soloProgramadas ? "bg-[var(--desconexiones)]" : "bg-primary"
+          }`}
+        >
           {items.length}
         </span>
         <div className="min-w-0 flex-1">
