@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as IngresoDatosRouteImport } from './routes/ingreso-datos'
+import { Route as InterrupcionesRouteImport } from './routes/interrupciones'
 import { Route as QuieroLuzRouteImport } from './routes/quiero-luz'
 import { Route as SigueTuVisitaRouteImport } from './routes/sigue-tu-visita'
 
@@ -22,6 +23,11 @@ const IndexRoute = IndexRouteImport.update({
 const IngresoDatosRoute = IngresoDatosRouteImport.update({
   id: '/ingreso-datos',
   path: '/ingreso-datos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InterrupcionesRoute = InterrupcionesRouteImport.update({
+  id: '/interrupciones',
+  path: '/interrupciones',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuieroLuzRoute = QuieroLuzRouteImport.update({
@@ -38,12 +44,14 @@ const SigueTuVisitaRoute = SigueTuVisitaRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ingreso-datos': typeof IngresoDatosRoute
+  '/interrupciones': typeof InterrupcionesRoute
   '/quiero-luz': typeof QuieroLuzRoute
   '/sigue-tu-visita': typeof SigueTuVisitaRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ingreso-datos': typeof IngresoDatosRoute
+  '/interrupciones': typeof InterrupcionesRoute
   '/quiero-luz': typeof QuieroLuzRoute
   '/sigue-tu-visita': typeof SigueTuVisitaRoute
 }
@@ -51,20 +59,38 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ingreso-datos': typeof IngresoDatosRoute
+  '/interrupciones': typeof InterrupcionesRoute
   '/quiero-luz': typeof QuieroLuzRoute
   '/sigue-tu-visita': typeof SigueTuVisitaRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/ingreso-datos' | '/quiero-luz' | '/sigue-tu-visita'
+  fullPaths:
+    | '/'
+    | '/ingreso-datos'
+    | '/interrupciones'
+    | '/quiero-luz'
+    | '/sigue-tu-visita'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/ingreso-datos' | '/quiero-luz' | '/sigue-tu-visita'
-  id: '__root__' | '/' | '/ingreso-datos' | '/quiero-luz' | '/sigue-tu-visita'
+  to:
+    | '/'
+    | '/ingreso-datos'
+    | '/interrupciones'
+    | '/quiero-luz'
+    | '/sigue-tu-visita'
+  id:
+    | '__root__'
+    | '/'
+    | '/ingreso-datos'
+    | '/interrupciones'
+    | '/quiero-luz'
+    | '/sigue-tu-visita'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   IngresoDatosRoute: typeof IngresoDatosRoute
+  InterrupcionesRoute: typeof InterrupcionesRoute
   QuieroLuzRoute: typeof QuieroLuzRoute
   SigueTuVisitaRoute: typeof SigueTuVisitaRoute
 }
@@ -83,6 +109,13 @@ declare module '@tanstack/react-router' {
       path: '/ingreso-datos'
       fullPath: '/ingreso-datos'
       preLoaderRoute: typeof IngresoDatosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/interrupciones': {
+      id: '/interrupciones'
+      path: '/interrupciones'
+      fullPath: '/interrupciones'
+      preLoaderRoute: typeof InterrupcionesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/quiero-luz': {
@@ -105,6 +138,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   IngresoDatosRoute: IngresoDatosRoute,
+  InterrupcionesRoute: InterrupcionesRoute,
   QuieroLuzRoute: QuieroLuzRoute,
   SigueTuVisitaRoute: SigueTuVisitaRoute,
 }

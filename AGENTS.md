@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep outage-domain logic isolated under `src/components/interrupciones` and `src/lib/interrupciones-data.ts` so mock data can be replaced by live services without rewriting the UI.

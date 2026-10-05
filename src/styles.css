@@ -1,4 +1,7 @@
 @import "tailwindcss" source(none);
+@import "leaflet/dist/leaflet.css";
+@import "leaflet.markercluster/dist/MarkerCluster.css";
+@import "leaflet.markercluster/dist/MarkerCluster.Default.css";
 @source "../src";
 @import "tw-animate-css";
 
@@ -78,6 +81,10 @@
   --color-warning-foreground: var(--warning-foreground);
   --color-warning-soft: var(--warning-soft);
   --color-warning-tint: var(--warning-tint);
+  --color-status-active: var(--status-active);
+  --color-status-scheduled: var(--status-scheduled);
+  --color-status-expired: var(--status-expired);
+  --color-status-ok: var(--status-ok);
   --color-destructive-soft: var(--destructive-soft);
   --color-destructive-tint: var(--destructive-tint);
   --color-surface: var(--surface);
@@ -154,6 +161,11 @@
   --warning-soft: oklch(0.9683 0.0246 87); /* #FFF3E0 */
   --warning-tint: oklch(0.9107 0.0576 79); /* #FFE3B8 */
 
+  --status-active: var(--primary);
+  --status-scheduled: var(--info);
+  --status-expired: var(--muted-foreground);
+  --status-ok: var(--success);
+
   --border: oklch(0.8867 0 0); /* #D9D9D9 */
   --border-strong: oklch(0.8429 0.0113 274.87);
   --input: oklch(0.8429 0.0113 274.87);
@@ -221,6 +233,11 @@
   --warning-soft: oklch(0.3299 0.0566 82.6);
   --warning-tint: oklch(0.3899 0.0866 82.6);
 
+  --status-active: var(--primary);
+  --status-scheduled: var(--info);
+  --status-expired: var(--muted-foreground);
+  --status-ok: var(--success);
+
 
   --border: oklch(1 0 0 / 12%);
   --border-strong: oklch(1 0 0 / 24%);
@@ -235,6 +252,25 @@
   --sidebar-accent-foreground: oklch(0.9587 0.0027 286.35);
   --sidebar-border: oklch(1 0 0 / 12%);
   --sidebar-ring: oklch(0.665 0.137 242.2);
+}
+
+.leaflet-container {
+  background: var(--muted);
+  font-family: var(--font-sans);
+}
+
+.marker-cluster-small,
+.marker-cluster-medium,
+.marker-cluster-large {
+  background: color-mix(in oklab, var(--primary) 30%, transparent);
+}
+
+.marker-cluster-small div,
+.marker-cluster-medium div,
+.marker-cluster-large div {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 700;
 }
 
 @layer base {
