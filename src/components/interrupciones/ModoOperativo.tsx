@@ -131,7 +131,12 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
                 aria-selected={categoria === tipo}
                 size="sm"
                 variant={categoria === tipo ? "primary" : "ghost"}
-                className="min-w-0 rounded-pill px-4"
+                className={
+                  `min-w-0 rounded-pill px-4` +
+                  (categoria === tipo && tipo === "desconexiones"
+                    ? " bg-[var(--desconexiones)] hover:bg-[var(--desconexiones-strong)]"
+                    : "")
+                }
                 onClick={() => {
                   setCategoria(tipo);
                   setSel(null);
@@ -284,9 +289,18 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
             </div>
           )}
           <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-            <LegendDot color="var(--status-active)" label="Falla imprevista con hora estimada" />
-            <LegendDot color="var(--status-scheduled)" label="Trabajo programado" />
-            <LegendDot color="var(--status-expired)" label="Sin hora confirmada" />
+            {categoria === "desconexiones" ? (
+              <>
+                <LegendDot color="var(--desconexiones)" label="Desconexión programada" />
+                <LegendDot color="var(--status-expired)" label="Desconexión cancelada" />
+              </>
+            ) : (
+              <>
+                <LegendDot color="var(--status-active)" label="Falla imprevista con hora estimada" />
+                <LegendDot color="var(--status-scheduled)" label="Trabajo programado" />
+                <LegendDot color="var(--status-expired)" label="Sin hora confirmada" />
+              </>
+            )}
           </div>
           <Button
             type="button"

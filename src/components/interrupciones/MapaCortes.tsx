@@ -15,7 +15,7 @@ L.Icon.Default.mergeOptions({
 function colorPorEstado(i: Interrupcion): string {
   const est = estadoETR(i);
   if (est === "investigacion" || est === "vencida") return "var(--status-expired)";
-  if (i.tipo === "programado") return "var(--status-scheduled)";
+  if (i.tipo === "programado") return "var(--desconexiones)";
   return "var(--status-active)";
 }
 
