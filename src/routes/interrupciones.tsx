@@ -78,16 +78,13 @@ function InterrupcionesPage() {
               <span aria-hidden className="h-1 w-16 rounded-pill bg-primary" />
             </div>
           </div>
-
-          {vista === "cliente" && (
-            <div className="mt-ch-lg flex justify-center lg:justify-end" data-tour="toggle">
-              <ViewToggle vista={vista} onChange={cambiarVista} />
-            </div>
-          )}
         </div>
 
         {vista === "cliente" ? (
-          <ModoCliente onIrOperativo={() => cambiarVista("operativa")} />
+          <ModoCliente
+            onIrOperativo={() => cambiarVista("operativa")}
+            viewToggle={<ViewToggle vista={vista} onChange={cambiarVista} />}
+          />
         ) : (
           <ModoOperativo onVolver={() => cambiarVista("cliente")} viewToggle={<ViewToggle vista={vista} onChange={cambiarVista} />} />
         )}
