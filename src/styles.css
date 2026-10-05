@@ -85,6 +85,7 @@
   --color-status-scheduled: var(--status-scheduled);
   --color-status-expired: var(--status-expired);
   --color-status-ok: var(--status-ok);
+  --color-tab-track: var(--tab-track);
   --color-destructive-soft: var(--destructive-soft);
   --color-destructive-tint: var(--destructive-tint);
   --color-surface: var(--surface);
