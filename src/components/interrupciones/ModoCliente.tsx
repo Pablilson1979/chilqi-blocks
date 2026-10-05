@@ -254,6 +254,7 @@ export default function ModoCliente({
         )}
       </div>
 
+      <div className="mx-auto w-full max-w-2xl">
       {/* Chips de prueba — se eliminan en producción */}
       <EscenariosChips escenario={escenario} onSelect={aplicarEscenario} onReset={reset} />
 
@@ -291,6 +292,7 @@ export default function ModoCliente({
           <EscenarioCard id="individual" nisReal={res.nis} folio={res.solicitud.orden} />
         </div>
       )}
+      </div>
     </div>
   );
 }
