@@ -218,7 +218,7 @@ export default function MapaCortes({
     <div
       ref={wrapperRef}
       style={{ height, width: "100%", position: "relative" }}
-      className="rounded-[15px] overflow-hidden border border-border bg-muted"
+      className="rounded-card overflow-hidden border border-border bg-muted"
     >
       <div
         ref={containerRef}

@@ -151,7 +151,7 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
 
       {/* Tabs + buscador + Ver repuestos */}
       <div className="sticky top-0 z-20 -mx-4 mb-4 border-b border-border bg-background/80 px-4 py-3 backdrop-blur">
-        <div className="mb-3 flex items-center gap-1 rounded-[30px] bg-muted p-1 sm:w-fit" role="tablist" aria-label="Tipo de evento">
+        <div className="mb-3 flex items-center gap-1 rounded-pill bg-muted p-1 sm:w-fit" role="tablist" aria-label="Tipo de evento">
           <button
             type="button"
             role="tab"
@@ -161,7 +161,7 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
               setSel(null);
               setSelFromMap(false);
             }}
-            className={`flex-1 rounded-[30px] px-4 py-2 text-xs font-bold transition sm:flex-none ${
+            className={`flex-1 rounded-pill px-4 py-2 text-xs font-bold transition sm:flex-none ${
               categoria === "interrupciones" ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
             }`}
           >
@@ -176,7 +176,7 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
               setSel(null);
               setSelFromMap(false);
             }}
-            className={`flex-1 rounded-[30px] px-4 py-2 text-xs font-bold transition sm:flex-none ${
+            className={`flex-1 rounded-pill px-4 py-2 text-xs font-bold transition sm:flex-none ${
               categoria === "desconexiones"
                 ? "bg-[color:var(--status-scheduled)] text-primary-foreground shadow-sm"
                 : "text-muted-foreground hover:text-foreground"
@@ -201,7 +201,7 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
                 }
               }}
               placeholder="Buscar por N° de cliente, N° de orden, sector o comuna..."
-              className="h-10 w-full rounded-[30px] border border-border bg-card pl-9 pr-4 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+              className="h-10 w-full rounded-pill border border-border bg-card pl-9 pr-4 text-sm text-foreground outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
             />
           </div>
 
@@ -210,7 +210,7 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
             data-tour="repuestos"
             onClick={() => setShowRepuestos((v) => !v)}
             aria-pressed={showRepuestos}
-            className={`inline-flex h-10 items-center gap-2 rounded-[30px] border px-3.5 text-xs font-semibold transition ${
+            className={`inline-flex h-10 items-center gap-2 rounded-pill border px-3.5 text-xs font-semibold transition ${
               showRepuestos
                 ? "border-[color:var(--status-ok)] bg-[color-mix(in_oklab,var(--status-ok)_12%,transparent)] text-[color:var(--status-ok)]"
                 : "border-border bg-card text-foreground hover:bg-muted"
@@ -220,9 +220,9 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
             <CheckCircle2 className="h-3.5 w-3.5" />
             {showRepuestos ? "Ocultando repuestos" : "Ver repuestos"}
             <span
-              className={`inline-flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-[10px] font-bold ${
+              className={`inline-flex h-4 min-w-4 items-center justify-center rounded-full px-1 text-sm font-bold ${
                 showRepuestos
-                  ? "bg-[color:var(--status-ok)] text-white"
+                  ? "bg-[color:var(--status-ok)] text-primary-foreground"
                   : "bg-muted text-muted-foreground"
               }`}
             >
@@ -233,7 +233,7 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
           {q ? (
             <button
               onClick={() => setQ("")}
-              className="inline-flex items-center gap-1 rounded-[30px] px-3 py-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground"
+              className="inline-flex items-center gap-1 rounded-pill px-3 py-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground"
             >
               <X className="h-3 w-3" /> Limpiar
             </button>
@@ -299,10 +299,10 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
       {/* Toggle Lista/Mapa solo mobile */}
       <div className="mb-3 flex lg:hidden">
 
-        <div className="inline-flex w-full rounded-[30px] border border-border bg-card p-1">
+        <div className="inline-flex w-full rounded-pill border border-border bg-card p-1">
           <button
             onClick={() => setMobileView("lista")}
-            className={`flex-1 rounded-[30px] px-3 py-1.5 text-xs font-semibold transition ${
+            className={`flex-1 rounded-pill px-3 py-1.5 text-xs font-semibold transition ${
               mobileView === "lista"
                 ? "bg-primary text-primary-foreground"
                 : "text-muted-foreground"
@@ -312,7 +312,7 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
           </button>
           <button
             onClick={() => setMobileView("mapa")}
-            className={`flex-1 rounded-[30px] px-3 py-1.5 text-xs font-semibold transition ${
+            className={`flex-1 rounded-pill px-3 py-1.5 text-xs font-semibold transition ${
               mobileView === "mapa"
                 ? "bg-primary text-primary-foreground"
                 : "text-muted-foreground"
@@ -331,7 +331,7 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
 
 
           {selFromMap && seleccionada && (
-            <div className="mb-2 flex items-center justify-between rounded-[15px] border border-primary/40 bg-primary/5 px-3 py-2 text-xs">
+            <div className="mb-2 flex items-center justify-between rounded-card border border-primary/40 bg-primary/5 px-3 py-2 text-xs">
               <span className="text-foreground">
                 Mostrando el corte seleccionado en el mapa
               </span>
@@ -340,7 +340,7 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
                   setSel(null);
                   setSelFromMap(false);
                 }}
-                className="inline-flex items-center gap-1 rounded-[30px] px-2 py-1 font-semibold text-primary hover:bg-primary/10"
+                className="inline-flex items-center gap-1 rounded-pill px-2 py-1 font-semibold text-primary hover:bg-primary/10"
               >
                 <X className="h-3 w-3" /> Ver todos
               </button>
@@ -409,12 +409,12 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
               <CorteCard i={seleccionada} variant="mapa" activo />
             </div>
           )}
-          <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] text-muted-foreground">
+          <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
             <LegendDot color="var(--status-active)" label="Falla imprevista con hora estimada" />
             <LegendDot color="var(--status-scheduled)" label="Trabajo programado" />
             <LegendDot color="var(--status-expired)" label="Sin hora confirmada" />
             {showRepuestos && (
-              <LegendDot color="#1f9d55" label="Repuesto (últimas 24h)" />
+              <LegendDot color="var(--status-ok)" label="Repuesto (últimas 24h)" />
             )}
           </div>
           <button
@@ -423,7 +423,7 @@ export default function ModoOperativo({ onVolver }: { onVolver: () => void }) {
               onVolver();
               window.setTimeout(() => document.querySelector("#reportar")?.scrollIntoView({ behavior: "smooth" }), 100);
             }}
-            className="mt-4 flex min-h-11 w-full items-center justify-center rounded-[30px] border border-primary bg-card px-5 py-2.5 text-center text-sm font-bold text-primary transition hover:bg-primary/5"
+            className="mt-4 flex min-h-11 w-full items-center justify-center rounded-pill border border-primary bg-card px-5 py-2.5 text-center text-sm font-bold text-primary transition hover:bg-primary/5"
           >
             Reportar un corte que no aparece en el mapa
           </button>
@@ -457,7 +457,7 @@ function ComunaAccordion({
   const vencidas = items.filter((i) => estadoETR(i) !== "vigente").length;
   const soloProgramadas = items.every((i) => i.tipo === "programado");
   return (
-    <section className="overflow-hidden rounded-[15px] border border-border bg-card">
+    <section className="overflow-hidden rounded-card border border-border bg-card">
       <button
         onClick={() => setOpen((o) => !o)}
         className="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-muted/50"
@@ -468,7 +468,7 @@ function ComunaAccordion({
         </span>
         <div className="min-w-0 flex-1">
           <h2 className="truncate text-sm font-bold text-foreground">{comuna}</h2>
-          <p className="truncate text-[11px] text-muted-foreground">
+          <p className="truncate text-sm text-muted-foreground">
             {items.length} {soloProgramadas ? (items.length === 1 ? "desconexión" : "desconexiones") : (items.length === 1 ? "interrupción" : "interrupciones")}
             {!soloProgramadas && <> · {afectados.toLocaleString("es-CL")} clientes afectados</>}
             {!soloProgramadas && vencidas > 0 && (

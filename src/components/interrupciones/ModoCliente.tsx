@@ -123,8 +123,8 @@ export default function ModoCliente({ onIrOperativo: _ }: { onIrOperativo: () =>
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 pb-16 pt-6">
-      <div id="reportar" className="rounded-[15px] bg-card p-5 shadow-sm sm:p-7">
-        <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+      <div id="reportar" className="rounded-card bg-card p-5 shadow-sm sm:p-7">
+        <div className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase tracking-normal text-muted-foreground">
           <Zap className="h-3.5 w-3.5 text-primary" /> Estado de tu suministro
         </div>
         <h1 className="text-2xl font-bold leading-tight text-foreground sm:text-[28px]">
@@ -135,7 +135,7 @@ export default function ModoCliente({ onIrOperativo: _ }: { onIrOperativo: () =>
         </p>
 
         {/* Tabs */}
-        <div role="tablist" className="mt-4 inline-flex w-full rounded-[30px] bg-muted p-1 sm:w-auto">
+        <div role="tablist" className="mt-4 inline-flex w-full rounded-pill bg-muted p-1 sm:w-auto">
           {(
             [
               { id: "nis", label: "N° cliente", icon: Hash },
@@ -151,7 +151,7 @@ export default function ModoCliente({ onIrOperativo: _ }: { onIrOperativo: () =>
                 setTab(id);
                 reset();
               }}
-              className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-[30px] px-3.5 py-1.5 text-xs font-bold transition sm:flex-none ${
+              className={`inline-flex flex-1 items-center justify-center gap-1.5 rounded-pill px-3.5 py-1.5 text-xs font-bold transition sm:flex-none ${
                 tab === id ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
               }`}
             >
@@ -173,10 +173,10 @@ export default function ModoCliente({ onIrOperativo: _ }: { onIrOperativo: () =>
                   placeholder="Ej: 1234567"
                   value={nis}
                   onChange={(e) => setNis(e.target.value)}
-                  className="h-14 w-full rounded-[30px] border border-border bg-background pl-11 pr-4 text-base font-medium text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  className="h-14 w-full rounded-pill border border-border bg-background pl-11 pr-4 text-base font-medium text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
                 />
               </div>
-              <button type="submit" className="h-14 rounded-[30px] bg-primary px-7 text-sm font-bold uppercase tracking-wide text-primary-foreground transition hover:brightness-110 active:scale-[0.98]">
+              <button type="submit" className="h-14 rounded-pill bg-primary px-7 text-sm font-bold uppercase tracking-normal text-primary-foreground transition hover:brightness-110 active:scale-[0.98]">
                 Consultar
               </button>
             </div>
@@ -198,14 +198,14 @@ export default function ModoCliente({ onIrOperativo: _ }: { onIrOperativo: () =>
                   placeholder="Ej: Av. Argentina, Valparaíso"
                   value={dir}
                   onChange={(e) => setDir(e.target.value)}
-                  className="h-14 w-full rounded-[30px] border border-border bg-background pl-11 pr-4 text-base font-medium text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  className="h-14 w-full rounded-pill border border-border bg-background pl-11 pr-4 text-base font-medium text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
                 />
               </div>
-              <button type="submit" className="h-14 rounded-[30px] bg-primary px-7 text-sm font-bold uppercase tracking-wide text-primary-foreground hover:brightness-110">
+              <button type="submit" className="h-14 rounded-pill bg-primary px-7 text-sm font-bold uppercase tracking-normal text-primary-foreground hover:brightness-110">
                 Consultar
               </button>
             </div>
-            <p className="mt-3 text-[11px] text-muted-foreground">
+            <p className="mt-3 text-sm text-muted-foreground">
               Ubicamos tu domicilio en la red y te decimos si hay corte reconocido.
             </p>
           </form>
@@ -224,14 +224,14 @@ export default function ModoCliente({ onIrOperativo: _ }: { onIrOperativo: () =>
                   placeholder="Ej: 471001-1"
                   value={orden}
                   onChange={(e) => setOrden(e.target.value)}
-                  className="h-14 w-full rounded-[30px] border border-border bg-background pl-11 pr-4 text-base font-medium text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  className="h-14 w-full rounded-pill border border-border bg-background pl-11 pr-4 text-base font-medium text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
                 />
               </div>
-              <button type="submit" className="h-14 rounded-[30px] bg-primary px-7 text-sm font-bold uppercase tracking-wide text-primary-foreground hover:brightness-110">
+              <button type="submit" className="h-14 rounded-pill bg-primary px-7 text-sm font-bold uppercase tracking-normal text-primary-foreground hover:brightness-110">
                 Consultar
               </button>
             </div>
-            <p className="mt-3 text-[11px] text-muted-foreground">
+            <p className="mt-3 text-sm text-muted-foreground">
               Ingresa el número asociado a tu solicitud o interrupción.
             </p>
           </form>
@@ -250,7 +250,7 @@ export default function ModoCliente({ onIrOperativo: _ }: { onIrOperativo: () =>
 
       {/* Resultados reales de búsqueda */}
       {!escenario && res?.kind === "no_encontrado" && (
-        <div className="mt-4 rounded-[15px] border border-border bg-card p-5 text-sm text-muted-foreground">
+        <div className="mt-4 rounded-card border border-border bg-card p-5 text-sm text-muted-foreground">
           No encontramos suministros con esos datos. Revisa y vuelve a intentar.
         </div>
       )}
@@ -264,7 +264,7 @@ export default function ModoCliente({ onIrOperativo: _ }: { onIrOperativo: () =>
       {!escenario && res?.kind === "masiva" && (
         <div className="mt-4 space-y-3">
           <CorteCard i={res.i} variant="cliente" nis={res.nis} />
-          <div className="overflow-hidden rounded-[15px] border border-border">
+          <div className="overflow-hidden rounded-card border border-border">
             <ClientOnlyMap items={[res.i]} focus={res.i} cluster={false} height={220} seleccionada={res.i.nr_orden} />
           </div>
         </div>
@@ -296,7 +296,7 @@ function EscenarioCard({
   const btnActualizaciones = (
     <button
       type="button"
-      className="inline-flex items-center gap-2 rounded-[30px] bg-primary px-4 py-2.5 text-xs font-bold uppercase tracking-wide text-primary-foreground hover:brightness-110"
+      className="inline-flex items-center gap-2 rounded-pill bg-primary px-4 py-2.5 text-xs font-bold uppercase tracking-normal text-primary-foreground hover:brightness-110"
     >
       <Bell className="h-3.5 w-3.5" />
       {id === "reprogramando" ? "Avísame cuando haya nueva hora" : "Recibir actualizaciones"}
@@ -318,7 +318,7 @@ function EscenarioCard({
               </span>
               Tu suministro está normal
             </p>
-            <p className="mt-2 text-[13px] text-muted-foreground">
+            <p className="mt-2 text-base text-muted-foreground">
               No registramos interrupciones en tu dirección.
             </p>
           </div>
@@ -366,16 +366,16 @@ function EscenarioCard({
         i={i}
         variant="cliente"
         nis={nis}
-        kickerOverride={{ label: "Hora en actualización", color: "#7a7a82" }}
+        kickerOverride={{ label: "Hora en actualización", color: "var(--status-expired)" }}
         nivel2Override={
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+            <p className="text-sm font-bold uppercase tracking-normal text-muted-foreground">
               Reposición estimada
             </p>
             <p className="mt-0.5 text-[22px] font-extrabold leading-tight text-foreground">
               La reparación está tomando más tiempo
             </p>
-            <p className="mt-2 text-[13px] text-muted-foreground">
+            <p className="mt-2 text-base text-muted-foreground">
               La cuadrilla sigue trabajando en tu sector — el trabajo no se suspendió. Te daremos la nueva hora apenas el equipo en terreno la confirme.
             </p>
           </div>
@@ -395,16 +395,16 @@ function EscenarioCard({
         i={i}
         variant="cliente"
         nis={nis}
-        kickerOverride={{ label: "En investigación", color: "#7a7a82" }}
+        kickerOverride={{ label: "En investigación", color: "var(--status-expired)" }}
         nivel2Override={
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+            <p className="text-sm font-bold uppercase tracking-normal text-muted-foreground">
               Reposición estimada
             </p>
             <p className="mt-0.5 text-[22px] font-extrabold leading-tight text-foreground">
               Falla en investigación
             </p>
-            <p className="mt-2 text-[13px] text-muted-foreground">
+            <p className="mt-2 text-base text-muted-foreground">
               Publicaremos la hora estimada de reposición cuando el diagnóstico en terreno sea confiable.
             </p>
           </div>
@@ -424,16 +424,16 @@ function EscenarioCard({
         i={i}
         variant="cliente"
         nis={nis}
-        kickerOverride={{ label: "Solicitud individual", color: "#7a7a82" }}
+        kickerOverride={{ label: "Solicitud individual", color: "var(--status-expired)" }}
         nivel2Override={
           <div>
             <p className="text-[22px] font-extrabold leading-tight text-foreground">
               Tu solicitud fue ingresada
             </p>
-            <p className="mt-2 text-[13px] text-muted-foreground">
+            <p className="mt-2 text-base text-muted-foreground">
               Registramos tu reporte individual. Conoceremos más detalles cuando la cuadrilla esté en terreno.
             </p>
-            <p className="mt-2 text-[11px] text-muted-foreground">
+            <p className="mt-2 text-sm text-muted-foreground">
               N° de folio <span className="font-semibold text-foreground">{folioMostrar}</span>
             </p>
           </div>
@@ -463,7 +463,7 @@ function EscenarioCard({
             </span>
             Servicio restablecido
           </p>
-          <p className="mt-2 text-[13px] text-muted-foreground">
+          <p className="mt-2 text-base text-muted-foreground">
             Tu suministro fue recuperado hoy a las {formatHora(repuestoAt).split(" · ")[0]} hrs.
           </p>
         </div>
@@ -495,8 +495,8 @@ function EscenariosChips({
   onReset: () => void;
 }) {
   return (
-    <div className="mt-4 rounded-[15px] border border-dashed border-border bg-card/60 p-3">
-      <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+    <div className="mt-4 rounded-card border border-dashed border-border bg-card/60 p-3">
+      <div className="flex items-center gap-1.5 text-sm font-bold uppercase tracking-normal text-muted-foreground">
         <FlaskConical className="h-3.5 w-3.5" />
         Escenarios del prototipo — se eliminan en producción
       </div>
@@ -505,7 +505,7 @@ function EscenariosChips({
           <button
             key={e.id}
             onClick={() => onSelect(e.id)}
-            className={`rounded-[30px] border px-3 py-1 text-[11px] font-semibold transition ${
+            className={`rounded-pill border px-3 py-1 text-sm font-semibold transition ${
               escenario === e.id
                 ? "border-primary bg-primary text-primary-foreground"
                 : "border-border bg-background text-foreground hover:border-primary/40"
@@ -517,7 +517,7 @@ function EscenariosChips({
         {escenario && (
           <button
             onClick={onReset}
-            className="rounded-[30px] border border-border bg-background px-3 py-1 text-[11px] font-semibold text-muted-foreground hover:text-foreground"
+            className="rounded-pill border border-border bg-background px-3 py-1 text-sm font-semibold text-muted-foreground hover:text-foreground"
           >
             Limpiar
           </button>

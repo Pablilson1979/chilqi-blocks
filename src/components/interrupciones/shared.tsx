@@ -130,7 +130,7 @@ export function Tracker({ hitos, compact = false, currentLabel = "En curso" }: {
         const dotCls = done
           ? "bg-[color-mix(in_oklab,var(--status-ok)_18%,transparent)] text-[color:var(--status-ok)]"
           : isCurrent
-            ? "bg-[color-mix(in_oklab,#F59E0B_20%,transparent)] text-[#B45309]"
+            ? "bg-warning-soft text-warning"
             : "bg-muted text-muted-foreground";
         const lineCls = done ? "bg-[color:var(--status-ok)]/50" : "bg-border";
         const textCls = done
@@ -148,8 +148,8 @@ export function Tracker({ hitos, compact = false, currentLabel = "En curso" }: {
               {!isLast && <span className={`mt-0.5 w-0.5 flex-1 ${lineCls}`} style={{ minHeight: compact ? 14 : 22 }} />}
             </div>
             <div className={`min-w-0 flex-1 ${compact ? "pb-1" : "pb-1.5"}`}>
-              <p className={`text-[13px] leading-tight ${textCls}`}>{s.label}</p>
-              <p className="mt-0.5 text-[11px] text-muted-foreground">
+              <p className={`text-base leading-tight ${textCls}`}>{s.label}</p>
+              <p className="mt-0.5 text-sm text-muted-foreground">
                 {done ? formatHora(s.at) : isCurrent ? currentLabel : "Pendiente"}
               </p>
             </div>
@@ -232,14 +232,14 @@ export function CorteCard({
     <div className="min-w-0">
       <p className="truncate text-[17px] font-extrabold leading-tight text-foreground">{i.direccion}</p>
       {nis && (
-        <p className="mt-0.5 text-[11px] text-muted-foreground">
+        <p className="mt-0.5 text-sm text-muted-foreground">
           N° de cliente <span className="font-semibold text-foreground">{nis}</span>
         </p>
       )}
     </div>
   ) : (
     <div className="min-w-0">
-      <p className="truncate text-[15px] font-extrabold leading-tight text-foreground">
+      <p className="truncate text-base font-extrabold leading-tight text-foreground">
         {toTitleCase(i.sector)}, {i.comuna}
       </p>
     </div>
@@ -250,7 +250,7 @@ export function CorteCard({
     if (!isCliente && i.tipo === "programado") {
       return (
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Fecha y horario</p>
+          <p className="text-sm font-bold uppercase tracking-normal text-muted-foreground">Fecha y horario</p>
           <p className="mt-1 text-[18px] font-black leading-tight text-foreground">
             {formatFechaProgramada(i.inicio, i.etr_max)}
           </p>
@@ -260,9 +260,9 @@ export function CorteCard({
     if (est === "vigente" && i.etr_max) {
       return (
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Reposición estimada</p>
+          <p className="text-sm font-bold uppercase tracking-normal text-muted-foreground">Reposición estimada</p>
           <p
-            className={`mt-0.5 font-black tabular-nums leading-none tracking-tight text-foreground ${
+            className={`mt-0.5 font-black tabular-nums leading-none tracking-normal text-foreground ${
               variant === "cliente" ? "text-[38px]" : "text-[28px]"
             }`}
           >
@@ -274,11 +274,11 @@ export function CorteCard({
     const msg = est === "vencida" ? "Estamos recalculando la hora" : "Aún estamos evaluando el corte";
     return (
       <div>
-        <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Reposición estimada</p>
+        <p className="text-sm font-bold uppercase tracking-normal text-muted-foreground">Reposición estimada</p>
         <p className={`mt-0.5 font-extrabold leading-tight text-foreground ${variant === "cliente" ? "text-[22px]" : "text-[18px]"}`}>
           {msg}
         </p>
-        <p className="mt-1 text-[11px] text-muted-foreground">Última actualización {haceCuanto(i.etr_updated_at)}</p>
+        <p className="mt-1 text-sm text-muted-foreground">Última actualización {haceCuanto(i.etr_updated_at)}</p>
       </div>
     );
   })();
@@ -301,10 +301,10 @@ export function CorteCard({
   // Kicker de tipo/estado alineado al color del pin del mapa
   const kickerDefault = (() => {
     if (est === "investigacion" || est === "vencida") {
-      return { label: est === "vencida" ? "Recalculando hora" : "En investigación", color: "#7a7a82" };
+      return { label: est === "vencida" ? "Recalculando hora" : "En investigación", color: "var(--status-expired)" };
     }
-    if (i.tipo === "programado") return { label: "Trabajo programado", color: "#2f6bd6" };
-    return { label: "Falla imprevista", color: "#DA291C" };
+    if (i.tipo === "programado") return { label: "Trabajo programado", color: "var(--status-scheduled)" };
+    return { label: "Falla imprevista", color: "var(--status-active)" };
   })();
   const kicker = kickerOverride === undefined ? kickerDefault : kickerOverride;
 
@@ -321,7 +321,7 @@ export function CorteCard({
             aria-hidden
           />
           <span
-            className="text-[10px] font-bold uppercase tracking-wider"
+            className="text-sm font-bold uppercase tracking-normal"
             style={{ color: kicker.color }}
           >
             {kicker.label}
@@ -329,7 +329,7 @@ export function CorteCard({
         </div>
       )}
       {!isCliente && (
-        <p className="mb-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+        <p className="mb-1.5 text-sm font-bold uppercase tracking-normal text-muted-foreground">
           Sectores:
         </p>
       )}
@@ -341,7 +341,7 @@ export function CorteCard({
 
       {/* Pretitulo (paso activo del tracker, etc.) */}
       {pretitulo && (
-        <p className="mt-3 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+        <p className="mt-3 text-sm font-bold uppercase tracking-normal text-muted-foreground">
           {pretitulo}
         </p>
       )}
@@ -351,19 +351,19 @@ export function CorteCard({
 
       {/* Nivel 3 */}
       {contextoNode && (
-        <p className="mt-3 text-[13px] leading-snug text-foreground/90">{contextoNode}</p>
+        <p className="mt-3 text-base leading-snug text-foreground/90">{contextoNode}</p>
       )}
       {isCliente && !hideNoReporte && (
-        <p className="mt-1.5 inline-flex items-center gap-1.5 text-[11px] font-medium text-[color:var(--status-ok)]">
+        <p className="mt-1.5 inline-flex items-center gap-1.5 text-sm font-medium text-[color:var(--status-ok)]">
           <Check className="h-3 w-3" strokeWidth={3} /> Este corte ya está registrado — no necesitas reportarlo.
         </p>
       )}
-      {extraNota && <div className="mt-2 text-[11px] text-muted-foreground">{extraNota}</div>}
+      {extraNota && <div className="mt-2 text-sm text-muted-foreground">{extraNota}</div>}
 
       {/* Nivel 4 — Tracker */}
       {!hideTracker && (
         <div className={`${compactTracker ? "mt-3 border-t border-dashed border-border pt-3" : "mt-5 border-t border-dashed border-border pt-4"}`}>
-          <p className="mb-2 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+          <p className="mb-2 text-sm font-bold uppercase tracking-normal text-muted-foreground">
             Estado de la reparación
           </p>
           <Tracker
@@ -375,7 +375,7 @@ export function CorteCard({
       )}
 
       {ctaPrimario && <div className="mt-4">{ctaPrimario}</div>}
-      {notaFinal && <div className="mt-3 text-[12px] leading-snug text-muted-foreground">{notaFinal}</div>}
+      {notaFinal && <div className="mt-3 text-base leading-snug text-muted-foreground">{notaFinal}</div>}
 
       {mostrarCentrar && (
         <div className="mt-3 flex justify-end">
@@ -386,7 +386,7 @@ export function CorteCard({
               onCentrar?.(e);
               onClick?.();
             }}
-            className="text-[11px] font-semibold text-primary hover:underline"
+            className="text-sm font-semibold text-primary hover:underline"
           >
             Centrar en el mapa
           </button>
@@ -396,7 +396,7 @@ export function CorteCard({
   );
 
 
-  const base = `block w-full overflow-hidden rounded-[15px] border bg-card text-left transition ${
+  const base = `block w-full overflow-hidden rounded-card border bg-card text-left transition ${
     activo ? "border-primary ring-2 ring-primary/25" : "border-border"
   } ${interactive ? "hover:border-primary/40" : ""} ${className}`;
 
@@ -429,7 +429,7 @@ export function CorteCard({
 /** Estado vacío del panel de lista. */
 export function ListaVacia() {
   return (
-    <div className="rounded-[15px] border border-dashed border-border bg-card p-6 text-center text-[13px] text-muted-foreground">
+    <div className="rounded-card border border-dashed border-border bg-card p-6 text-center text-base text-muted-foreground">
       Sin cortes activos en esta búsqueda. Revisa <strong className="text-foreground">“Ver repuestos”</strong> para confirmar reposiciones recientes.
     </div>
   );

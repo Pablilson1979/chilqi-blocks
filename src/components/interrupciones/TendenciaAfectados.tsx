@@ -66,7 +66,7 @@ export default function TendenciaAfectados({ afectadosActuales }: { afectadosAct
             Tendencia de clientes afectados
           </span>
           <span
-            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-bold ${
+            className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-sm font-bold ${
               subiendo
                 ? "bg-[color:var(--status-active)]/10 text-[color:var(--status-active)]"
                 : "bg-emerald-500/10 text-emerald-600"
@@ -80,7 +80,7 @@ export default function TendenciaAfectados({ afectadosActuales }: { afectadosAct
             {subiendo ? "+" : ""}
             {delta.toLocaleString("es-CL")} última hora
           </span>
-          <span className="hidden text-[11px] text-muted-foreground xl:inline">
+          <span className="hidden text-sm text-muted-foreground xl:inline">
             Actualizado 09:30
           </span>
         </div>
@@ -95,12 +95,12 @@ export default function TendenciaAfectados({ afectadosActuales }: { afectadosAct
             <p className="text-xs text-muted-foreground">
               Clientes sin servicio en la región · vista histórica
             </p>
-            <div className="inline-flex rounded-[30px] border border-border bg-background p-1">
+            <div className="inline-flex rounded-pill border border-border bg-background p-1">
               {(["24h", "3d", "7d"] as Rango[]).map((r) => (
                 <button
                   key={r}
                   onClick={() => setRango(r)}
-                  className={`rounded-[30px] px-3 py-1 text-[11px] font-semibold transition ${
+                  className={`rounded-pill px-3 py-1 text-sm font-semibold transition ${
                     rango === r
                       ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover:text-foreground"

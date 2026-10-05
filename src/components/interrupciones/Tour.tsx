@@ -181,7 +181,7 @@ export default function Tour({
           }}
         />
       ) : (
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-foreground/60" />
       )}
 
       {/* Click en zona oscura cierra */}
@@ -194,12 +194,12 @@ export default function Tour({
 
       {/* Tooltip card */}
       <div
-        className="absolute rounded-[15px] bg-white p-4 shadow-2xl ring-1 ring-black/5"
+        className="absolute rounded-card bg-surface p-4 shadow-2xl ring-1 ring-black/5"
         style={{ top: tipTop, left: tipLeft, width: tooltipW }}
       >
         <div className="flex items-start gap-2">
           <div className="flex-1">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-[#DA291C]">
+            <p className="text-sm font-bold uppercase tracking-normal text-[#DA291C]">
               Paso {i + 1} de {STEPS.length}
             </p>
             <h3 className="mt-1 text-base font-extrabold text-[#373B53]">
@@ -241,14 +241,14 @@ export default function Tour({
             {i > 0 && (
               <button
                 onClick={prev}
-                className="rounded-[30px] border border-neutral-200 px-3 py-1.5 text-xs font-bold text-[#373B53] hover:bg-neutral-50"
+                className="rounded-pill border border-neutral-200 px-3 py-1.5 text-xs font-bold text-[#373B53] hover:bg-neutral-50"
               >
                 Atrás
               </button>
             )}
             <button
               onClick={next}
-              className="inline-flex items-center gap-1.5 rounded-[30px] bg-[#DA291C] px-4 py-1.5 text-xs font-bold uppercase tracking-wide text-white hover:brightness-110"
+              className="inline-flex items-center gap-1.5 rounded-pill bg-[#DA291C] px-4 py-1.5 text-xs font-bold uppercase tracking-normal text-primary-foreground hover:brightness-110"
             >
               {i === STEPS.length - 1 ? (
                 <>
