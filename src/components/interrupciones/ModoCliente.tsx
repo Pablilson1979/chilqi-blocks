@@ -148,7 +148,7 @@ export default function ModoCliente({
           ¿Estás sin luz?
         </h2>
         <p className="mt-1 text-base text-muted-foreground">
-          Consulta por <strong>N° de cliente</strong>, <strong>dirección</strong> o <strong>N° de orden</strong>.
+          Consulta por <strong>N° de cliente</strong>, <strong>dirección</strong> o <strong>N° de solicitud</strong>.
         </p>
 
         {/* Tabs */}
