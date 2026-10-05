@@ -11,6 +11,7 @@ import {
 } from "@/lib/interrupciones-data";
 import { CorteCard, formatHora } from "./shared";
 import ClientOnlyMap from "./ClientOnlyMap";
+import { Button } from "@/components/ui/button";
 import {
   Zap,
   Hash,
@@ -252,13 +253,8 @@ export default function ModoCliente({
             </p>
           </form>
         )}
-      </div>
 
-      <div className="mx-auto w-full max-w-2xl">
-      {/* Chips de prueba — se eliminan en producción */}
-      <EscenariosChips escenario={escenario} onSelect={aplicarEscenario} onReset={reset} />
-
-      {/* Escenario forzado (prototipo) */}
+      {/* Resultado dentro de la card, bajo el formulario */}
       {escenario && (
         <div className="mt-4">
           <EscenarioCard id={escenario} />
@@ -267,7 +263,7 @@ export default function ModoCliente({
 
       {/* Resultados reales de búsqueda */}
       {!escenario && res?.kind === "no_encontrado" && (
-        <div className="mt-4 rounded-card border border-border bg-card p-5 text-sm text-muted-foreground">
+        <div className="mt-4 rounded-card border border-border bg-muted/40 p-5 text-base text-muted-foreground">
           No encontramos suministros con esos datos. Revisa y vuelve a intentar.
         </div>
       )}
@@ -292,6 +288,11 @@ export default function ModoCliente({
           <EscenarioCard id="individual" nisReal={res.nis} folio={res.solicitud.orden} />
         </div>
       )}
+      </div>
+
+      {/* Escenarios del prototipo — al final, fuera de la card */}
+      <div className="mx-auto mt-4 w-full max-w-2xl">
+        <EscenariosChips escenario={escenario} onSelect={aplicarEscenario} onReset={reset} />
       </div>
     </div>
   );
@@ -321,6 +322,15 @@ function EscenarioCard({
     </button>
   );
 
+  const btnReportar = (
+    <Button asChild variant="secondary" size="lg" className="w-full sm:w-auto">
+      <a href="#reportar">
+        <img src="/icons/emergencia/reportarcorte.svg" alt="" aria-hidden className="size-5" />
+        Reportar corte
+      </a>
+    </Button>
+  );
+
   if (id === "sin_corte") {
     return (
       <CorteCard
@@ -346,11 +356,8 @@ function EscenarioCard({
         hideTracker
         notaFinal={
           <>
-            ¿Estás sin luz igual? Puede ser una falla interna o un corte muy reciente.{" "}
-            <a href="#reportar" className="font-semibold text-primary hover:underline">
-              Repórtalo y lo revisamos
-            </a>
-            .
+            ¿Estás sin luz igual? Puede ser una falla interna o un corte muy reciente.
+            <div className="mt-4">{btnReportar}</div>
           </>
         }
       />
@@ -490,11 +497,8 @@ function EscenarioCard({
       hideNoReporte
       notaFinal={
         <>
-          ¿Sigues sin luz? Puede ser una falla interna de tu instalación.{" "}
-          <a href="#reportar" className="font-semibold text-primary hover:underline">
-            Repórtalo aquí
-          </a>
-          .
+          ¿Sigues sin luz? Puede ser una falla interna de tu instalación.
+          <div className="mt-4">{btnReportar}</div>
         </>
       }
     />
