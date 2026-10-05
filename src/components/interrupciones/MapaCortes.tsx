@@ -123,15 +123,14 @@ export default function MapaCortes({
       const n = cluster.getChildCount();
       const sizeClass =
         n < 10 ? "marker-cluster-small" : n < 100 ? "marker-cluster-medium" : "marker-cluster-large";
-      const size = n < 10 ? 40 : n < 100 ? 50 : 60;
       const markers = cluster.getAllChildMarkers() ?? [];
       const allProgramado =
         markers.length > 0 &&
         markers.every((m) => tipoPorMarcador.current.get(m) === "programado");
       return L.divIcon({
-        html: `<div class="marker-cluster ${sizeClass}${allProgramado ? " desconexiones" : ""}"><span>${n}</span></div>`,
-        className: "marker-cluster-icon",
-        iconSize: [size, size],
+        html: `<div><span>${n}</span></div>`,
+        className: `marker-cluster ${sizeClass}${allProgramado ? " desconexiones" : ""}`,
+        iconSize: [40, 40],
       });
     };
 

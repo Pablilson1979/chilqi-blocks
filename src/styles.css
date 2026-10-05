@@ -285,6 +285,17 @@
   font-weight: 700;
 }
 
+/* Clusters de desconexiones: azul #0080C3 en lugar del rojo corporativo */
+.marker-cluster.desconexiones {
+  background: color-mix(in oklab, var(--desconexiones) 30%, transparent);
+}
+
+.marker-cluster.desconexiones div {
+  background: var(--desconexiones);
+  color: #fff;
+}
+
+
 @layer base {
   * {
     border-color: var(--color-border);
