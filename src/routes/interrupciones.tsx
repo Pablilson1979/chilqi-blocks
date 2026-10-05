@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ChevronLeft, HelpCircle } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
@@ -77,15 +77,6 @@ function InterrupcionesPage() {
               </h1>
               <span aria-hidden className="h-1 w-16 rounded-pill bg-primary" />
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label="Cómo usar esta funcionalidad"
-              className="absolute right-0 hidden lg:inline-flex"
-              onClick={() => setTourOpen(true)}
-            >
-              <HelpCircle aria-hidden />
-            </Button>
           </div>
 
           {vista === "cliente" && (
