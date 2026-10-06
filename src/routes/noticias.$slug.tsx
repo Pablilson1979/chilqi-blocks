@@ -25,7 +25,7 @@ function NoticiaDetalle() {
   return <div className="flex min-h-screen flex-col bg-surface font-sans text-foreground">
     <SiteHeader />
     <main className="ch-container flex-1 py-ch-xl sm:py-ch-2xl">
-      <Button asChild variant="tertiary" className="mb-ch-lg -ml-2 text-base"><Link to="/noticias/"><ArrowLeft aria-hidden />Volver a noticias</Link></Button>
+      <Button asChild variant="tertiary" className="mb-ch-lg -ml-2 text-base"><Link to="/noticias"><ArrowLeft aria-hidden />Volver a noticias</Link></Button>
       <article>
         <header className="mx-auto max-w-4xl">
           <p className="flex items-center gap-3 text-base font-semibold text-muted-foreground"><span className="h-0.5 w-8 bg-primary" aria-hidden />{noticia.category}</p>
@@ -42,7 +42,7 @@ function NoticiaDetalle() {
           {noticia.paragraphs.length === 0 && <Button asChild variant="secondary" className="text-base"><a href="https://www.chilquinta.cl/noticias/titulares-noticias" target="_blank" rel="noopener noreferrer">Ver publicación original<ArrowRight aria-hidden /></a></Button>}
         </div>
       </article>
-      <div className="mx-auto mt-ch-2xl max-w-[720px] border-t border-border pt-ch-lg"><Button asChild variant="tertiary" className="-ml-2 text-base"><Link to="/noticias/"><ArrowLeft aria-hidden />Todas las noticias</Link></Button></div>
+      <div className="mx-auto mt-ch-2xl max-w-[720px] border-t border-border pt-ch-lg"><Button asChild variant="tertiary" className="-ml-2 text-base"><Link to="/noticias"><ArrowLeft aria-hidden />Todas las noticias</Link></Button></div>
     </main>
     <SiteFooter />
   </div>;
