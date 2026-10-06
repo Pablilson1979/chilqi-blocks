@@ -115,11 +115,13 @@ export function Tracker({
   hitos,
   compact = false,
   desktopCompact = false,
+  mapReference = false,
   currentLabel = "En curso",
 }: {
   hitos: Hito[];
   compact?: boolean;
   desktopCompact?: boolean;
+  mapReference?: boolean;
   currentLabel?: string;
 }) {
   const steps = derive5Steps(hitos);
@@ -131,7 +133,7 @@ export function Tracker({
   const currentIdx = lastDone < steps.length - 1 ? lastDone + 1 : -1;
 
   return (
-    <ol className={`relative ${compact ? "space-y-2" : desktopCompact ? "space-y-3.5 lg:space-y-1.5" : "space-y-3.5"} pl-1`}>
+    <ol className={`relative ${mapReference ? "" : compact ? "space-y-2" : desktopCompact ? "space-y-3.5 lg:space-y-1.5" : "space-y-3.5"} ${mapReference ? "" : "pl-1"}`}>
       {steps.map((s, k) => {
         const done = !!s.at;
         const isCurrent = k === currentIdx;
@@ -150,22 +152,22 @@ export function Tracker({
             : "text-muted-foreground";
 
         return (
-          <li key={k} className={`relative flex items-start gap-3 ${desktopCompact ? "lg:gap-2" : ""}`}>
+          <li key={k} className={`relative flex items-start gap-3 ${mapReference ? (isLast ? "min-h-10" : "min-h-[46px]") : desktopCompact ? "lg:gap-2" : ""}`}>
             <div className="relative flex flex-col items-center">
-               <span className={`grid shrink-0 place-items-center rounded-full h-6 w-6 ${desktopCompact ? "lg:h-5 lg:w-5" : ""} ${dotCls}`}>
-                {done ? <Check className="h-3.5 w-3.5" strokeWidth={3} /> : isCurrent ? <Zap className="h-3 w-3" strokeWidth={3} /> : <span className="h-1.5 w-1.5 rounded-full bg-current" />}
+               <span className={`grid shrink-0 place-items-center rounded-full ${mapReference ? "size-7" : "h-6 w-6"} ${desktopCompact ? "lg:h-5 lg:w-5" : ""} ${mapReference && isCurrent ? "bg-warning text-info-foreground" : mapReference && !done ? "bg-border text-muted-foreground" : dotCls}`}>
+                 {done ? <Check className="h-3.5 w-3.5" strokeWidth={3} /> : isCurrent ? <Zap className="h-3 w-3" strokeWidth={3} /> : !mapReference ? <span className="h-1.5 w-1.5 rounded-full bg-current" /> : null}
               </span>
               {!isLast && (
                 <span
-                  className={`mt-0.5 w-0.5 flex-1 ${compact ? "min-h-3.5" : desktopCompact ? "min-h-[22px] lg:min-h-2.5" : "min-h-[22px]"} ${lineCls}`}
+                   className={`${mapReference ? "absolute top-7 h-[calc(100%+18px)] bg-border" : `mt-0.5 flex-1 ${compact ? "min-h-3.5" : desktopCompact ? "min-h-[22px] lg:min-h-2.5" : "min-h-[22px]"} ${lineCls}`} w-0.5`}
                 />
               )}
             </div>
-            <div className={`min-w-0 flex-1 ${compact ? "pb-1" : desktopCompact ? "pb-1.5 lg:pb-0.5" : "pb-1.5"}`}>
-              <p className={`text-base leading-tight ${textCls}`}>{s.label}</p>
-              <p className="mt-0.5 text-sm text-muted-foreground">
+            <div className={`min-w-0 flex-1 ${mapReference ? "pb-4 pt-1.5" : compact ? "pb-1" : desktopCompact ? "pb-1.5 lg:pb-0.5" : "pb-1.5"}`}>
+              <p className={`text-base leading-tight ${mapReference ? done ? "font-semibold text-success" : "font-bold text-foreground" : textCls}`}>{mapReference && k === 0 ? "Corte informado" : s.label}</p>
+              {(!mapReference || !done) && <p className={`mt-0.5 ${mapReference ? "text-base leading-tight" : "text-sm"} ${mapReference && isCurrent ? "text-warning" : "text-muted-foreground"}`}>
                 {done ? formatHora(s.at) : isCurrent ? currentLabel : "Pendiente"}
-              </p>
+              </p>}
             </div>
           </li>
         );
