@@ -153,13 +153,13 @@ export function Tracker({
 
         return (
           <li key={k} className={`relative flex items-start gap-3 ${mapReference ? (isLast ? "min-h-10" : "min-h-[46px]") : desktopCompact ? "lg:gap-2" : ""}`}>
-            <div className="relative flex flex-col items-center">
+            <div className={`relative flex flex-col items-center ${mapReference ? "self-stretch" : ""}`}>
                <span className={`grid shrink-0 place-items-center rounded-full ${mapReference ? "size-7" : "h-6 w-6"} ${desktopCompact ? "lg:h-5 lg:w-5" : ""} ${mapReference && isCurrent ? "bg-warning text-info-foreground" : mapReference && !done ? "bg-border text-muted-foreground" : dotCls}`}>
                  {done ? <Check className="h-3.5 w-3.5" strokeWidth={3} /> : isCurrent ? <Zap className="h-3 w-3" strokeWidth={3} /> : !mapReference ? <span className="h-1.5 w-1.5 rounded-full bg-current" /> : null}
               </span>
               {!isLast && (
                 <span
-                   className={`${mapReference ? "absolute top-7 h-[calc(100%+18px)] bg-border" : `mt-0.5 flex-1 ${compact ? "min-h-3.5" : desktopCompact ? "min-h-[22px] lg:min-h-2.5" : "min-h-[22px]"} ${lineCls}`} w-0.5`}
+                   className={`${mapReference ? "absolute bottom-0 top-7 bg-border" : `mt-0.5 flex-1 ${compact ? "min-h-3.5" : desktopCompact ? "min-h-[22px] lg:min-h-2.5" : "min-h-[22px]"} ${lineCls}`} w-0.5`}
                 />
               )}
             </div>
