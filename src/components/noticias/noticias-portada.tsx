@@ -27,7 +27,7 @@ export function NoticiasPortada() {
       <div className="mt-ch-lg max-w-4xl">
         <time dateTime={principal.date} className="text-base text-muted-foreground">{fechaNoticia(principal.date)}</time>
         <h2 className="mt-2 text-2xl font-bold leading-snug sm:text-3xl"><Link to="/noticias/$slug" params={{ slug: principal.slug }} className="transition-colors hover:text-primary">{principal.title}</Link></h2>
-        <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-lg">{principal.summary}</p>
+        <p className="mt-3 text-base leading-relaxed text-muted-foreground sm:text-lg">Cuadrillas municipales y de Chilquinta realizaron trabajos nocturnos de poda y mantenimiento de la red eléctrica en el centro de Quilpué.</p>
         <Button asChild variant="tertiary" className="mt-3 -ml-2 text-base"><Link to="/noticias/$slug" params={{ slug: principal.slug }}>Leer noticia<ArrowRight aria-hidden /></Link></Button>
       </div>
     </article>
@@ -37,7 +37,7 @@ export function NoticiasPortada() {
           <div className="min-w-0">
             <p className="text-base font-semibold text-muted-foreground">{noticia.category}</p>
             <h2 className="mt-2 text-lg font-bold leading-snug"><Link to="/noticias/$slug" params={{ slug: noticia.slug }} className="hover:text-primary">{noticia.title}</Link></h2>
-            <p className="mt-2 text-base leading-relaxed text-muted-foreground">{noticia.summary}</p>
+            <p className="mt-2 line-clamp-3 text-base leading-relaxed text-muted-foreground">{noticia.summary}</p>
             <time dateTime={noticia.date} className="mt-3 block text-base text-muted-foreground">{fechaNoticia(noticia.date)}</time>
             <Button asChild variant="tertiary" className="mt-2 -ml-2 text-base"><Link to="/noticias/$slug" params={{ slug: noticia.slug }} aria-label={`Leer: ${noticia.title}`}>Leer noticia<ArrowRight aria-hidden /></Link></Button>
           </div>
