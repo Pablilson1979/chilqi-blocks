@@ -6,4 +6,4 @@
 - [x] Verify all prototype states and responsive map interactions.
 
 - [x] Match the map toolbar reference, remove filter/restored controls, and verify shared width and footer clearance.
-- [ ] Match expanded outage cards and isolate selected map events with a return action in both categories.
+- [x] Match expanded outage cards and isolate selected map events with a return action in both categories.
