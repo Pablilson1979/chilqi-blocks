@@ -35,7 +35,7 @@ export default function CorteMapaCard({ i, onVerMapa }: { i: Interrupcion; onVer
       </div>
       {!programada && <div className="border-t border-border p-ch-lg">
         <p className="mb-ch-base text-base font-semibold uppercase text-muted-foreground">Estado de la reparación</p>
-        <Tracker hitos={i.hitos} mapAppearance />
+        <Tracker hitos={i.hitos} />
       </div>}
       {onVerMapa && <div className="flex justify-center px-ch-lg pb-ch-lg">
         <Button variant="secondary" className={`text-base ${programada ? "border-status-scheduled text-status-scheduled hover:bg-status-scheduled hover:text-info-foreground" : ""}`} onClick={onVerMapa}>

@@ -111,7 +111,7 @@ function derive5Steps(hitos: Hito[]): Array<{ label: string; at: string | null }
   });
 }
 
-export function Tracker({ hitos, compact = false, currentLabel = "En curso", mapAppearance = false }: { hitos: Hito[]; compact?: boolean; currentLabel?: string; mapAppearance?: boolean }) {
+export function Tracker({ hitos, compact = false, currentLabel = "En curso" }: { hitos: Hito[]; compact?: boolean; currentLabel?: string }) {
   const steps = derive5Steps(hitos);
   // "en curso" = primer pendiente después del último hecho
   let lastDone = -1;
