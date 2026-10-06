@@ -1,6 +1,9 @@
 import quilpue from "@/assets/noticias-quilpue.jpg.asset.json";
 import huasco from "@/assets/noticias-huasco.jpg.asset.json";
 import bomberos from "@/assets/noticias-bomberos.jpg.asset.json";
+import rari from "@/assets/noticias-rari.jpg.asset.json";
+import desierto from "@/assets/noticias-desierto.jpg.asset.json";
+import catemu from "@/assets/noticias-catemu.jpg.asset.json";
 
 export interface Noticia {
   slug: string;
@@ -47,9 +50,20 @@ export const noticias: Noticia[] = [
   ] },
   { slug: "visita-ceipa-colombia", title: "Estudiantes internacionales de CEIPA Colombia sostuvieron visita pedagógica en Chilquinta", date: "2026-09-24", category: "Comunidad", summary: "Estudiantes de CEIPA Colombia visitaron Chilquinta en una jornada de intercambio y aprendizaje.", imageAlt: "Estudiantes de CEIPA Colombia durante su visita a Chilquinta", paragraphs: [] },
   { slug: "septiembre-seguro", title: "Septiembre Seguro 2026: Estudiantes del Colegio Carmelita de El Melón se sumaron a campaña preventiva de Chilquinta", date: "2026-09-23", category: "Prevención", summary: "La comunidad escolar de El Melón se sumó a una jornada de prevención junto a Chilquinta.", imageAlt: "Comunidad escolar en la campaña Septiembre Seguro", paragraphs: [] },
-  { slug: "artesania-pari", title: "Chilquinta lleva la artesanía en crin de Rari a encuentro cultural entre Chile, Brasil y China", date: "2026-09-22", category: "Comunidad", summary: "La artesanía en crin de Rari fue parte de un encuentro cultural entre Chile, Brasil y China.", imageAlt: "Encuentro cultural de Chile, Brasil y China", paragraphs: [] },
-  { slug: "desierto-florido", title: "“Mira, Disfruta y Cuida”: lanzan campaña para proteger el Desierto Florido y orientar a sus visitantes", date: "2026-09-15", category: "Medioambiente", summary: "Una campaña invita a disfrutar y proteger el Desierto Florido durante la visita.", imageAlt: "Lanzamiento de campaña para proteger el Desierto Florido", paragraphs: [] },
-  { slug: "operativo-catemu", title: "Exitoso operativo permitió reforzar la infraestructura eléctrica de Catemu", date: "2026-09-13", category: "Prevención", summary: "Un operativo en terreno reforzó la infraestructura eléctrica de la comuna de Catemu.", imageAlt: "Cuadrillas en un operativo eléctrico en Catemu", paragraphs: [] },
+  { slug: "artesania-pari", title: "Chilquinta lleva la artesanía en crin de Rari a encuentro cultural entre Chile, Brasil y China", date: "2026-09-22", category: "Comunidad", image: rari.url, summary: "La artesanía en crin de Rari fue parte de un encuentro cultural entre Chile, Brasil y China.", imageAlt: "Encuentro cultural de Chile, Brasil y China", paragraphs: [] },
+  { slug: "desierto-florido", title: "“Mira, Disfruta y Cuida”: lanzan campaña para proteger el Desierto Florido y orientar a sus visitantes", date: "2026-09-15", category: "Medioambiente", image: desierto.url, summary: "Grupo Empresas Chilquinta, Sociedad Concesionaria Valles del Desierto y Municipalidad de Vallenar impulsan una campaña para promover visitas seguras y responsables durante la temporada del Desierto Florido.", imageAlt: "Lanzamiento de campaña para proteger el Desierto Florido", paragraphs: [
+    "Para dar comienzo a la campaña se instaló señalética en ambos sentidos de la Ruta 5 Norte para orientar a los visitantes hacia el Mirador del Desierto Florido, un espacio habilitado para detenerse de manera segura, disfrutar del paisaje y tomar fotografías.",
+    "También se incorporó señalización al interior del mirador para reforzar las recomendaciones de cuidado, iniciativa desarrollada por Eletrans, filial del Grupo Empresas Chilquinta.",
+    "La campaña “Mira, Disfruta y Cuida” busca que esta temporada quienes lleguen hasta la provincia del Huasco puedan vivir el Desierto Florido de manera segura y responsable, convirtiendo cada visita en una oportunidad para conocer, valorar y proteger este patrimonio natural de Atacama.",
+  ] },
+  { slug: "operativo-catemu", title: "Exitoso operativo permitió reforzar la infraestructura eléctrica de Catemu", date: "2026-09-13", category: "Prevención", image: catemu.url, summary: "La intervención se realizó durante una jornada de trabajo coordinada entre Chilquinta Transmisión y Chilquinta Distribución para prevenir futuras interrupciones y entregar mayor seguridad y confiabilidad al suministro de la comuna.", imageAlt: "Cuadrillas en un operativo eléctrico en Catemu", paragraphs: [
+    "Una intervención simultánea en distintos puntos de la infraestructura eléctrica permitió a Chilquinta desarrollar con éxito este domingo una importante jornada de mantenimiento en Catemu, aprovechando las horas de desconexión programada para concentrar una gran cantidad de trabajos en una sola jornada.",
+    "La importancia de estas labores está en anticiparse a los problemas. Revisar y mantener las instalaciones antes de que aparezca una falla permite reducir riesgos y contribuir a que el sistema eléctrico pueda seguir funcionando de manera segura y estable.",
+    "En el caso de Transmisión, los trabajos se concentraron en la Subestación Catemu y en la línea de 44 kV Estancilla-Catemu, infraestructura fundamental para el abastecimiento eléctrico de la comuna. Se realizó mantenimiento preventivo, revisión de equipos y renovación de elementos que presentaban desgaste, además de medidas para evitar interrupciones asociadas a la presencia de aves.",
+    "Las cuadrillas realizaron poda de ejemplares de gran tamaño cercanos a las redes eléctricas. El objetivo es evitar que ramas o árboles puedan entrar en contacto con la infraestructura, especialmente durante episodios de viento, situación que puede provocar cortes de energía.",
+    "La coordinación entre Transmisión y Distribución permitió aprovechar una desconexión que ya era necesaria para ejecutar trabajos adicionales, evitando tener que generar nuevas interrupciones para abordar estas tareas.",
+    "El resultado es una red mejor preparada para enfrentar los próximos meses, con acciones que apuntan a reducir riesgos y prevenir interrupciones antes de que ocurran, contribuyendo a entregar un suministro eléctrico más seguro y confiable para toda la comunidad.",
+  ] },
 ];
 
 export function fechaNoticia(date: string) {
