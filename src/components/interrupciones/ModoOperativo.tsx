@@ -222,7 +222,10 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
       {/* Split */}
       <div className="grid gap-4 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)]">
         {/* Lista */}
-        <div data-tour="lista" className={`min-w-0 ${mobileView === "mapa" ? "hidden lg:block" : ""}`}>
+        <div
+          data-tour="lista"
+          className={`min-w-0 lg:h-[min(65vh,640px)] lg:overflow-y-auto lg:overscroll-contain lg:pr-ch-sm ${mobileView === "mapa" ? "hidden lg:block" : ""}`}
+        >
           {Object.keys(grouped).length === 0 && <ListaVacia />}
 
 
