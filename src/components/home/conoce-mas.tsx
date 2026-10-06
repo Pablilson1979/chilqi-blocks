@@ -41,7 +41,7 @@ export function ConoceMas() {
                   {group.links.map((link) => (
                     <li key={link} className={group.title === "Conoce Chilquinta" ? "flex items-center gap-ch-base before:size-2.5 before:shrink-0 before:rounded-full before:bg-primary" : undefined}>
                       <a
-                        href={group.title === "Conoce Chilquinta" && link === "Noticias" ? "https://www.chilquinta.cl/noticias/titulares-noticias" : "#"}
+                        href={group.title === "Conoce Chilquinta" && link === "Noticias" ? "/noticias" : "#"}
                         className={group.title === "Conoce Chilquinta" ? "text-lg font-bold text-foreground hover:text-primary hover:underline" : "text-base text-foreground/80 hover:text-primary hover:underline"}
                       >
                         {link}
