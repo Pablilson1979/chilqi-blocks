@@ -10,6 +10,7 @@
 - [x] Compact expanded outage cards on desktop and give the event list its own map-height scroll.
 
 - [x] Match the Conoce Chilquinta menu labels and expanded presentation to the supplied reference.
-- [ ] Research official news content and choose a mobile-first news design within the Chilquinta UI kit.
+- [x] Research official news content and choose a mobile-first news design within the Chilquinta UI kit.
 - [ ] Build the chosen news section and connect the home menu.
+- [ ] Add article detail using the supplied Quilpué article text and news-list reference.
 - [ ] Verify news navigation and mobile/desktop presentation.
