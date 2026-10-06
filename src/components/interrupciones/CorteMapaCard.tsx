@@ -29,9 +29,9 @@ export default function CorteMapaCard({ i, onVerMapa }: { i: Interrupcion; onVer
                 ? "Estamos recalculando la hora"
                 : "Aún estamos evaluando el corte"}
         </p>
-        {programada && <p className="mt-1 text-base text-foreground">Hasta {formatFechaRelativa(i.etr_max)}</p>}
+        {programada && <p className="mt-1 text-[12px] font-semibold text-foreground">Hasta {formatFechaRelativa(i.etr_max)}</p>}
         {!programada && estado !== "vigente" && (
-          <p className="mt-1 text-base text-muted-foreground">Última actualización {haceCuanto(i.etr_updated_at)}</p>
+          <p className="mt-1 text-[12px] font-semibold text-muted-foreground">Última actualización {haceCuanto(i.etr_updated_at)}</p>
         )}
         <p className="mt-2 text-base font-bold leading-5 text-foreground">
           {causaVisible(i)} - <span className="font-extrabold">{i.cant_clientes.toLocaleString("es-CL")}</span> clientes afectados
