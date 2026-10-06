@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { causaVisible, estadoETR, type Interrupcion } from "@/lib/interrupciones-data";
 import { formatFechaRelativa, formatHora, haceCuanto, Tracker } from "./shared";
 
-export default function CorteMapaCard({ i, onVerMapa }: { i: Interrupcion; onVerMapa?: () => void }) {
+export default function CorteMapaCard({ i, onVerMapa }: { i: Interrupcion; onVerMapa?: (() => void) | undefined }) {
   const programada = i.tipo === "programado";
   const estado = estadoETR(i);
   return (
