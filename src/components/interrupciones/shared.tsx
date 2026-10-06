@@ -165,8 +165,8 @@ export function Tracker({
             </div>
             <div className={`min-w-0 flex-1 ${mapReference ? "pb-4 pt-1.5" : compact ? "pb-1" : desktopCompact ? "pb-1.5 lg:pb-0.5" : "pb-1.5"}`}>
               <p className={`text-base leading-tight ${mapReference ? done ? "font-semibold text-success" : "font-bold text-foreground" : textCls}`}>{mapReference && k === 0 ? "Corte informado" : s.label}</p>
-              {(!mapReference || !done) && <p className={`mt-0.5 ${mapReference ? "text-base leading-tight" : "text-sm"} ${mapReference && isCurrent ? "text-warning" : "text-muted-foreground"}`}>
-                {done ? formatHora(s.at) : isCurrent ? currentLabel : "Pendiente"}
+              {(!mapReference || !done) && (done || isCurrent) && <p className={`mt-0.5 ${mapReference ? "text-base leading-tight" : "text-sm"} ${mapReference && isCurrent ? "text-warning" : "text-muted-foreground"}`}>
+                {done ? formatHora(s.at) : currentLabel}
               </p>}
             </div>
           </li>
