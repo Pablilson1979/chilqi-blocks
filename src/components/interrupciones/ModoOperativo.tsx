@@ -12,9 +12,10 @@ import {
   type Interrupcion,
 } from "@/lib/interrupciones-data";
 import ClientOnlyMap from "./ClientOnlyMap";
-import { CorteCard, ListaVacia, haceCuanto } from "./shared";
+import { ListaVacia, haceCuanto } from "./shared";
+import CorteMapaCard from "./CorteMapaCard";
 import TendenciaAfectados from "./TendenciaAfectados";
-import { Users, X, ChevronDown, Hash } from "lucide-react";
+import { Users, X, ChevronDown, ChevronLeft, Hash } from "lucide-react";
 
 type CategoriaMapa = "interrupciones" | "desconexiones";
 
@@ -90,6 +91,21 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
   const seleccionada = items.find((i) => i.nr_orden === sel) ?? null;
   const itemsLista = selFromMap && seleccionada ? [seleccionada] : items;
   const grouped = useMemo(() => agruparPorComuna(itemsLista), [itemsLista]);
+  const verEnMapa = (id: string) => {
+    setSel(id);
+    setSelFromMap(true);
+    setMobileView("mapa");
+  };
+  const volverATodos = () => {
+    setSel(null);
+    setSelFromMap(false);
+  };
+  const returnButton = (
+    <Button variant="secondary" onClick={volverATodos} className={`w-full whitespace-normal text-base ${categoria === "desconexiones" ? "border-status-scheduled text-status-scheduled hover:bg-status-scheduled hover:text-info-foreground" : ""}`}>
+      <ChevronLeft aria-hidden />
+      {categoria === "desconexiones" ? "Volver y ver todas las desconexiones" : "Volver y ver todos los cortes"}
+    </Button>
+  );
 
   const totales = useMemo(
     () => ({
@@ -210,23 +226,6 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
           {Object.keys(grouped).length === 0 && <ListaVacia />}
 
 
-          {selFromMap && seleccionada && (
-            <div className="mb-2 flex items-center justify-between rounded-card border border-primary/40 bg-primary/5 px-3 py-2 text-xs">
-              <span className="text-foreground">
-                Mostrando el corte seleccionado en el mapa
-              </span>
-              <button
-                onClick={() => {
-                  setSel(null);
-                  setSelFromMap(false);
-                }}
-                className="inline-flex items-center gap-1 rounded-pill px-2 py-1 font-semibold text-primary hover:bg-primary/10"
-              >
-                <X className="h-3 w-3" /> Ver todos
-              </button>
-            </div>
-          )}
-
           <div className="space-y-2">
 
             {Object.entries(grouped)
@@ -237,12 +236,9 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
                   comuna={comuna}
                   items={arr}
                   sel={sel}
-                  onSelect={(id) => {
-                    const same = id === sel;
-                    setSel(same ? null : id);
-                    setSelFromMap(false);
-                    if (!same) setMobileView("mapa");
-                  }}
+                   focused={selFromMap && seleccionada !== null}
+                   returnButton={returnButton}
+                   onSelect={verEnMapa}
                 />
               ))}
           </div>
@@ -263,29 +259,18 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
             }`}
           >
             <ClientOnlyMap
-              items={items}
+               items={selFromMap && seleccionada ? [seleccionada] : items}
               seleccionada={sel}
               focus={seleccionada}
-              onSelect={(id) => {
-                setSel(id);
-                setSelFromMap(true);
-              }}
+               onSelect={verEnMapa}
+               cluster={!selFromMap}
               height="100%"
             />
           </div>
           {seleccionada && (
-            <div className="relative mt-3 lg:hidden">
-              <button
-                onClick={() => {
-                  setSel(null);
-                  setSelFromMap(false);
-                }}
-                aria-label="Cerrar detalle"
-                className="absolute right-3 top-3 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full bg-background/90 text-muted-foreground shadow-sm hover:text-foreground"
-              >
-                <X className="h-4 w-4" />
-              </button>
-              <CorteCard i={seleccionada} variant="mapa" activo />
+             <div className="mt-3 space-y-ch-lg lg:hidden">
+               <CorteMapaCard i={seleccionada} />
+               {returnButton}
             </div>
           )}
           <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
@@ -327,11 +312,15 @@ function ComunaAccordion({
   items,
   sel,
   onSelect,
+  focused,
+  returnButton,
 }: {
   comuna: string;
   items: Interrupcion[];
   sel: string | null;
   onSelect: (id: string) => void;
+  focused: boolean;
+  returnButton: ReactNode;
 }) {
   const contieneSel = sel !== null && items.some((i) => i.nr_orden === sel);
   const [open, setOpen] = useState(contieneSel);
@@ -344,9 +333,9 @@ function ComunaAccordion({
   const soloProgramadas = items.every((i) => i.tipo === "programado");
   return (
     <section className="overflow-hidden rounded-card border border-border bg-card">
-      <button
+      <Button variant="ghost"
         onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center gap-3 px-4 py-3 text-left transition hover:bg-muted/50"
+        className="flex h-auto w-full items-center justify-start gap-3 whitespace-normal rounded-none px-4 py-3 text-left font-normal transition hover:bg-muted/50"
         aria-expanded={open}
       >
         <span
@@ -376,21 +365,17 @@ function ComunaAccordion({
             open ? "rotate-180" : ""
           }`}
         />
-      </button>
+      </Button>
       {open && (
-        <div className="space-y-2 border-t border-border bg-background/40 p-3">
+        <div className="space-y-ch-base border-t border-border bg-background/40 p-ch-base">
           {items.map((i) => (
-            <CorteCard
+            <CorteMapaCard
               key={i.nr_orden}
               i={i}
-              variant="mapa"
-              activo={sel === i.nr_orden}
-              onClick={() => onSelect(i.nr_orden)}
-              showCentrar
-              scrollOnActive
-              hideTracker={i.tipo === "programado"}
+              onVerMapa={focused ? undefined : () => onSelect(i.nr_orden)}
             />
           ))}
+          {focused && <div className="pt-ch-md">{returnButton}</div>}
         </div>
       )}
     </section>
