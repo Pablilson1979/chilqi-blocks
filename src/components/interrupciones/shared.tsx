@@ -134,7 +134,7 @@ export function Tracker({ hitos, compact = false, currentLabel = "En curso" }: {
             : "bg-muted text-muted-foreground";
         const lineCls = done ? "bg-[color:var(--status-ok)]/50" : "bg-border";
         const textCls = done
-           ? mapAppearance ? "font-semibold text-success" : "text-foreground"
+          ? "text-foreground"
           : isCurrent
             ? "font-bold text-foreground"
             : "text-muted-foreground";
@@ -142,14 +142,14 @@ export function Tracker({ hitos, compact = false, currentLabel = "En curso" }: {
         return (
           <li key={k} className="relative flex items-start gap-3">
             <div className="relative flex flex-col items-center">
-               <span className={`grid shrink-0 place-items-center rounded-full ${mapAppearance ? "h-8 w-8" : "h-6 w-6"} ${mapAppearance && isCurrent ? "bg-warning text-success-foreground" : dotCls}`}>
+               <span className={`grid shrink-0 place-items-center rounded-full h-6 w-6 ${dotCls}`}>
                 {done ? <Check className="h-3.5 w-3.5" strokeWidth={3} /> : isCurrent ? <Zap className="h-3 w-3" strokeWidth={3} /> : <span className="h-1.5 w-1.5 rounded-full bg-current" />}
               </span>
               {!isLast && <span className={`mt-0.5 w-0.5 flex-1 ${lineCls}`} style={{ minHeight: compact ? 14 : 22 }} />}
             </div>
             <div className={`min-w-0 flex-1 ${compact ? "pb-1" : "pb-1.5"}`}>
               <p className={`text-base leading-tight ${textCls}`}>{s.label}</p>
-               <p className={`mt-0.5 ${mapAppearance ? "text-base" : "text-sm"} ${mapAppearance && isCurrent ? "font-semibold text-warning-foreground" : "text-muted-foreground"}`}>
+              <p className="mt-0.5 text-sm text-muted-foreground">
                 {done ? formatHora(s.at) : isCurrent ? currentLabel : "Pendiente"}
               </p>
             </div>
