@@ -24,6 +24,8 @@ export interface Interrupcion {
   cant_clientes: number;
   comuna: string;
   sector: string;
+  /** Sectores afectados (máx. 3 para la card); el primero es el sector principal. */
+  sectores: string[];
   direccion: string; // dirección enmascarada asociada al suministro/cliente
   causa?: string;
   lat: number;
@@ -182,7 +184,13 @@ function build(): Interrupcion[] {
       const lat = d.lat + jitterLat;
       const lng = d.lng + jitterLng;
 
-      const sector = d.sectores[k % d.sectores.length] ?? d.comuna;
+      const offset = k % d.sectores.length;
+      const sectores: string[] = [];
+      for (let o = 0; o < d.sectores.length && sectores.length < 3; o++) {
+        const s = d.sectores[(offset + o) % d.sectores.length]!;
+        if (!sectores.includes(s)) sectores.push(s);
+      }
+      const sector = sectores[0] ?? d.comuna;
       const numero = Math.floor(100 + R() * 8999);
       const calles = ["Av. Principal", "Calle Bellavista", "Calle España", "Los Carrera", "San Martín", "Pedro Montt", "Av. Argentina", "Calle Blanco"];
       const calle = calles[Math.floor(R() * calles.length)];
