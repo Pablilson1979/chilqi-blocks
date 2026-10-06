@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { causaVisible, estadoETR, type Interrupcion } from "@/lib/interrupciones-data";
 import { formatFechaRelativa, formatHora, haceCuanto, Tracker } from "./shared";
 
-const LABEL = "text-base font-semibold uppercase leading-5 tracking-[0.8px] text-foreground";
+const LABEL = "text-[12px] font-bold uppercase leading-4 tracking-[0.8px] text-foreground";
 
 export default function CorteMapaCard({ i, onVerMapa }: { i: Interrupcion; onVerMapa?: (() => void) | undefined }) {
   const programada = i.tipo === "programado";
@@ -14,7 +14,7 @@ export default function CorteMapaCard({ i, onVerMapa }: { i: Interrupcion; onVer
   return (
     <article className="@container min-w-0 overflow-hidden rounded-[15px] border border-border bg-card">
       <div className="px-[22.6px] pb-6 pt-6">
-        <p className={`flex items-center gap-2 text-[15px] font-bold uppercase leading-[19px] tracking-[0.3px] ${programada ? "text-status-scheduled" : "text-primary"}`}>
+        <p className={`flex items-center gap-2 text-[12px] font-bold uppercase leading-4 tracking-[0.36px] ${programada ? "text-status-scheduled" : "text-primary"}`}>
           <span aria-hidden className="size-[15px] shrink-0 rounded-full bg-current" />
           {programada ? "Desconexión programada" : "Corte no programado"}
         </p>
