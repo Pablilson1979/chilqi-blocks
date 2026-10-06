@@ -14,6 +14,8 @@ import { Route as IngresoDatosRouteImport } from './routes/ingreso-datos'
 import { Route as InterrupcionesRouteImport } from './routes/interrupciones'
 import { Route as QuieroLuzRouteImport } from './routes/quiero-luz'
 import { Route as SigueTuVisitaRouteImport } from './routes/sigue-tu-visita'
+import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
+import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,6 +42,16 @@ const SigueTuVisitaRoute = SigueTuVisitaRouteImport.update({
   path: '/sigue-tu-visita',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NoticiasIndexRoute = NoticiasIndexRouteImport.update({
+  id: '/noticias/',
+  path: '/noticias/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticiasSlugRoute = NoticiasSlugRouteImport.update({
+  id: '/noticias/$slug',
+  path: '/noticias/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +59,8 @@ export interface FileRoutesByFullPath {
   '/interrupciones': typeof InterrupcionesRoute
   '/quiero-luz': typeof QuieroLuzRoute
   '/sigue-tu-visita': typeof SigueTuVisitaRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias/': typeof NoticiasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +68,8 @@ export interface FileRoutesByTo {
   '/interrupciones': typeof InterrupcionesRoute
   '/quiero-luz': typeof QuieroLuzRoute
   '/sigue-tu-visita': typeof SigueTuVisitaRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias': typeof NoticiasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,6 +78,8 @@ export interface FileRoutesById {
   '/interrupciones': typeof InterrupcionesRoute
   '/quiero-luz': typeof QuieroLuzRoute
   '/sigue-tu-visita': typeof SigueTuVisitaRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias/': typeof NoticiasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -71,6 +89,8 @@ export interface FileRouteTypes {
     | '/interrupciones'
     | '/quiero-luz'
     | '/sigue-tu-visita'
+    | '/noticias/$slug'
+    | '/noticias/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -78,6 +98,8 @@ export interface FileRouteTypes {
     | '/interrupciones'
     | '/quiero-luz'
     | '/sigue-tu-visita'
+    | '/noticias/$slug'
+    | '/noticias'
   id:
     | '__root__'
     | '/'
@@ -85,6 +107,8 @@ export interface FileRouteTypes {
     | '/interrupciones'
     | '/quiero-luz'
     | '/sigue-tu-visita'
+    | '/noticias/$slug'
+    | '/noticias/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -93,6 +117,8 @@ export interface RootRouteChildren {
   InterrupcionesRoute: typeof InterrupcionesRoute
   QuieroLuzRoute: typeof QuieroLuzRoute
   SigueTuVisitaRoute: typeof SigueTuVisitaRoute
+  NoticiasSlugRoute: typeof NoticiasSlugRoute
+  NoticiasIndexRoute: typeof NoticiasIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -132,6 +158,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SigueTuVisitaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/noticias/': {
+      id: '/noticias/'
+      path: '/noticias'
+      fullPath: '/noticias/'
+      preLoaderRoute: typeof NoticiasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/noticias/$slug': {
+      id: '/noticias/$slug'
+      path: '/noticias/$slug'
+      fullPath: '/noticias/$slug'
+      preLoaderRoute: typeof NoticiasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -141,6 +181,8 @@ const rootRouteChildren: RootRouteChildren = {
   InterrupcionesRoute: InterrupcionesRoute,
   QuieroLuzRoute: QuieroLuzRoute,
   SigueTuVisitaRoute: SigueTuVisitaRoute,
+  NoticiasSlugRoute: NoticiasSlugRoute,
+  NoticiasIndexRoute: NoticiasIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
