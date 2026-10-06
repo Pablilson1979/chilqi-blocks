@@ -53,15 +53,14 @@ export default function CorteMapaCard({ i, onVerMapa }: { i: Interrupcion; onVer
             type="button"
             onClick={() => setReparacionAbierta((v) => !v)}
             aria-expanded={reparacionAbierta}
-            className="flex w-full items-center justify-between gap-3 text-left"
+            className="flex w-full items-center justify-between gap-3 rounded-input bg-tab-track px-4 py-3 text-left transition-colors hover:bg-border"
           >
-            <span className={LABEL}>Estado de la reparación</span>
-            <span className="flex min-w-0 items-center justify-end gap-2 text-right text-base font-semibold text-foreground">
-              {pasoActual.label}
-              <ChevronDown
-                aria-hidden
-                className={`size-4 shrink-0 text-muted-foreground transition-transform duration-200 ${reparacionAbierta ? "rotate-180" : ""}`}
-              />
+            <span className="min-w-0">
+              <span className="block text-[11px] font-bold uppercase leading-4 tracking-[0.8px] text-muted-foreground">Estado de la reparación</span>
+              <span className="mt-0.5 block truncate text-base font-semibold text-foreground">{pasoActual.label}</span>
+            </span>
+            <span aria-hidden className={`grid size-8 shrink-0 place-items-center rounded-full bg-surface shadow-card transition-transform duration-200 ${reparacionAbierta ? "rotate-180" : ""}`}>
+              <ChevronDown className="size-4 text-foreground" />
             </span>
           </button>
           {reparacionAbierta && (
