@@ -20,7 +20,7 @@ export default function CorteMapaCard({ i, onVerMapa }: { i: Interrupcion; onVer
         </p>
 
         <p className={`mt-6 ${LABEL}`}>{programada ? "Fecha y horario" : "Reposición estimada"}</p>
-        <p className={`mt-1 break-words font-extrabold text-foreground ${grande ? "text-[34px] leading-[42px] @min-[380px]:text-[42px] @min-[380px]:leading-[51px]" : "text-[28px] leading-[34px]"}`}>
+        <p className={`mt-1 break-words text-foreground ${grande ? "font-extrabold text-[34px] leading-[42px] @min-[380px]:text-[42px] @min-[380px]:leading-[51px]" : "font-bold text-[28px] leading-[34px]"}`}>
           {programada
             ? formatHora(i.inicio)
             : estado === "vigente"
