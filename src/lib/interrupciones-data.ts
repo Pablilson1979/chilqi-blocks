@@ -204,6 +204,7 @@ function build(): Interrupcion[] {
         cant_clientes: Math.round(40 + R() * 3200),
         comuna: d.comuna,
         sector,
+        sectores,
         direccion: `${calle} •• ${numero}, ${d.comuna}`,
         causa: esProgramado
           ? (CAUSAS_P[Math.floor(R() * CAUSAS_P.length)] ?? "Mantención programada de redes")
