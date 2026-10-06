@@ -120,7 +120,7 @@ export function pasoActualDe(hitos: Hito[]): { label: string; enCurso: boolean }
   });
   const currentIdx = lastDone < steps.length - 1 ? lastDone + 1 : -1;
   if (currentIdx === -1) return { label: "Suministro recuperado", enCurso: false };
-  return { label: steps[currentIdx].label, enCurso: true };
+  return { label: steps[currentIdx]?.label ?? "Suministro recuperado", enCurso: true };
 }
 
 export function Tracker({
