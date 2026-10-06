@@ -1,7 +1,8 @@
-import { ChevronRight, MapPin } from "lucide-react";
+import { useState } from "react";
+import { ChevronDown, ChevronRight, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { causaVisible, estadoETR, type Interrupcion } from "@/lib/interrupciones-data";
-import { formatFechaRelativa, formatHora, haceCuanto, Tracker } from "./shared";
+import { formatFechaRelativa, formatHora, haceCuanto, pasoActualDe, Tracker } from "./shared";
 
 const LABEL = "text-[12px] font-bold uppercase leading-4 tracking-[0.8px] text-foreground";
 
@@ -10,6 +11,8 @@ export default function CorteMapaCard({ i, onVerMapa }: { i: Interrupcion; onVer
   const estado = estadoETR(i);
   const sectoresLista = (i.sectores.length > 0 ? i.sectores : [i.sector]).slice(0, 3);
   const grande = programada || estado === "vigente";
+  const [reparacionAbierta, setReparacionAbierta] = useState(false);
+  const pasoActual = pasoActualDe(i.hitos);
 
   return (
     <article className="@container min-w-0 overflow-hidden rounded-[15px] border border-border bg-card">
@@ -46,8 +49,26 @@ export default function CorteMapaCard({ i, onVerMapa }: { i: Interrupcion; onVer
 
       {!programada && (
         <div className="border-t border-border px-[22.6px] pb-6 pt-6">
-          <p className={`mb-4 ${LABEL}`}>Estado de la reparación</p>
-          <Tracker hitos={i.hitos} mapReference />
+          <button
+            type="button"
+            onClick={() => setReparacionAbierta((v) => !v)}
+            aria-expanded={reparacionAbierta}
+            className="flex w-full items-center justify-between gap-3 text-left"
+          >
+            <span className={LABEL}>Estado de la reparación</span>
+            <span className="flex min-w-0 items-center justify-end gap-2 text-right text-base font-semibold text-foreground">
+              {pasoActual.label}
+              <ChevronDown
+                aria-hidden
+                className={`size-4 shrink-0 text-muted-foreground transition-transform duration-200 ${reparacionAbierta ? "rotate-180" : ""}`}
+              />
+            </span>
+          </button>
+          {reparacionAbierta && (
+            <div className="mt-5">
+              <Tracker hitos={i.hitos} mapReference />
+            </div>
+          )}
         </div>
       )}
       {onVerMapa && (

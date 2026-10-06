@@ -111,6 +111,18 @@ function derive5Steps(hitos: Hito[]): Array<{ label: string; at: string | null }
   });
 }
 
+/** Fase actual del tracking para encabezados colapsados. */
+export function pasoActualDe(hitos: Hito[]): { label: string; enCurso: boolean } {
+  const steps = derive5Steps(hitos);
+  let lastDone = -1;
+  steps.forEach((s, k) => {
+    if (s.at) lastDone = k;
+  });
+  const currentIdx = lastDone < steps.length - 1 ? lastDone + 1 : -1;
+  if (currentIdx === -1) return { label: "Suministro recuperado", enCurso: false };
+  return { label: steps[currentIdx]?.label ?? "Suministro recuperado", enCurso: true };
+}
+
 export function Tracker({
   hitos,
   compact = false,
