@@ -24,6 +24,8 @@ export interface Interrupcion {
   cant_clientes: number;
   comuna: string;
   sector: string;
+  /** Sectores afectados (máx. 3 para la card); el primero es el sector principal. */
+  sectores: string[];
   direccion: string; // dirección enmascarada asociada al suministro/cliente
   causa?: string;
   lat: number;
@@ -87,15 +89,15 @@ const DISTRIBUCION: Array<{
   { comuna: "Villa Alemana", cortes: 3, lat: -33.047, lng: -71.376, sectores: ["Peñablanca centro","Villa Hermosa","El Patagual"] },
   { comuna: "Quillota", cortes: 3, lat: -32.88, lng: -71.25, sectores: ["San Pedro","Quillota centro","Boco"] },
   { comuna: "La Cruz", cortes: 3, lat: -32.825, lng: -71.24, sectores: ["La Cruz centro","San Isidro","Pocochay"] },
-  { comuna: "Santo Domingo", cortes: 2, lat: -33.642, lng: -71.635, sectores: ["Santo Domingo centro","Rocas de Santo Domingo"] },
-  { comuna: "Puchuncaví", cortes: 2, lat: -32.725, lng: -71.413, sectores: ["Puchuncaví pueblo","Maitencillo"] },
-  { comuna: "Quintero", cortes: 2, lat: -32.783, lng: -71.533, sectores: ["Quintero centro","Loncura"] },
-  { comuna: "Viña del Mar", cortes: 2, lat: -33.0245, lng: -71.5518, sectores: ["Reñaca bajo","15 Norte con Libertad"] },
-  { comuna: "Putaendo", cortes: 1, lat: -32.626, lng: -70.713, sectores: ["Putaendo centro"] },
-  { comuna: "Panquehue", cortes: 1, lat: -32.81, lng: -70.9, sectores: ["Panquehue centro"] },
-  { comuna: "Los Andes", cortes: 1, lat: -32.834, lng: -70.598, sectores: ["Los Andes centro"] },
-  { comuna: "San Antonio", cortes: 1, lat: -33.592, lng: -71.61, sectores: ["Barrancas alto"] },
-  { comuna: "Llay-Llay", cortes: 1, lat: -32.842, lng: -70.96, sectores: ["Llay-Llay centro"] },
+  { comuna: "Santo Domingo", cortes: 2, lat: -33.642, lng: -71.635, sectores: ["Santo Domingo centro","Rocas de Santo Domingo","Maitenes"] },
+  { comuna: "Puchuncaví", cortes: 2, lat: -32.725, lng: -71.413, sectores: ["Puchuncaví pueblo","Maitencillo","Los Maitenes"] },
+  { comuna: "Quintero", cortes: 2, lat: -32.783, lng: -71.533, sectores: ["Quintero centro","Loncura","Ritoque"] },
+  { comuna: "Viña del Mar", cortes: 2, lat: -33.0245, lng: -71.5518, sectores: ["Reñaca bajo","15 Norte con Libertad","Cerro Castillo"] },
+  { comuna: "Putaendo", cortes: 1, lat: -32.626, lng: -70.713, sectores: ["Putaendo centro","Putaendo norte","Quebrada Escobar"] },
+  { comuna: "Panquehue", cortes: 1, lat: -32.81, lng: -70.9, sectores: ["Panquehue centro","Panquehue oriente","Las Pircas"] },
+  { comuna: "Los Andes", cortes: 1, lat: -32.834, lng: -70.598, sectores: ["Los Andes centro","Los Andes sur","Villa Alegre"] },
+  { comuna: "San Antonio", cortes: 1, lat: -33.592, lng: -71.61, sectores: ["Barrancas alto","San Antonio centro","Puerto Viejo"] },
+  { comuna: "Llay-Llay", cortes: 1, lat: -32.842, lng: -70.96, sectores: ["Llay-Llay centro","Vegas de Ahumada","Llay-Llay norte"] },
 ];
 
 const CAUSAS_NP = [
@@ -182,7 +184,13 @@ function build(): Interrupcion[] {
       const lat = d.lat + jitterLat;
       const lng = d.lng + jitterLng;
 
-      const sector = d.sectores[k % d.sectores.length] ?? d.comuna;
+      const offset = k % d.sectores.length;
+      const sectores: string[] = [];
+      for (let o = 0; o < d.sectores.length && sectores.length < 3; o++) {
+        const s = d.sectores[(offset + o) % d.sectores.length]!;
+        if (!sectores.includes(s)) sectores.push(s);
+      }
+      const sector = sectores[0] ?? d.comuna;
       const numero = Math.floor(100 + R() * 8999);
       const calles = ["Av. Principal", "Calle Bellavista", "Calle España", "Los Carrera", "San Martín", "Pedro Montt", "Av. Argentina", "Calle Blanco"];
       const calle = calles[Math.floor(R() * calles.length)];
@@ -196,6 +204,7 @@ function build(): Interrupcion[] {
         cant_clientes: Math.round(40 + R() * 3200),
         comuna: d.comuna,
         sector,
+        sectores,
         direccion: `${calle} •• ${numero}, ${d.comuna}`,
         causa: esProgramado
           ? (CAUSAS_P[Math.floor(R() * CAUSAS_P.length)] ?? "Mantención programada de redes")
