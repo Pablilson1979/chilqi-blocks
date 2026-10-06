@@ -14,7 +14,7 @@ export default function CorteMapaCard({ i, onVerMapa }: { i: Interrupcion; onVer
   return (
     <article className="@container min-w-0 overflow-hidden rounded-[15px] border border-border bg-card">
       <div className="px-[22.6px] pb-6 pt-6">
-        <p className={`flex items-center gap-2 text-lg font-bold uppercase leading-[22px] tracking-[0.36px] ${programada ? "text-status-scheduled" : "text-primary"}`}>
+        <p className={`flex items-center gap-2 text-[15px] font-bold uppercase leading-[19px] tracking-[0.3px] ${programada ? "text-status-scheduled" : "text-primary"}`}>
           <span aria-hidden className="size-[15px] shrink-0 rounded-full bg-current" />
           {programada ? "Desconexión programada" : "Corte no programado"}
         </p>
