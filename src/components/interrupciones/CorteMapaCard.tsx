@@ -8,19 +8,19 @@ export default function CorteMapaCard({ i, onVerMapa }: { i: Interrupcion; onVer
   const estado = estadoETR(i);
   return (
     <article className="min-w-0 overflow-hidden rounded-card border border-border bg-card">
-      <div className="space-y-ch-lg p-ch-lg">
+      <div className="space-y-ch-lg p-ch-lg lg:space-y-ch-md lg:p-ch-md">
         <p className={`flex items-start gap-2 text-base font-bold uppercase ${programada ? "text-status-scheduled" : "text-primary"}`}>
           <span aria-hidden className="mt-1 size-3 shrink-0 rounded-full bg-current" />
           {programada ? "Desconexión programada" : "Corte no programado"}
         </p>
         <div>
           <p className="text-base font-semibold uppercase text-foreground">{programada ? "Fecha y horario" : "Reposición estimada"}</p>
-          <p className="mt-1 break-words text-[28px] font-extrabold leading-tight text-foreground">
+          <p className="mt-1 break-words text-[28px] font-extrabold leading-tight text-foreground lg:text-2xl">
             {programada ? formatHora(i.inicio) : estado === "vigente" ? formatFechaRelativa(i.etr_max) : estado === "vencida" ? "Estamos recalculando la hora" : "Aún estamos evaluando el corte"}
           </p>
           {programada && <p className="mt-2 text-base font-semibold text-foreground">Hasta {formatFechaRelativa(i.etr_max)}</p>}
           {!programada && estado !== "vigente" && <p className="mt-2 text-base text-muted-foreground">Última actualización {haceCuanto(i.etr_updated_at)}</p>}
-          <div className="mt-ch-md text-base font-bold leading-snug text-foreground">
+          <div className="mt-ch-md text-base font-bold leading-snug text-foreground lg:mt-ch-sm">
             <p>{causaVisible(i)}</p>
             <p>{i.cant_clientes.toLocaleString("es-CL")} clientes afectados</p>
           </div>
@@ -33,11 +33,11 @@ export default function CorteMapaCard({ i, onVerMapa }: { i: Interrupcion; onVer
           </p>
         </div>
       </div>
-      {!programada && <div className="border-t border-border p-ch-lg">
-        <p className="mb-ch-base text-base font-semibold uppercase text-muted-foreground">Estado de la reparación</p>
-        <Tracker hitos={i.hitos} />
+      {!programada && <div className="border-t border-border p-ch-lg lg:p-ch-md">
+        <p className="mb-ch-base text-base font-semibold uppercase text-muted-foreground lg:mb-ch-sm">Estado de la reparación</p>
+        <Tracker hitos={i.hitos} desktopCompact />
       </div>}
-      {onVerMapa && <div className="flex justify-center px-ch-lg pb-ch-lg">
+      {onVerMapa && <div className="flex justify-center px-ch-lg pb-ch-lg lg:px-ch-md lg:pb-ch-sm">
         <Button variant="secondary" className={`text-base ${programada ? "border-status-scheduled text-status-scheduled hover:bg-status-scheduled hover:text-info-foreground" : ""}`} onClick={onVerMapa}>
           Ver en el mapa <ChevronRight aria-hidden />
         </Button>

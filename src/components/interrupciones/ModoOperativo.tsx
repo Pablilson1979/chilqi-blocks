@@ -222,7 +222,10 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
       {/* Split */}
       <div className="grid gap-4 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)]">
         {/* Lista */}
-        <div data-tour="lista" className={`min-w-0 ${mobileView === "mapa" ? "hidden lg:block" : ""}`}>
+        <div
+          data-tour="lista"
+          className={`min-w-0 lg:h-[700px] lg:overflow-y-auto lg:overscroll-contain lg:pr-ch-sm ${mobileView === "mapa" ? "hidden lg:block" : ""}`}
+        >
           {Object.keys(grouped).length === 0 && <ListaVacia />}
 
 
@@ -254,7 +257,7 @@ export default function ModoOperativo({ onVolver, viewToggle }: { onVolver: () =
         >
 
           <div
-            className={`lg:h-[min(65vh,640px)] ${
+            className={`lg:h-[700px] ${
               seleccionada ? "h-[48svh]" : "h-[calc(100vh-14rem)]"
             }`}
           >
@@ -367,7 +370,7 @@ function ComunaAccordion({
         />
       </Button>
       {open && (
-        <div className="space-y-ch-base border-t border-border bg-background/40 p-ch-base">
+        <div className="space-y-ch-base border-t border-border bg-background/40 p-ch-base lg:p-ch-md">
           {items.map((i) => (
             <CorteMapaCard
               key={i.nr_orden}
