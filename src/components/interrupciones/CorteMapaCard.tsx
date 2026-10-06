@@ -1,7 +1,8 @@
-import { ChevronRight, MapPin } from "lucide-react";
+import { useState } from "react";
+import { ChevronDown, ChevronRight, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { causaVisible, estadoETR, type Interrupcion } from "@/lib/interrupciones-data";
-import { formatFechaRelativa, formatHora, haceCuanto, Tracker } from "./shared";
+import { formatFechaRelativa, formatHora, haceCuanto, pasoActualDe, Tracker } from "./shared";
 
 const LABEL = "text-[12px] font-bold uppercase leading-4 tracking-[0.8px] text-foreground";
 
