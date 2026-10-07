@@ -65,7 +65,7 @@ export default function CorteMapaCard({ i, onVerMapa }: { i: Interrupcion; onVer
           </button>
           {reparacionAbierta && (
             <div className="mt-5">
-              <Tracker hitos={i.hitos} mapReference />
+              <Tracker hitos={i.hitos} />
             </div>
           )}
         </div>
