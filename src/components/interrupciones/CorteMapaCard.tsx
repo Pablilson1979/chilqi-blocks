@@ -36,7 +36,7 @@ export default function CorteMapaCard({ i, onVerMapa }: { i: Interrupcion; onVer
         {!programada && estado !== "vigente" && (
           <p className="mt-1 text-[12px] font-semibold text-muted-foreground">Última actualización {haceCuanto(i.etr_updated_at)}</p>
         )}
-        <p className="mt-2 text-base font-medium leading-5 text-foreground">
+        <p className="mt-[5px] text-[12px] font-medium leading-4 text-foreground">
           {causaVisible(i)} - <span className="font-bold">{i.cant_clientes.toLocaleString("es-CL")}</span> clientes afectados
         </p>
 
