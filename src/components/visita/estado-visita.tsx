@@ -277,7 +277,7 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
                     title={caso.reasignado ? "Tu ventana se ajustó" : colaTexto}
                     description={
                       caso.reasignado
-                        ? `Atendimos primero una emergencia de mayor prioridad en el sector, por eso tu horario estimado se corrió. ${colaTexto} y tu orden mantiene su lugar en la cola.`
+                        ? `Atendimos primero una emergencia de mayor prioridad en el sector, por eso tu horario estimado se corrió. ${colaTexto} y tu solicitud mantiene su lugar en la cola.`
                         : "El horario estimado considera esos trabajos y el traslado del técnico hasta tu dirección."
                     }
                   >
