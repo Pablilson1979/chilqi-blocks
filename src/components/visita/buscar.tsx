@@ -7,6 +7,7 @@ import { CASOS, type Caso } from "@/components/visita/content";
 
 /** Ejemplos ordenados según el flujo del reporte: en espera → en camino → en reparación → cierres → excepciones. */
 const ORDEN_EJEMPLOS: Caso[] = [
+  "20455302",
   "20455301",
   "11234412",
   "30778120",
@@ -52,7 +53,7 @@ export function BuscarVisita({ onBuscar, error }: BuscarVisitaProps) {
           <div className="flex items-start gap-ch-sm">
             <Field
               id="orden"
-              label="N° de orden o N° de cliente"
+              label="N° de solicitud o N° de cliente"
               placeholder="Ej: 11234412"
               inputMode="numeric"
               autoComplete="off"
@@ -79,7 +80,7 @@ export function BuscarVisita({ onBuscar, error }: BuscarVisitaProps) {
           {ayuda ? (
             <div className="rounded-card bg-muted p-ch-md text-sm leading-relaxed text-foreground">
               <p>
-                <span className="font-bold">N° de orden (8 dígitos):</span> llega en el
+                <span className="font-bold">N° de solicitud (8 dígitos):</span> llega en el
                 mensaje que recibes al reportar tu corte por la web, WhatsApp o teléfono.
               </p>
               <p className="mt-ch-sm">

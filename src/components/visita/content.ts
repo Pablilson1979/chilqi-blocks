@@ -140,7 +140,7 @@ export const CASOS: Caso[] = [
   {
     orden: "20455301",
     reposicion: "Hoy, 18:30 hrs",
-    ejemplo: "En espera de móvil",
+    ejemplo: "En espera de móvil (ventana ajustada)",
     cliente: "4187903",
     direccion: "Av. Libertad 1180, depto. 703",
     comuna: "Viña del Mar",
@@ -150,6 +150,19 @@ export const CASOS: Caso[] = [
     etrEstado: "ajustado",
     enCola: 2,
     reasignado: true,
+  },
+  {
+    orden: "20455302",
+    reposicion: "Hoy, 17:45 hrs",
+    ejemplo: "En espera de móvil",
+    cliente: "4187904",
+    direccion: "Calle Valparaíso 540",
+    comuna: "Viña del Mar",
+    hito: "espera",
+    tiempos: { informado: "Hoy · 13:05", espera: "Hoy · 13:20" },
+    ventana: "16:10 – 16:50",
+    etrEstado: "pendiente",
+    enCola: 1,
   },
   {
     orden: "30778120",
@@ -210,14 +223,14 @@ export const CASOS: Caso[] = [
   },
   {
     orden: "60220033",
-    ejemplo: "Sin seguimiento (falla masiva)",
+    ejemplo: "Falla masiva",
     cliente: "8340112",
     direccion: "Camino Troncal 2200",
     comuna: "Quilpué",
     hito: "espera",
     tiempos: { informado: "Hoy · 10:15" },
     noDisponible:
-      "Tu corte forma parte de una falla que afecta a varios clientes del sector. En estos casos el seguimiento en tiempo real todavía no está disponible.",
+      "Tu corte forma parte de una falla que afecta a varios clientes del sector. Nuestros equipos ya trabajan en la reparación; en estos casos no mostramos la ubicación del técnico.",
   },
 ];
 
