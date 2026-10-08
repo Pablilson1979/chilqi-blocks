@@ -31,7 +31,7 @@ function destacado(caso: Caso) {
 
   if (caso.noDisponible) {
     return {
-      titulo: "Seguimiento no disponible",
+      titulo: "Falla masiva",
       dato: null as string | null,
       sub: null as string | null,
       nota: null as string | null,
@@ -108,7 +108,7 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
         <div className="grid gap-ch-lg p-ch-lg sm:p-ch-xl lg:grid-cols-[minmax(0,1fr)_minmax(440px,0.9fr)] lg:items-center lg:gap-ch-xl">
           <div className="min-w-0">
             <p className="text-sm font-bold uppercase tracking-wide text-primary">
-              Orden N° {caso.orden}
+              N° de solicitud {caso.orden}
             </p>
             <h2 className="mt-ch-sm text-3xl font-bold leading-tight text-foreground lg:text-4xl">
               {info.titulo}
@@ -174,9 +174,16 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
 
       {caso.noDisponible ? (
         <>
+          <section className="rounded-[1.5rem] bg-card p-ch-lg shadow-card sm:p-ch-xl">
+            <h2 className="text-lg font-bold text-foreground">Avance de tu visita</h2>
+            <p className="mb-ch-lg mt-1 text-sm text-muted-foreground">
+              Actualizamos cada etapa a medida que ocurre en terreno.
+            </p>
+            <HitosVisita caso={caso} />
+          </section>
           <StatusMessage
             tone="info"
-            title="Este corte no tiene seguimiento en línea"
+            title="Falla masiva"
             description={caso.noDisponible}
           />
           <div className="flex flex-wrap gap-ch-md">
@@ -187,7 +194,7 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
               </a>
             </Button>
             <Button variant="secondary" size="lg" onClick={onVolver}>
-              Consultar otra orden
+              Consultar otra solicitud
             </Button>
           </div>
         </>
@@ -384,7 +391,7 @@ export function EstadoVisita({ caso, onVolver }: EstadoVisitaProps) {
 
                 <Button variant="tertiary" size="lg" onClick={onVolver}>
                   <RefreshCw aria-hidden />
-                  Consultar otra orden
+                  Consultar otra solicitud
                 </Button>
               </div>
             </section>
