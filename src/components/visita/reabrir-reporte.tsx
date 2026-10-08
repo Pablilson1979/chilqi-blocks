@@ -82,11 +82,16 @@ export function ReabrirReporte({ caso }: ReabrirReporteProps) {
                   aria-pressed={motivo === m}
                   onClick={() => setMotivo(m)}
                   className={cn(
-                    "ch-touch rounded-card border px-ch-base py-3 text-left text-base font-semibold transition-colors",
-                    motivo === m ? "border-primary bg-primary-soft text-primary" : "border-border-strong bg-surface text-foreground hover:border-primary",
+                    "ch-touch flex items-center justify-between gap-ch-sm rounded-card border px-ch-base py-3 text-left text-base font-semibold transition-colors",
+                    motivo === m
+                      ? "border-success bg-success-soft text-success"
+                      : "border-border-strong bg-surface text-foreground hover:border-primary",
                   )}
                 >
-                  {m}
+                  <span>{m}</span>
+                  {motivo === m ? (
+                    <CircleCheck className="size-5 shrink-0" aria-hidden />
+                  ) : null}
                 </button>
               ))}
             </div>
