@@ -140,7 +140,7 @@ export const CASOS: Caso[] = [
   {
     orden: "20455301",
     reposicion: "Hoy, 18:30 hrs",
-    ejemplo: "En espera de móvil (ventana ajustada)",
+    ejemplo: "En espera del móvil B",
     cliente: "4187903",
     direccion: "Av. Libertad 1180, depto. 703",
     comuna: "Viña del Mar",
@@ -154,7 +154,7 @@ export const CASOS: Caso[] = [
   {
     orden: "20455302",
     reposicion: "Hoy, 17:45 hrs",
-    ejemplo: "En espera de móvil",
+    ejemplo: "En espera del móvil A",
     cliente: "4187904",
     direccion: "Calle Valparaíso 540",
     comuna: "Viña del Mar",
