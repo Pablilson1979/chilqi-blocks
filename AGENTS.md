@@ -14,3 +14,4 @@
 - Keep map-reference timeline styling as an opt-in presentation of the shared Tracker; derive all steps from the same logic to avoid diverging supply and map states.
 - Keep news content in a browser-safe typed data module and render listing and article detail as separate routes; this allows verified content or future services to replace prototype data without changing the editorial presentation.
 - Keep payment identifier schemas in a browser-safe validation module and customer-number help separate from the home payment form so future payment services can reuse the same rules without changing the UI.
+- Keep online-payment rules and demo account data in browser-safe modules, presentation under `components/pago`, and temporary payment context in a root provider; never store payment identity or receipt data in URLs or browser persistence, so the QA flow can be replaced safely by real services.
