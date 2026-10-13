@@ -2,7 +2,6 @@ import { useState, type ReactNode } from "react";
 import {
   buscarPorNIS,
   buscarPorDireccion,
-  buscarPorOrden,
   estadoETR,
   INTERRUPCIONES,
   type Interrupcion,
@@ -18,7 +17,6 @@ import {
   Check,
   HelpCircle,
   Home,
-  ClipboardList,
   FlaskConical,
   Bell,
   PartyPopper,
