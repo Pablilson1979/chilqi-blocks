@@ -21,7 +21,7 @@ function HeroMobile() {
       </div>
 
       <div className="ch-container py-ch-xl">
-        <PayExpressCard className="max-w-none rounded-none bg-transparent p-0 shadow-none backdrop-blur-none" />
+        <PayExpressCard className="max-w-none rounded-none bg-transparent px-0 py-0 shadow-none backdrop-blur-none" />
       </div>
     </section>
   );
