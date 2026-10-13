@@ -219,31 +219,6 @@ export default function ModoCliente({
         )}
 
 
-        {tab === "orden" && (
-          <form onSubmit={onBuscarOrden} className="mt-4">
-            <label htmlFor="orden" className="sr-only">N° de solicitud</label>
-            <div className="flex flex-col gap-2 sm:flex-row">
-              <div className="relative flex-1">
-                <ClipboardList className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                <input
-                  id="orden"
-                  autoComplete="off"
-                  placeholder="Ej: 471001-1"
-                  value={orden}
-                  onChange={(e) => setOrden(e.target.value)}
-                  className="h-14 w-full rounded-pill border border-border bg-background pl-11 pr-4 text-base font-medium text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-primary/20"
-                />
-              </div>
-              <button type="submit" className="h-14 rounded-pill bg-primary px-7 text-sm font-bold uppercase tracking-normal text-primary-foreground hover:brightness-110">
-                Consultar
-              </button>
-            </div>
-            <p className="mt-3 text-sm text-muted-foreground">
-              Ingresa el número asociado a tu solicitud o interrupción.
-            </p>
-          </form>
-        )}
-
       {/* Resultado dentro de la card, bajo el formulario */}
       {escenario && (
         <div className="mt-4">
