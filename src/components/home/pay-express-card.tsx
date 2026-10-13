@@ -58,7 +58,7 @@ export function PayExpressCard({ className }: { className?: string }) {
         validatePayIdentifier(mode, value);
       }}
       className={cn(
-        "w-full max-w-[440px] rounded-[2rem] bg-surface/95 p-ch-xl shadow-card-hover backdrop-blur-sm",
+        "w-full max-w-[500px] rounded-[2rem] bg-surface/95 shadow-card-hover backdrop-blur-sm",
         className,
       )}
     >
@@ -92,7 +92,7 @@ export function PayExpressCard({ className }: { className?: string }) {
         ))}
       </div>
 
-      <div className={cn("relative mt-ch-lg rounded-input border-2 bg-surface px-ch-base pb-ch-sm pt-ch-md", showError ? "border-pay-warning" : canSubmit ? "border-success" : "border-border")}>
+      <div className={cn("relative mt-[28px] rounded-input border-2 bg-surface px-ch-base pb-ch-sm pt-ch-md", showError ? "border-pay-warning" : canSubmit ? "border-success" : "border-border")}>
         <label
           htmlFor={fieldId}
           className="relative -mt-7 mb-1 block w-fit max-w-full bg-surface px-1 text-sm font-bold leading-snug text-foreground"
@@ -124,12 +124,12 @@ export function PayExpressCard({ className }: { className?: string }) {
         type="submit"
         size="lg"
         disabled={!canSubmit}
-        className="mt-ch-base w-full text-base disabled:opacity-60"
+        className="mt-ch-md w-full text-base disabled:opacity-60"
       >
         Paga tu cuenta
       </Button>
 
-      <div className="mt-ch-md text-center">
+      <div className="mt-ch-xs text-center">
         <a
           href="#"
           className="ch-touch inline-flex items-center justify-center text-base font-bold text-primary hover:text-primary-hover hover:underline"
