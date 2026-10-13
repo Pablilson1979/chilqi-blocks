@@ -78,7 +78,7 @@ function hitosForzados(avance: number): Hito[] {
 
 /* ---------------- Página ---------------- */
 
-type TabId = "nis" | "direccion" | "orden";
+type TabId = "nis" | "direccion";
 
 export default function ModoCliente({
   onIrOperativo: _,
@@ -90,7 +90,6 @@ export default function ModoCliente({
   const [tab, setTab] = useState<TabId>("nis");
   const [nis, setNis] = useState("");
   const [dir, setDir] = useState("");
-  const [orden, setOrden] = useState("");
   const [res, setRes] = useState<ResultadoBusqueda | null>(null);
   const [escenario, setEscenario] = useState<EscenarioId | null>(null);
 
@@ -120,12 +119,6 @@ export default function ModoCliente({
     setRes(buscarPorDireccion(dir));
   }
 
-  function onBuscarOrden(e: React.FormEvent) {
-    e.preventDefault();
-    setEscenario(null);
-    setRes(buscarPorOrden(orden));
-  }
-
   return (
     <div className="ch-container pb-16 pt-ch-lg">
       {/* Franja superior con el selector: misma posición que en Mapa de cortes */}
@@ -146,7 +139,7 @@ export default function ModoCliente({
           ¿Estás sin luz?
         </h2>
         <p className="mt-1 text-base text-muted-foreground">
-          Consulta por <strong>N° de cliente</strong>, <strong>dirección</strong> o <strong>N° de solicitud</strong>.
+          Consulta por <strong>N° de cliente</strong> o <strong>dirección</strong>.
         </p>
 
         {/* Tabs */}
