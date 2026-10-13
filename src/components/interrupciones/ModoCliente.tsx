@@ -148,7 +148,6 @@ export default function ModoCliente({
             [
               { id: "nis", label: "N° cliente", icon: Hash },
               { id: "direccion", label: "Dirección", icon: Home },
-              { id: "orden", label: "N° de solicitud", icon: ClipboardList },
             ] as const
           ).map(({ id, label, icon: Icon }) => (
             <button
