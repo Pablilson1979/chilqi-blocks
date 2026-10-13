@@ -118,7 +118,7 @@ export function PayExpressCard({ className }: { className?: string }) {
         {mode === "cliente" && showError ? <CustomerNumberHelp /> : null}
         </div>
       </div>
-      {showError ? <p id={`${fieldId}-error`} role="status" className="mt-2 flex items-start gap-2 text-base font-semibold leading-snug text-destructive"><AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden />{error}</p> : null}
+      {showError ? <p id={`${fieldId}-error`} role="status" className="mt-2 flex items-start gap-2 text-sm font-semibold leading-snug text-destructive"><AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden />{error}</p> : null}
 
       <Button
         type="submit"
