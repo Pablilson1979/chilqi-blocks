@@ -1,7 +1,7 @@
 # Roadmap
 
-- [ ] Validate home payment identifiers and add accessible customer-number help based on the supplied examples.
-- [ ] Verify invalid/valid identifiers and help on mobile and desktop.
+- [x] Validate home payment identifiers and add accessible customer-number help based on the supplied examples.
+- [x] Verify invalid/valid identifiers and help on mobile and desktop.
 
 - [x] Migrate the complete Mi suministro and Mapa de cortes feature.
 - [x] Adapt the feature to the Chilquinta UI kit and shared header/footer.

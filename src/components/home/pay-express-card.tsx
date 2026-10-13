@@ -47,6 +47,8 @@ export function PayExpressCard({ className }: { className?: string }) {
   const showError = !canSubmit && (value.length > 0 || touched);
   const error = !validation.success ? validation.error.issues[0]?.message : undefined;
 
+  if (!active) return null;
+
   return (
     <form
       noValidate
