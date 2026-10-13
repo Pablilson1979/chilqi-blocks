@@ -13,3 +13,4 @@
 - Use a dedicated map-event detail card, separate from supply-query cards, so map presentation changes do not alter customer-query scenarios.
 - Keep map-reference timeline styling as an opt-in presentation of the shared Tracker; derive all steps from the same logic to avoid diverging supply and map states.
 - Keep news content in a browser-safe typed data module and render listing and article detail as separate routes; this allows verified content or future services to replace prototype data without changing the editorial presentation.
+- Keep payment identifier schemas in a browser-safe validation module and customer-number help separate from the home payment form so future payment services can reuse the same rules without changing the UI.
