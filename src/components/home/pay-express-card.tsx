@@ -58,7 +58,7 @@ export function PayExpressCard({ className }: { className?: string }) {
         validatePayIdentifier(mode, value);
       }}
       className={cn(
-        "w-full max-w-[420px] rounded-[2rem] bg-surface/95 p-ch-xl shadow-card-hover backdrop-blur-sm",
+        "w-full max-w-[440px] rounded-[2rem] bg-surface/95 p-ch-xl shadow-card-hover backdrop-blur-sm",
         className,
       )}
     >
@@ -92,7 +92,7 @@ export function PayExpressCard({ className }: { className?: string }) {
         ))}
       </div>
 
-      <div className={cn("relative mt-ch-lg rounded-[1.25rem] border-2 bg-surface px-ch-base pb-ch-sm pt-ch-md", showError ? "border-destructive" : canSubmit ? "border-success" : "border-border")}>
+      <div className={cn("relative mt-ch-lg rounded-input border-2 bg-surface px-ch-base pb-ch-sm pt-ch-md", showError ? "border-pay-warning" : canSubmit ? "border-success" : "border-border")}>
         <label
           htmlFor={fieldId}
           className="relative -mt-7 mb-1 block w-fit max-w-full bg-surface px-1 text-sm font-bold leading-snug text-foreground"
@@ -112,10 +112,10 @@ export function PayExpressCard({ className }: { className?: string }) {
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onBlur={() => setTouched(true)}
-          className="h-10 min-h-10 min-w-0 flex-1 border-0 bg-transparent px-0 text-base font-bold shadow-none focus-visible:ring-0"
+          className="h-10 min-h-10 min-w-0 flex-1 border-0 bg-transparent px-0 text-base font-semibold shadow-none focus-visible:outline-none focus-visible:ring-0"
         />
-        {canSubmit ? <span id={`${fieldId}-success`} className="flex size-10 shrink-0 items-center justify-center rounded-full bg-success-soft text-success"><Check className="size-5" strokeWidth={3} aria-hidden /><span className="sr-only">Formato válido</span></span> : null}
-        {mode === "cliente" ? <CustomerNumberHelp /> : null}
+        {canSubmit ? <span id={`${fieldId}-success`} className="flex size-7 shrink-0 items-center justify-center rounded-full bg-success-tint text-success"><Check className="size-4" strokeWidth={3} aria-hidden /><span className="sr-only">Formato válido</span></span> : null}
+        {mode === "cliente" && showError ? <CustomerNumberHelp /> : null}
         </div>
       </div>
       {showError ? <p id={`${fieldId}-error`} role="status" className="mt-2 flex items-start gap-2 text-base font-semibold leading-snug text-destructive"><AlertCircle className="mt-0.5 size-4 shrink-0" aria-hidden />{error}</p> : null}

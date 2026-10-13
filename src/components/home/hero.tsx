@@ -47,7 +47,7 @@ export function Hero() {
       />
 
       <div className="ch-container">
-        <div className="grid items-center gap-ch-xl py-ch-2xl lg:grid-cols-[minmax(0,420px)_minmax(0,1fr)] lg:gap-ch-3xl">
+        <div className="grid items-center gap-ch-xl py-ch-2xl lg:grid-cols-[minmax(0,440px)_minmax(0,1fr)] lg:gap-ch-3xl">
           <PayExpressCard />
 
           <div className="text-center lg:text-left">

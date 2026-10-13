@@ -1,4 +1,4 @@
-import { ArrowDown, Check, HelpCircle } from "lucide-react";
+import { ArrowDown, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
@@ -6,8 +6,8 @@ export function CustomerNumberHelp() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button type="button" variant="tertiary" className="shrink-0 gap-1.5 px-2 text-base" aria-label="Ayuda para encontrar tu número de cliente">
-          <HelpCircle aria-hidden /> Ayuda
+        <Button type="button" variant="tertiary" className="min-h-0 shrink-0 rounded-input bg-pay-warning px-3 py-1.5 text-xs text-primary-foreground hover:bg-pay-warning hover:text-primary-foreground" aria-label="Ayuda para encontrar tu número de cliente">
+          Ayuda
         </Button>
       </DialogTrigger>
       <DialogContent className="max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-[560px] gap-5 overflow-y-auto rounded-card bg-card p-6 sm:p-8 [&>button:last-child]:flex [&>button:last-child]:size-8 [&>button:last-child]:items-center [&>button:last-child]:justify-center [&>button:last-child]:rounded-input [&>button:last-child]:bg-muted [&>button:last-child]:text-foreground">
