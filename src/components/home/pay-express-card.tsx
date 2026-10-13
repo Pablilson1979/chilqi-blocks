@@ -58,7 +58,7 @@ export function PayExpressCard({ className }: { className?: string }) {
         validatePayIdentifier(mode, value);
       }}
       className={cn(
-        "w-full max-w-[500px] rounded-[2rem] bg-surface/95 px-ch-xl py-ch-lg shadow-card-hover backdrop-blur-sm",
+        "w-full max-w-[500px] rounded-[2rem] bg-surface/95 shadow-card-hover backdrop-blur-sm",
         className,
       )}
     >

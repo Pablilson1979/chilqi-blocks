@@ -21,7 +21,7 @@ function HeroMobile() {
       </div>
 
       <div className="ch-container py-ch-xl">
-        <PayExpressCard className="max-w-none rounded-none bg-transparent px-0 py-0 shadow-none backdrop-blur-none" />
+        <PayExpressCard className="max-w-none rounded-none bg-transparent shadow-none backdrop-blur-none" />
       </div>
     </section>
   );
@@ -48,7 +48,7 @@ export function Hero() {
 
       <div className="ch-container">
         <div className="grid items-center gap-ch-xl py-ch-2xl lg:grid-cols-[minmax(0,500px)_minmax(0,1fr)] lg:gap-ch-3xl">
-          <PayExpressCard />
+          <PayExpressCard className="px-ch-xl py-ch-lg" />
 
           <div className="text-center lg:text-left">
             <h1 className="text-3xl font-bold leading-tight text-primary-foreground drop-shadow-sm lg:text-4xl">

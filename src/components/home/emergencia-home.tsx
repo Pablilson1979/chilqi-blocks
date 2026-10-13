@@ -220,7 +220,7 @@ export function EmergenciaHome() {
             />
           </summary>
           <div className="px-ch-lg pb-ch-lg">
-            <PayExpressCard className="max-w-none rounded-card bg-transparent p-0 shadow-none backdrop-blur-none" />
+            <PayExpressCard className="max-w-none rounded-card bg-transparent shadow-none backdrop-blur-none" />
           </div>
         </details>
       </div>
