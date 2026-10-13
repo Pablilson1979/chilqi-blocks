@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Build the two-step online payment prototype and QA success screen.
+- [x] Verify amount rules, collector limits, and the complete mobile/desktop payment flow.
+
 - [x] Validate home payment identifiers and add accessible customer-number help based on the supplied examples.
 - [x] Verify invalid/valid identifiers and help on mobile and desktop.
 

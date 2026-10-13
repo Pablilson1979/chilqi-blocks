@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as IngresoDatosRouteImport } from './routes/ingreso-datos'
 import { Route as InterrupcionesRouteImport } from './routes/interrupciones'
+import { Route as PagoEnLineaRouteImport } from './routes/pago-en-linea'
+import { Route as PagoResultadoRouteImport } from './routes/pago-resultado'
 import { Route as QuieroLuzRouteImport } from './routes/quiero-luz'
 import { Route as SigueTuVisitaRouteImport } from './routes/sigue-tu-visita'
 import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
@@ -30,6 +32,16 @@ const IngresoDatosRoute = IngresoDatosRouteImport.update({
 const InterrupcionesRoute = InterrupcionesRouteImport.update({
   id: '/interrupciones',
   path: '/interrupciones',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PagoEnLineaRoute = PagoEnLineaRouteImport.update({
+  id: '/pago-en-linea',
+  path: '/pago-en-linea',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PagoResultadoRoute = PagoResultadoRouteImport.update({
+  id: '/pago-resultado',
+  path: '/pago-resultado',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuieroLuzRoute = QuieroLuzRouteImport.update({
@@ -57,6 +69,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ingreso-datos': typeof IngresoDatosRoute
   '/interrupciones': typeof InterrupcionesRoute
+  '/pago-en-linea': typeof PagoEnLineaRoute
+  '/pago-resultado': typeof PagoResultadoRoute
   '/quiero-luz': typeof QuieroLuzRoute
   '/sigue-tu-visita': typeof SigueTuVisitaRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
@@ -66,6 +80,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ingreso-datos': typeof IngresoDatosRoute
   '/interrupciones': typeof InterrupcionesRoute
+  '/pago-en-linea': typeof PagoEnLineaRoute
+  '/pago-resultado': typeof PagoResultadoRoute
   '/quiero-luz': typeof QuieroLuzRoute
   '/sigue-tu-visita': typeof SigueTuVisitaRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
@@ -76,6 +92,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/ingreso-datos': typeof IngresoDatosRoute
   '/interrupciones': typeof InterrupcionesRoute
+  '/pago-en-linea': typeof PagoEnLineaRoute
+  '/pago-resultado': typeof PagoResultadoRoute
   '/quiero-luz': typeof QuieroLuzRoute
   '/sigue-tu-visita': typeof SigueTuVisitaRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
@@ -87,6 +105,8 @@ export interface FileRouteTypes {
     | '/'
     | '/ingreso-datos'
     | '/interrupciones'
+    | '/pago-en-linea'
+    | '/pago-resultado'
     | '/quiero-luz'
     | '/sigue-tu-visita'
     | '/noticias/$slug'
@@ -96,6 +116,8 @@ export interface FileRouteTypes {
     | '/'
     | '/ingreso-datos'
     | '/interrupciones'
+    | '/pago-en-linea'
+    | '/pago-resultado'
     | '/quiero-luz'
     | '/sigue-tu-visita'
     | '/noticias/$slug'
@@ -105,6 +127,8 @@ export interface FileRouteTypes {
     | '/'
     | '/ingreso-datos'
     | '/interrupciones'
+    | '/pago-en-linea'
+    | '/pago-resultado'
     | '/quiero-luz'
     | '/sigue-tu-visita'
     | '/noticias/$slug'
@@ -115,6 +139,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   IngresoDatosRoute: typeof IngresoDatosRoute
   InterrupcionesRoute: typeof InterrupcionesRoute
+  PagoEnLineaRoute: typeof PagoEnLineaRoute
+  PagoResultadoRoute: typeof PagoResultadoRoute
   QuieroLuzRoute: typeof QuieroLuzRoute
   SigueTuVisitaRoute: typeof SigueTuVisitaRoute
   NoticiasSlugRoute: typeof NoticiasSlugRoute
@@ -142,6 +168,20 @@ declare module '@tanstack/react-router' {
       path: '/interrupciones'
       fullPath: '/interrupciones'
       preLoaderRoute: typeof InterrupcionesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pago-en-linea': {
+      id: '/pago-en-linea'
+      path: '/pago-en-linea'
+      fullPath: '/pago-en-linea'
+      preLoaderRoute: typeof PagoEnLineaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pago-resultado': {
+      id: '/pago-resultado'
+      path: '/pago-resultado'
+      fullPath: '/pago-resultado'
+      preLoaderRoute: typeof PagoResultadoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/quiero-luz': {
@@ -179,6 +219,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   IngresoDatosRoute: IngresoDatosRoute,
   InterrupcionesRoute: InterrupcionesRoute,
+  PagoEnLineaRoute: PagoEnLineaRoute,
+  PagoResultadoRoute: PagoResultadoRoute,
   QuieroLuzRoute: QuieroLuzRoute,
   SigueTuVisitaRoute: SigueTuVisitaRoute,
   NoticiasSlugRoute: NoticiasSlugRoute,

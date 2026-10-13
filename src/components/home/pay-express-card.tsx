@@ -1,5 +1,7 @@
 import { useId, useState } from "react";
 import { AlertCircle, Check } from "lucide-react";
+import { useNavigate } from "@tanstack/react-router";
+import { usePayment } from "@/components/pago/payment-context";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -37,6 +39,8 @@ const modes: {
  * acción principal. Réplica del patrón en producción con tokens del DS 4.0.
  */
 export function PayExpressCard({ className }: { className?: string }) {
+  const navigate = useNavigate();
+  const payment = usePayment();
   const [mode, setMode] = useState<PayMode>("cliente");
   const [value, setValue] = useState("");
   const [touched, setTouched] = useState(false);
@@ -55,7 +59,10 @@ export function PayExpressCard({ className }: { className?: string }) {
       onSubmit={(e) => {
         e.preventDefault();
         setTouched(true);
-        validatePayIdentifier(mode, value);
+        const result = validatePayIdentifier(mode, value);
+        if (!result.success) return;
+        payment.start({ mode, value: value.trim() });
+        void navigate({ to: "/pago-en-linea" });
       }}
       className={cn(
         "w-full max-w-[500px] rounded-[2rem] bg-surface/95 shadow-card-hover backdrop-blur-sm",
