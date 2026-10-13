@@ -78,6 +78,7 @@
   --color-info-soft: var(--info-soft);
   --color-info-tint: var(--info-tint);
   --color-warning: var(--warning);
+  --color-pay-warning: var(--pay-warning);
   --color-warning-foreground: var(--warning-foreground);
   --color-warning-soft: var(--warning-soft);
   --color-warning-tint: var(--warning-tint);
@@ -161,6 +162,7 @@
   --desconexiones-strong: #006DA9; /* sombra del azul para hover del tab activo */
 
   --warning: oklch(0.772 0.1738 64.55); /* #FF9900 */
+  --pay-warning: #F45516; /* Estado incompleto de Pago express según referencia */
   --warning-foreground: oklch(0.3899 0.0366 264.01);
   --warning-soft: oklch(0.9683 0.0246 87); /* #FFF3E0 */
   --warning-tint: oklch(0.9107 0.0576 79); /* #FFE3B8 */
