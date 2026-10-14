@@ -349,3 +349,8 @@
   min-height: 44px;
   min-width: 44px;
 }
+
+@keyframes pago-load {
+  from { width: 0%; }
+  to { width: 100%; }
+}

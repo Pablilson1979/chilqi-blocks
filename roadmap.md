@@ -21,3 +21,4 @@
 - [x] Add article detail using the supplied Quilpué article text and news-list reference.
 - [x] Verify news navigation and mobile/desktop presentation.
 - [ ] Complete original photos for CEIPA and Septiembre Seguro, and full article copy for CEIPA, Septiembre Seguro and Rari — blocked by unavailable original content; requires source files from the user.
+- [x] Rebuild payment step 1 from Figma with 3s balance loader and fixed mobile pay button.

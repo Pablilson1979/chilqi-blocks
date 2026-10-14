@@ -141,13 +141,7 @@ export function AmountStep({ choice, setChoice, custom, setCustom, amount, valid
 
       {/* Barra fija mobile */}
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-[0_-8px_24px_-12px_color-mix(in_oklab,var(--foreground)_30%,transparent)] lg:hidden">
-        <div className="mx-auto flex max-w-[600px] items-center gap-3">
-          <div className="min-w-0">
-            <p className="text-xs font-semibold text-muted-foreground">Total a pagar</p>
-            <p className="text-lg font-extrabold text-foreground">{valid ? pesos(amount) : "—"}</p>
-          </div>
-          <Button size="lg" disabled={!valid} onClick={onContinue} className="flex-1">{valid ? "Continuar" : "Ingresa monto"}<ArrowRight aria-hidden /></Button>
-        </div>
+        <Button size="lg" disabled={!valid} onClick={onContinue} className="mx-auto flex w-full max-w-[600px]">{label}<ArrowRight aria-hidden /></Button>
       </div>
     </section>
   );
