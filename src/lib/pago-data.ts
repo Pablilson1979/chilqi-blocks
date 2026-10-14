@@ -3,9 +3,11 @@ export const DEMO_ACCOUNT = {
   address: "V LAFON 947",
   dueDate: "28/10/2026",
   billNumber: "10456892",
-  total: 68049,
-  previous: 40026,
+  total: 107459,
+  previous: 79436,
   current: 28023,
+  cutoff: 39410,
+  cutoffDate: "3 de octubre 2026",
 };
 
 export type CollectorId = "bemobi" | "bancoestado" | "mach" | "servipag" | "unired";
@@ -18,9 +20,10 @@ export const COLLECTORS: { id: CollectorId; name: string; type: string; limit: n
   { id: "unired", name: "Unired", type: "Débito y crédito", limit: 1000000, tab: "otros" },
 ];
 
+export const MIN_PAYMENT = 1000;
 export const pesos = (amount: number) => `$${new Intl.NumberFormat("es-CL").format(amount)}`;
 export function validAmount(amount: number) {
-  return Number.isSafeInteger(amount) && amount >= 100;
+  return Number.isSafeInteger(amount) && amount >= MIN_PAYMENT;
 }
 export function eligibleCollector(id: CollectorId, amount: number) {
   const collector = COLLECTORS.find((item) => item.id === id);
