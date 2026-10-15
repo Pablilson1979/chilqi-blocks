@@ -27,6 +27,14 @@ describe("Pago en línea", () => {
     assert.equal(validEmail("persona@"), false);
     assert.equal(validEmail("qa@example.com"), true);
   });
+  it("exige selección explícita del recaudador aunque el correo sea válido", () => {
+    assert.equal(canPay(107459, null, "cliente@example.cl"), false);
+    assert.equal(canPay(107459, "bancoestado", "cliente@example.cl"), true);
+  });
+  it("no permite continuar con recaudador seleccionado y correo inválido", () => {
+    assert.equal(canPay(107459, "bancoestado", "cliente@"), false);
+    assert.equal(canPay(107459, "bancoestado", "  cliente@example.cl  "), true);
+  });
   it("impide pagar sin monto, recaudador o correo válidos", () => {
     assert.equal(canPay(999, "bemobi", "qa@example.com"), false);
     assert.equal(canPay(68049, null, "qa@example.com"), false);
