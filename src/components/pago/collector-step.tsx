@@ -15,6 +15,7 @@ import { PaymentConfirmation } from "./payment-confirmation";
 import type { PaymentOutcome } from "./payment-context";
 import { paymentQuote } from "@/lib/payment-quote";
 import { BemobiInstallments } from "./bemobi-installments";
+import { BemobiFeesInfo } from "./bemobi-fees-info";
 
 const LOGOS: Record<CollectorId, string> = { bemobi: bemobi.url, bancoestado: bancoestado.url, mach: mach.url, servipag: servipag.url, unired: unired.url };
 type Props = { installments: number; setInstallments: (count: number) => void; amount: number; customer: string; collector: CollectorId | null; setCollector: (value: CollectorId | null) => void; email: string; setEmail: (value: string) => void; processing: boolean; onBack: () => void; onOther: () => void; onSubmit: (outcome: PaymentOutcome) => void };
@@ -22,6 +23,7 @@ type Props = { installments: number; setInstallments: (count: number) => void; a
 export function CollectorStep({ installments, setInstallments, amount, customer, collector, setCollector, email, setEmail, processing, onBack, onOther, onSubmit }: Props) {
   const [others, setOthers] = useState(collector === "unired");
   const [touched, setTouched] = useState(false);
+  const [simple, setSimple] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [outcome, setOutcome] = useState<PaymentOutcome>("success");
   const emailRef = useRef<HTMLInputElement>(null);
@@ -39,7 +41,7 @@ export function CollectorStep({ installments, setInstallments, amount, customer,
       <span className="col-start-2 row-start-2 text-sm leading-snug text-muted-foreground sm:col-start-3 sm:row-start-1">Permite pagos hasta:<br className="hidden sm:block" /> <strong className="font-semibold">{pesos(item.limit)}</strong>{item.installments && <span className="block">Hasta {item.installments} cuotas</span>}</span>
       <span className={cn("col-start-3 row-start-1 self-start rounded px-2 py-1 text-xs font-semibold sm:col-start-4 sm:self-center", item.type === "Crédito" ? "bg-info-soft text-info" : "bg-primary-soft text-primary")}>{item.type}</span>
       {item.id === "bemobi" && <span className="col-start-2 col-end-4 text-sm font-semibold text-muted-foreground sm:col-end-5">Con comisión por servicio</span>}<span className="sr-only">{item.name}</span>
-    </Button>{item.id === "bemobi" && active && <BemobiInstallments quote={quote} onChange={setInstallments} disabled={processing} />}{!eligible && <p id={`limit-${item.id}`} className="mt-2 text-sm font-semibold text-destructive">Tu monto supera el límite de {pesos(item.limit)}.</p>}</div>;
+    </Button>{item.id === "bemobi" && active && simple && <BemobiFeesInfo />}{item.id === "bemobi" && active && !simple && <BemobiInstallments quote={quote} onChange={setInstallments} disabled={processing} />}{!eligible && <p id={`limit-${item.id}`} className="mt-2 text-sm font-semibold text-destructive">Tu monto supera el límite de {pesos(item.limit)}.</p>}</div>;
   }
 
   function attemptPay() {
@@ -51,7 +53,7 @@ export function CollectorStep({ installments, setInstallments, amount, customer,
   const payAction = <Button size="lg" disabled={!ready || processing} onClick={attemptPay} className="w-full px-4 whitespace-normal">Continuar y pagar {pesos(quote.total)}<ArrowRight aria-hidden /></Button>;
   const mobileAction = <Button size="lg" disabled={!collector || processing} onClick={attemptPay} aria-disabled={!ready || undefined} className={cn("w-full px-4 whitespace-normal", !ready && "opacity-60")}>{ready ? `Continuar y pagar ${pesos(quote.total)}` : "Ingresa tu correo para continuar"}<ArrowRight aria-hidden /></Button>;
   return <section aria-labelledby="collector-heading" className="pb-28 lg:pb-0">
-    <h2 id="collector-heading" className="mb-5 text-xl font-bold sm:text-2xl">¿Cómo quieres pagar?</h2>
+    <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><h2 id="collector-heading" className="text-xl font-bold sm:text-2xl">¿Cómo quieres pagar?</h2><div role="radiogroup" aria-label="Versión del paso" className="inline-flex rounded-lg bg-muted p-1">{([{ v: false, l: "Con simulador" }, { v: true, l: "Versión simple" }] as const).map((o) => <Button key={o.l} variant="ghost" size="sm" role="radio" aria-checked={simple === o.v} disabled={processing} onClick={() => { setSimple(o.v); if (o.v) setInstallments(1); }} className={cn("text-sm", simple === o.v ? "bg-surface font-bold shadow-sm hover:bg-surface" : "text-muted-foreground")}>{o.l}</Button>)}</div></div>
     <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
       <div className="min-w-0">
         <div role="radiogroup" aria-label="Recaudador" className="space-y-3">{COLLECTORS.filter((item) => item.tab === "express").map(collectorCard)}
