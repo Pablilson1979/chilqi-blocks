@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, Check, ChevronDown, ChevronLeft, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { canPay, COLLECTORS, DEMO_ACCOUNT, eligibleCollector, pesos, validEmail, type CollectorId } from "@/lib/pago-data";
+import { canPay, COLLECTORS, eligibleCollector, pesos, validEmail, type CollectorId } from "@/lib/pago-data";
 import { cn } from "@/lib/utils";
 import bemobi from "@/assets/pago/BEMOBI.svg.asset.json";
 import bancoestado from "@/assets/pago/bancoestado.svg.asset.json";
@@ -38,7 +38,7 @@ export function CollectorStep({ installments, setInstallments, amount, customer,
       <img src={LOGOS[item.id]} alt="" className="h-10 w-full max-w-[180px] object-contain object-left" />
       <span className="col-start-2 row-start-2 text-sm leading-snug text-muted-foreground sm:col-start-3 sm:row-start-1">Permite pagos hasta:<br className="hidden sm:block" /> <strong className="font-semibold">{pesos(item.limit)}</strong>{item.installments && <span className="block">Hasta {item.installments} cuotas</span>}</span>
       <span className={cn("col-start-3 row-start-1 self-start rounded px-2 py-1 text-xs font-semibold sm:col-start-4 sm:self-center", item.type === "Crédito" ? "bg-info-soft text-info" : "bg-primary-soft text-primary")}>{item.type}</span>
-      <span className={cn("col-start-2 col-end-4 text-sm font-semibold sm:col-end-5", item.id === "bemobi" ? "text-muted-foreground" : "text-success")}>{item.id === "bemobi" ? "Con comisión por servicio" : "Sin comisión · $0 adicional"}</span><span className="sr-only">{item.name}</span>
+      {item.id === "bemobi" && <span className="col-start-2 col-end-4 text-sm font-semibold text-muted-foreground sm:col-end-5">Con comisión por servicio</span>}<span className="sr-only">{item.name}</span>
     </Button>{item.id === "bemobi" && active && <BemobiInstallments quote={quote} onChange={setInstallments} disabled={processing} />}{!eligible && <p id={`limit-${item.id}`} className="mt-2 text-sm font-semibold text-destructive">Tu monto supera el límite de {pesos(item.limit)}.</p>}</div>;
   }
 
@@ -63,9 +63,9 @@ export function CollectorStep({ installments, setInstallments, amount, customer,
         <details className="mt-5 text-sm text-muted-foreground"><summary className="w-fit cursor-pointer py-2">Escenario de prueba QA</summary><fieldset className="mt-2 flex flex-wrap gap-2" disabled={processing}><legend className="sr-only">Resultado simulado</legend>{([{ value: "success", label: "Pago exitoso" }, { value: "error", label: "Pago no realizado" }] as const).map((item) => <Button key={item.value} variant="ghost" role="radio" aria-checked={outcome === item.value} onClick={() => setOutcome(item.value)} className={cn("border", outcome === item.value ? "border-success bg-success-soft" : "border-border bg-surface")}>{outcome === item.value && <Check aria-hidden />}{item.label}</Button>)}</fieldset></details>
       </div>
       <aside aria-label="Resumen del pago" className="rounded-card bg-surface p-5 sm:p-6 lg:sticky lg:top-6"><h3 className="mb-4 text-base font-bold">Resumen del pago</h3>
-        <dl className="text-base"><div className="flex justify-between gap-3 border-b border-border pb-3"><dt className="text-muted-foreground">Número de cliente</dt><dd className="font-semibold">{customer}</dd></div><div className="flex justify-between gap-3 border-b border-border py-3"><dt className="text-muted-foreground">Dirección</dt><dd className="text-right font-semibold">{DEMO_ACCOUNT.address}</dd></div><div className="flex justify-between gap-3 py-3"><dt className="text-muted-foreground">Medio de pago</dt><dd className="text-right font-semibold">{selected?.name ?? "Por seleccionar"}</dd></div>
+        <dl className="text-base"><div className="flex justify-between gap-3 border-b border-border py-3"><dt className="text-muted-foreground">Medio de pago</dt><dd className="text-right font-semibold">{selected?.name ?? "Por seleccionar"}</dd></div>
           <div className="flex justify-between gap-3 py-2"><dt className="text-muted-foreground">Tu cuenta Chilquinta</dt><dd className="font-semibold">{pesos(amount)}</dd></div>
-          {collector && <div className="flex justify-between gap-3 pb-3"><dt className="text-muted-foreground">{collector === "bemobi" ? "Comisión Bemobi" : "Comisión"}</dt><dd className={cn("font-semibold", quote.commission === 0 && "text-success")}>{quote.commission > 0 ? `+${pesos(quote.commission)}` : pesos(0)}</dd></div>}
+          {collector === "bemobi" && <div className="flex justify-between gap-3 pb-3"><dt className="text-muted-foreground">Comisión Bemobi</dt><dd className="font-semibold">+{pesos(quote.commission)}</dd></div>}
           <div className="flex items-baseline justify-between gap-3 border-t border-border pt-4"><dt className="font-bold">{collector === "bemobi" ? "Total estimado" : "Total a pagar"}</dt><dd aria-live="polite" className="text-2xl font-extrabold">{pesos(quote.total)}</dd></div>
         </dl>
         {collector === "bemobi" && <p className="mt-2 text-sm text-muted-foreground">Incluye la comisión por servicio de Bemobi.</p>}
