@@ -1,5 +1,8 @@
 # Roadmap
 
+- [x] Match payment step 2 to Figma, require collector and email, and add address confirmation.
+- [x] Add shared-style QA success/failure results with retry and verify mobile/desktop flows.
+
 - [x] Build the two-step online payment prototype and QA success screen.
 - [x] Verify amount rules, collector limits, and the complete mobile/desktop payment flow.
 
