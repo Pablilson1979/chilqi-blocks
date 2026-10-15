@@ -7,6 +7,7 @@ import { AccountSummary, MissingPayment, PaymentHeading, PaymentShell } from "./
 import { usePayment, type PaymentOutcome } from "./payment-context";
 
 import { AmountStep, BalanceLoader, amountFor, type AmountChoice } from "./amount-step";
+import { paymentQuote } from "@/lib/payment-quote";
 
 export function PaymentFlow() {
   const payment = usePayment();
@@ -19,6 +20,7 @@ export function PaymentFlow() {
   const [detail, setDetail] = useState(false);
   const [collector, setCollector] = useState<CollectorId | null>(payment.draft?.collector ?? null);
   const [email, setEmail] = useState(payment.draft?.email ?? "");
+  const [installments, setInstallments] = useState(payment.draft?.installments ?? 1);
   const [processing, setProcessing] = useState(false);
   const submitting = useRef(false);
   const amount = amountFor(choice, custom);
@@ -37,15 +39,15 @@ export function PaymentFlow() {
     submitting.current = true;
     setProcessing(true);
     await new Promise((resolve) => window.setTimeout(resolve, 1200));
-    payment.saveDraft({ choice, custom, collector, email });
-    payment.complete({ outcome, amount, collector, email: email.trim(), reference: `QA-${crypto.randomUUID().slice(0, 8).toUpperCase()}`, date: new Date().toLocaleString("es-CL") });
+    payment.saveDraft({ choice, custom, collector, email, installments });
+    payment.complete({ outcome, amount, collector, quote: paymentQuote(amount, collector, installments), email: email.trim(), reference: `QA-${crypto.randomUUID().slice(0, 8).toUpperCase()}`, date: new Date().toLocaleString("es-CL") });
     await navigate({ to: "/pago-resultado" });
   }
 
   return <PaymentShell>{!payment.identity ? <MissingPayment /> : <>
     <PaymentHeading step={step} />
     <AccountSummary />
-    {step === 1 ? (loading ? <BalanceLoader onDone={doneLoading} /> : <AmountStep choice={choice} setChoice={setChoice} custom={custom} setCustom={setCustom} amount={amount} valid={valid} onContinue={() => changeStep(2)} onDetail={() => setDetail(true)} onOther={payment.clear} customer={payment.identity.mode === "cliente" ? payment.identity.value : DEMO_ACCOUNT.customer} />) : <CollectorStep amount={amount} customer={payment.identity.mode === "cliente" ? payment.identity.value : DEMO_ACCOUNT.customer} collector={collector} setCollector={setCollector} email={email} setEmail={setEmail} processing={processing} onBack={() => changeStep(1)} onOther={() => { payment.clear(); void navigate({ to: "/" }); }} onSubmit={(outcome) => void submitPayment(outcome)} />}
+    {step === 1 ? (loading ? <BalanceLoader onDone={doneLoading} /> : <AmountStep choice={choice} setChoice={setChoice} custom={custom} setCustom={setCustom} amount={amount} valid={valid} onContinue={() => changeStep(2)} onDetail={() => setDetail(true)} onOther={payment.clear} customer={payment.identity.mode === "cliente" ? payment.identity.value : DEMO_ACCOUNT.customer} />) : <CollectorStep installments={installments} setInstallments={setInstallments} amount={amount} customer={payment.identity.mode === "cliente" ? payment.identity.value : DEMO_ACCOUNT.customer} collector={collector} setCollector={setCollector} email={email} setEmail={setEmail} processing={processing} onBack={() => changeStep(1)} onOther={() => { payment.clear(); void navigate({ to: "/" }); }} onSubmit={(outcome) => void submitPayment(outcome)} />}
     <p className="mt-6 text-center text-sm text-muted-foreground">Prueba QA · No se realizarán cobros ni se enviarán correos.</p>
     <ChilquintaModal title="Detalle de tu boleta" open={detail} onOpenChange={setDetail} cancelLabel="Cerrar" confirmLabel="Volver al pago" onConfirm={() => setDetail(false)}><div className="space-y-3 text-base"><p>Boleta de prueba N° {DEMO_ACCOUNT.billNumber}</p><p>{DEMO_ACCOUNT.address}</p><dl className="space-y-3"><div className="flex justify-between gap-4"><dt>Saldo actual</dt><dd>{pesos(DEMO_ACCOUNT.current)}</dd></div><div className="flex justify-between gap-4"><dt>Saldo anterior</dt><dd>{pesos(DEMO_ACCOUNT.previous)}</dd></div><div className="flex justify-between gap-4 border-t border-border pt-3 font-bold"><dt>Saldo total</dt><dd>{pesos(DEMO_ACCOUNT.total)}</dd></div></dl><p>Vencimiento: {DEMO_ACCOUNT.dueDate}</p></div></ChilquintaModal>
   </>}</PaymentShell>;
