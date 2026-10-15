@@ -1,7 +1,7 @@
 # Roadmap
 
-- [ ] Add a simple Bemobi installment simulator with upfront commission and consistent confirmation/results.
-- [ ] Verify Bemobi calculations and the complete mobile/desktop flow, including retry and switching collectors.
+- [x] Add a simple Bemobi installment simulator with upfront commission and consistent confirmation/results.
+- [x] Verify Bemobi calculations and the complete mobile/desktop flow, including retry and switching collectors.
 
 - [x] Match payment step 2 to Figma, require collector and email, and add address confirmation.
 - [x] Add shared-style QA success/failure results with retry and verify mobile/desktop flows.
