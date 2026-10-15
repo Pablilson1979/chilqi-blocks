@@ -42,7 +42,14 @@ export function CollectorStep({ installments, setInstallments, amount, customer,
     </Button>{item.id === "bemobi" && active && <BemobiInstallments quote={quote} onChange={setInstallments} disabled={processing} />}{!eligible && <p id={`limit-${item.id}`} className="mt-2 text-sm font-semibold text-destructive">Tu monto supera el límite de {pesos(item.limit)}.</p>}</div>;
   }
 
-  const payAction = <Button size="lg" disabled={!ready || processing} onClick={() => { if (ready) setConfirm(true); }} className="w-full px-4 whitespace-normal">Continuar y pagar {pesos(quote.total)}<ArrowRight aria-hidden /></Button>;
+  function attemptPay() {
+    if (ready) return setConfirm(true);
+    setTouched(true);
+    emailRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    window.setTimeout(() => emailRef.current?.focus(), 250);
+  }
+  const payAction = <Button size="lg" disabled={!ready || processing} onClick={attemptPay} className="w-full px-4 whitespace-normal">Continuar y pagar {pesos(quote.total)}<ArrowRight aria-hidden /></Button>;
+  const mobileAction = <Button size="lg" disabled={!collector || processing} onClick={attemptPay} aria-disabled={!ready || undefined} className={cn("w-full px-4 whitespace-normal", !ready && "opacity-60")}>{ready ? `Continuar y pagar ${pesos(quote.total)}` : "Ingresa tu correo para continuar"}<ArrowRight aria-hidden /></Button>;
   return <section aria-labelledby="collector-heading" className="pb-28 lg:pb-0">
     <h2 id="collector-heading" className="mb-5 text-xl font-bold sm:text-2xl">¿Cómo quieres pagar?</h2>
     <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
@@ -65,7 +72,7 @@ export function CollectorStep({ installments, setInstallments, amount, customer,
         <div className="mt-5 hidden lg:block">{payAction}{!ready && <p className="mt-3 text-sm text-muted-foreground">{!collector ? "Selecciona un recaudador e ingresa un correo válido para continuar." : "Ingresa un correo válido para continuar."}</p>}</div>
       </aside>
     </div>
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-card-hover lg:hidden"><div className="mx-auto max-w-[600px]">{collector === "bemobi" && <p className="mb-2 text-center text-sm text-muted-foreground">Incluye {pesos(quote.commission)} de comisión Bemobi</p>}{payAction}</div></div>
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-card-hover lg:hidden"><div className="mx-auto max-w-[600px]">{!collector ? <p className="mb-2 text-center text-sm font-semibold text-muted-foreground">Selecciona un medio de pago</p> : !ready ? <p className="mb-2 flex items-center justify-center gap-2 text-center text-sm font-semibold text-foreground"><Mail aria-hidden className="size-4 text-primary" />Falta tu correo para enviarte el comprobante</p> : collector === "bemobi" && <p className="mb-2 text-center text-sm text-muted-foreground">Incluye {pesos(quote.commission)} de comisión Bemobi</p>}{mobileAction}</div></div>
     <PaymentConfirmation quote={quote} open={confirm} onOpenChange={setConfirm} amount={amount} collector={collector} email={email} customer={customer} processing={processing} onConfirm={() => onSubmit(outcome)} onOther={onOther} onEditEmail={() => { setConfirm(false); window.setTimeout(() => emailRef.current?.focus(), 100); }} />
   </section>;
 }

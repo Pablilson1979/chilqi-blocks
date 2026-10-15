@@ -12,10 +12,14 @@ export function PaymentResult() {
   if (!receipt || !identity) return <PaymentShell><MissingPayment /></PaymentShell>;
   const collector = COLLECTORS.find((item) => item.id === receipt.collector);
   const success = receipt.outcome === "success";
+  const coupon = `CP-${DEMO_ACCOUNT.billNumber}`;
+  const authCode = `AUT-${receipt.reference.replace(/\D/g, "").padEnd(6, "0").slice(0, 6)}`;
   const rows = [
     ["N° de cliente", identity.mode === "cliente" ? identity.value : DEMO_ACCOUNT.customer],
     ["Dirección", DEMO_ACCOUNT.address],
     ["Recaudador", collector?.name ?? receipt.collector],
+    ["N° de cupón", coupon],
+    ...(success ? [["Código de autorización", authCode]] : []),
     ...(receipt.collector === "bemobi" ? [
       ["Cuenta Chilquinta", pesos(receipt.amount)],
       ["Comisión Bemobi", pesos(receipt.quote.commission)],
@@ -23,8 +27,15 @@ export function PaymentResult() {
     ] : []),
     ["Correo electrónico", receipt.email],
     ["Referencia de prueba", receipt.reference],
-    ["Fecha", receipt.date],
+    ["Fecha y hora", `${receipt.date} hrs`],
   ];
+  function download() {
+    const text = ["Comprobante de pago Chilquinta (prueba QA)", `Monto: ${pesos(receipt!.quote.total)}`, ...rows.map(([l, v]) => `${l}: ${v}`)].join("\n");
+    const url = URL.createObjectURL(new Blob([text], { type: "text/plain;charset=utf-8" }));
+    const a = document.createElement("a");
+    a.href = url; a.download = `comprobante-${receipt!.reference}.txt`; a.click();
+    URL.revokeObjectURL(url);
+  }
   return <PaymentShell><div className="mx-auto max-w-[680px] py-4">
     <h1 className="mb-6 text-center text-2xl font-bold sm:text-3xl">{success ? "Pago simulado exitoso" : "No se pudo realizar el pago"}</h1>
     <StatusMessage tone={success ? "success" : "error"} title={success ? "Tu pago de prueba se completó" : "Intenta nuevamente"} description={success ? "Puedes revisar el resumen de tu operación a continuación." : "El pago no se completó. Conservamos tu monto, recaudador y correo para que puedas volver a intentarlo."} className="[&_p]:text-base" />
