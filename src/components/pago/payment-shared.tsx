@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Check, ChevronLeft } from "lucide-react";
+import { Check, ChevronLeft, MapPin } from "lucide-react";
 import type { ReactNode } from "react";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -19,7 +19,7 @@ export function PaymentHeading({ step }: { step: 1 | 2 }) {
 export function AccountSummary() {
   const { identity } = usePayment();
   const customer = identity?.mode === "cliente" ? identity.value : DEMO_ACCOUNT.customer;
-  return <section aria-label="Cuenta a pagar" className="mb-7 rounded-xl bg-surface px-4 py-4 sm:px-8 sm:py-5"><dl className="grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-3"><div className="col-span-2 sm:col-span-1"><dt className="text-sm text-muted-foreground">Vas a pagar la dirección</dt><dd className="text-base font-bold">{DEMO_ACCOUNT.address}</dd></div><div><dt className="text-sm text-muted-foreground">Número de cliente</dt><dd className="text-base font-bold">{customer}</dd>{identity?.mode === "rut" && <p className="text-sm text-muted-foreground">RUT: {identity.value}</p>}</div><div><dt className="text-sm text-muted-foreground">Vencimiento de boleta</dt><dd className="text-base font-bold">{DEMO_ACCOUNT.dueDate}</dd></div></dl></section>;
+  return <section aria-label="Cuenta a pagar" className="mb-7 flex items-center gap-3 rounded-xl bg-surface px-4 py-4 sm:gap-4 sm:px-6"><span aria-hidden className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary-soft text-primary"><MapPin className="size-5" /></span><div className="min-w-0"><p className="text-sm text-muted-foreground">Vas a pagar la dirección</p><p className="text-lg font-extrabold text-foreground">{DEMO_ACCOUNT.address}</p><p className="mt-1 text-sm text-muted-foreground">N° de cliente <strong className="font-bold text-foreground">{customer}</strong><span aria-hidden className="mx-2">·</span>Vence <strong className="font-bold text-foreground">{DEMO_ACCOUNT.dueDate}</strong></p>{identity?.mode === "rut" && <p className="text-sm text-muted-foreground">RUT: {identity.value}</p>}</div></section>;
 }
 
 export function SelectionMark({ selected }: { selected: boolean }) {

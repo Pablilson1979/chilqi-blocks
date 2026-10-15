@@ -94,36 +94,33 @@ export function AmountStep({ choice, setChoice, custom, setCustom, amount, valid
               </button>
             );
           })}
-          <div className={cn("rounded-xl border-2 bg-surface transition-colors", choice === "custom" ? "border-success bg-success-soft" : "border-border hover:border-muted-foreground/40")}>
+          <div className={cn("flex flex-wrap items-center gap-3 rounded-xl border-2 bg-surface px-4 py-4 transition-colors sm:gap-4 sm:px-5", choice === "custom" ? "border-success bg-success-soft" : "border-border hover:border-muted-foreground/40")}>
             <button type="button" role="radio" aria-checked={choice === "custom"} onClick={pickCustom}
-              className="flex w-full items-center gap-3 rounded-xl px-4 py-4 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:gap-4 sm:px-5">
+              className="flex min-w-[180px] flex-1 items-center gap-3 rounded-lg text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:gap-4">
               <SelectionMark selected={choice === "custom"} />
               <span className="flex-1">
                 <span className="block text-base font-bold text-foreground">Paga lo que puedas</span>
-                <span className="mt-1 block text-sm text-muted-foreground">Ingresa un monto desde {pesos(MIN_PAYMENT)}</span>
+                <span id="amount-help" role={customError ? "alert" : undefined} className={cn("mt-1 block text-sm", customError ? "font-semibold text-destructive" : "text-muted-foreground")}>
+                  {customError ? `El monto mínimo es de ${pesos(MIN_PAYMENT)}.` : `Desde ${pesos(MIN_PAYMENT)}`}
+                </span>
               </span>
             </button>
             {choice === "custom" && (
-              <div className="px-4 pb-4 sm:px-5 sm:pl-[68px] motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-top-1">
-                <label htmlFor="custom-amount" className="mb-2 block text-sm font-semibold text-foreground">Monto a pagar</label>
-                <div className="relative max-w-[320px]">
-                  <span aria-hidden className="absolute left-4 top-1/2 -translate-y-1/2 text-lg font-bold text-foreground">$</span>
-                  <Input ref={inputRef} id="custom-amount" inputMode="numeric" autoComplete="off" placeholder="0"
-                    value={custom ? new Intl.NumberFormat("es-CL").format(Number(custom)) : ""}
-                    onChange={(e) => setCustom(e.target.value.replace(/\D/g, "").slice(0, 9))}
-                    onBlur={() => setTouched(true)}
-                    aria-invalid={customError || undefined} aria-describedby="amount-help"
-                    className={cn("h-12 bg-surface pl-9 text-lg font-bold", customError && "border-destructive")} />
-                </div>
-                <p id="amount-help" role={customError ? "alert" : undefined} className={cn("mt-2 text-sm", customError ? "font-semibold text-destructive" : "text-muted-foreground")}>
-                  {customError ? `El monto mínimo es de ${pesos(MIN_PAYMENT)}.` : `Mínimo ${pesos(MIN_PAYMENT)}`}
-                </p>
+              <div className="relative ml-auto w-[150px] shrink-0 motion-safe:animate-in motion-safe:fade-in">
+                <label htmlFor="custom-amount" className="sr-only">Monto a pagar</label>
+                <span aria-hidden className="absolute left-3 top-1/2 -translate-y-1/2 text-lg font-bold text-foreground">$</span>
+                <Input ref={inputRef} id="custom-amount" inputMode="numeric" autoComplete="off" placeholder="0"
+                  value={custom ? new Intl.NumberFormat("es-CL").format(Number(custom)) : ""}
+                  onChange={(e) => setCustom(e.target.value.replace(/\D/g, "").slice(0, 9))}
+                  onBlur={() => setTouched(true)}
+                  aria-invalid={customError || undefined} aria-describedby="amount-help"
+                  className={cn("h-12 bg-surface pl-8 text-right text-lg font-bold", customError && "border-destructive")} />
               </div>
             )}
           </div>
-          <div className="flex flex-col items-center gap-1 pt-2 sm:flex-row sm:justify-center sm:gap-6">
-            <Button variant="tertiary" onClick={onDetail} className="text-base"><FileText aria-hidden />Ver detalle boleta</Button>
-            <Button variant="tertiary" asChild className="whitespace-normal text-base"><Link to="/" onClick={onOther}>Pagar otro N° de cliente</Link></Button>
+          <div className="flex items-center justify-between gap-3 border-t border-border pt-3">
+            <Button variant="tertiary" onClick={onDetail} className="h-auto min-h-11 px-0 text-base"><FileText aria-hidden />Ver detalle boleta</Button>
+            <Button variant="tertiary" asChild className="h-auto min-h-11 whitespace-normal px-0 text-right text-base"><Link to="/" onClick={onOther}>Pagar otro N° de cliente</Link></Button>
           </div>
         </div>
 
