@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, Check, ChevronDown, ChevronLeft, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { canPay, COLLECTORS, DEMO_ACCOUNT, eligibleCollector, pesos, validEmail, type CollectorId } from "@/lib/pago-data";
+import { canPay, COLLECTORS, eligibleCollector, pesos, validEmail, type CollectorId } from "@/lib/pago-data";
 import { cn } from "@/lib/utils";
 import bemobi from "@/assets/pago/BEMOBI.svg.asset.json";
 import bancoestado from "@/assets/pago/bancoestado.svg.asset.json";
