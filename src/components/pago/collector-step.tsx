@@ -30,7 +30,7 @@ export function CollectorStep({ amount, customer, collector, setCollector, email
   function collectorCard(item: typeof COLLECTORS[number]) {
     const active = item.id === collector;
     const eligible = eligibleCollector(item.id, amount);
-    return <div key={item.id}><Button variant="ghost" role="radio" aria-label={item.name} aria-checked={active} aria-describedby={!eligible ? `limit-${item.id}` : undefined} disabled={!eligible || processing} onClick={() => setCollector(item.id)} className={cn("grid min-h-[100px] w-full grid-cols-[28px_minmax(0,1fr)_auto] gap-x-3 gap-y-2 whitespace-normal rounded-card border-2 px-4 py-4 text-left hover:bg-surface sm:min-h-[92px] sm:grid-cols-[28px_180px_minmax(0,1fr)_auto] sm:gap-x-4", active ? "border-success bg-success-soft hover:bg-success-soft" : "border-border bg-surface")}>
+    return <div key={item.id}><Button variant="ghost" role="radio" aria-label={item.name} aria-checked={active} aria-describedby={!eligible ? `limit-${item.id}` : undefined} disabled={!eligible || processing} onClick={() => setCollector(item.id)} className={cn("grid min-h-[100px] w-full grid-cols-[28px_minmax(0,1fr)_auto] gap-x-3 gap-y-2 whitespace-normal rounded-xl! border-2 px-4 py-4 text-left hover:bg-surface sm:min-h-[92px] sm:grid-cols-[28px_160px_minmax(0,1fr)_auto] sm:gap-x-4", active ? "border-success bg-success-soft hover:bg-success-soft" : "border-border bg-surface")}>
       <span className="row-span-2 sm:row-span-1"><SelectionMark selected={active} /></span>
       <img src={LOGOS[item.id]} alt="" className="h-10 w-full max-w-[180px] object-contain object-left" />
       <span className="col-start-2 row-start-2 text-sm leading-snug text-muted-foreground sm:col-start-3 sm:row-start-1">Permite pagos hasta:<br className="hidden sm:block" /> <strong className="font-semibold">{pesos(item.limit)}</strong>{item.installments && <span className="block">Hasta {item.installments} cuotas</span>}</span>
@@ -39,7 +39,7 @@ export function CollectorStep({ amount, customer, collector, setCollector, email
     </Button>{!eligible && <p id={`limit-${item.id}`} className="mt-2 text-sm font-semibold text-destructive">Tu monto supera el límite de {pesos(item.limit)}.</p>}</div>;
   }
 
-  const payAction = <Button size="lg" disabled={!ready || processing} onClick={() => { if (ready) setConfirm(true); }} className="w-full whitespace-normal">Continuar y pagar {pesos(amount)}<ArrowRight aria-hidden /></Button>;
+  const payAction = <Button size="lg" disabled={!ready || processing} onClick={() => { if (ready) setConfirm(true); }} className="w-full px-4 whitespace-normal">Continuar y pagar {pesos(amount)}<ArrowRight aria-hidden /></Button>;
   return <section aria-labelledby="collector-heading" className="pb-28 lg:pb-0">
     <h2 id="collector-heading" className="mb-5 text-xl font-bold sm:text-2xl">¿Cómo quieres pagar?</h2>
     <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
