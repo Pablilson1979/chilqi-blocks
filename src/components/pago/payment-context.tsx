@@ -1,10 +1,11 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import type { CollectorId } from "@/lib/pago-data";
+import type { PaymentQuote } from "@/lib/payment-quote";
 
 export type PaymentIdentity = { mode: "cliente" | "rut"; value: string };
 export type PaymentOutcome = "success" | "error";
-export type PaymentDraft = { choice: "total" | "previous" | "cutoff" | "custom"; custom: string; collector: CollectorId; email: string };
-export type PaymentReceipt = { amount: number; collector: CollectorId; email: string; reference: string; date: string; outcome: PaymentOutcome };
+export type PaymentDraft = { choice: "total" | "previous" | "cutoff" | "custom"; custom: string; collector: CollectorId; email: string; installments: number };
+export type PaymentReceipt = { amount: number; collector: CollectorId; email: string; reference: string; date: string; outcome: PaymentOutcome; quote: PaymentQuote };
 type PaymentContextValue = {
   identity: PaymentIdentity | null;
   receipt: PaymentReceipt | null;
