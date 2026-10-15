@@ -9,10 +9,10 @@ describe("Pago en línea", () => {
     assert.equal(validAmount(1000.5), false);
     assert.equal(validAmount(NaN), false);
   });
-  it("mantiene total $107.459, mes anterior $79.436 y evitar corte $39.410", () => {
-    assert.equal(DEMO_ACCOUNT.total, 107459);
-    assert.equal(DEMO_ACCOUNT.previous, 79436);
-    assert.equal(DEMO_ACCOUNT.cutoff, 39410);
+  it("mantiene total $85.906, mes anterior $51.480 y evitar corte $42.150", () => {
+    assert.equal(DEMO_ACCOUNT.total, 85906);
+    assert.equal(DEMO_ACCOUNT.previous, 51480);
+    assert.equal(DEMO_ACCOUNT.cutoff, 42150);
     assert.equal(DEMO_ACCOUNT.current + DEMO_ACCOUNT.previous, DEMO_ACCOUNT.total);
   });
   for (const [id, limit] of [["bemobi", 1000000], ["bancoestado", 400000000], ["mach", 3000000], ["servipag", 3000000], ["unired", 1000000]] as const) {

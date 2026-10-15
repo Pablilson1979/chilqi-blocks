@@ -3,10 +3,10 @@ export const DEMO_ACCOUNT = {
   address: "V LAFON 947",
   dueDate: "28/10/2026",
   billNumber: "10456892",
-  total: 107459,
-  previous: 79436,
-  current: 28023,
-  cutoff: 39410,
+  total: 85906,
+  previous: 51480,
+  current: 34426,
+  cutoff: 42150,
   cutoffDate: "3 de octubre 2026",
 };
 
