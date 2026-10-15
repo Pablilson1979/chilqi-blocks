@@ -38,7 +38,7 @@ export function CollectorStep({ installments, setInstallments, amount, customer,
       <img src={LOGOS[item.id]} alt="" className="h-10 w-full max-w-[180px] object-contain object-left" />
       <span className="col-start-2 row-start-2 text-sm leading-snug text-muted-foreground sm:col-start-3 sm:row-start-1">Permite pagos hasta:<br className="hidden sm:block" /> <strong className="font-semibold">{pesos(item.limit)}</strong>{item.installments && <span className="block">Hasta {item.installments} cuotas</span>}</span>
       <span className={cn("col-start-3 row-start-1 self-start rounded px-2 py-1 text-xs font-semibold sm:col-start-4 sm:self-center", item.type === "Crédito" ? "bg-info-soft text-info" : "bg-primary-soft text-primary")}>{item.type}</span>
-      <span className={cn("col-start-2 col-end-4 text-sm font-semibold sm:col-end-5", item.id === "bemobi" ? "text-muted-foreground" : "text-success")}>{item.id === "bemobi" ? "Con comisión por servicio" : "Sin comisión · $0 adicional"}</span><span className="sr-only">{item.name}</span>
+      {item.id === "bemobi" && <span className="col-start-2 col-end-4 text-sm font-semibold text-muted-foreground sm:col-end-5">Con comisión por servicio</span>}<span className="sr-only">{item.name}</span>
     </Button>{item.id === "bemobi" && active && <BemobiInstallments quote={quote} onChange={setInstallments} disabled={processing} />}{!eligible && <p id={`limit-${item.id}`} className="mt-2 text-sm font-semibold text-destructive">Tu monto supera el límite de {pesos(item.limit)}.</p>}</div>;
   }
 
