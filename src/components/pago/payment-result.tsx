@@ -13,20 +13,17 @@ export function PaymentResult() {
   const collector = COLLECTORS.find((item) => item.id === receipt.collector);
   const success = receipt.outcome === "success";
   const coupon = `CP-${DEMO_ACCOUNT.billNumber}`;
-  const authCode = `AUT-${receipt.reference.replace(/\D/g, "").padEnd(6, "0").slice(0, 6)}`;
   const rows = [
     ["N° de cliente", identity.mode === "cliente" ? identity.value : DEMO_ACCOUNT.customer],
     ["Dirección", DEMO_ACCOUNT.address],
     ["Recaudador", collector?.name ?? receipt.collector],
     ["N° de cupón", coupon],
-    ...(success ? [["Código de autorización", authCode]] : []),
     ...(receipt.collector === "bemobi" ? [
       ["Cuenta Chilquinta", pesos(receipt.amount)],
       ["Comisión Bemobi", pesos(receipt.quote.commission)],
       ["Cuotas", receipt.quote.installments === 1 ? "1 pago" : `${receipt.quote.installments} cuotas de ${pesos(receipt.quote.installmentAmount)} aprox.`],
     ] : []),
     ["Correo electrónico", receipt.email],
-    ["Referencia de prueba", receipt.reference],
     ["Fecha y hora", `${receipt.date} hrs`],
   ];
   function download() {

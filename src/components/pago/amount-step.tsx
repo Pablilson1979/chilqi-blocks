@@ -24,17 +24,11 @@ export function BalanceLoader({ onDone }: { onDone: () => void }) {
   }, [onDone]);
   return (
     <div role="status" aria-live="polite" className="flex flex-col items-center justify-center gap-6 rounded-xl bg-surface px-6 py-16 text-center">
-      <span className="relative flex size-20 items-center justify-center" aria-hidden>
-        <span className="absolute inset-0 rounded-full bg-primary/10 motion-safe:animate-ping" />
-        <span className="absolute inset-0 rounded-full border-4 border-muted" />
-        <span className="absolute inset-0 rounded-full border-4 border-transparent border-t-primary motion-safe:animate-spin" />
-        <span className="size-3 rounded-full bg-primary" />
-      </span>
       <div>
         <p className="text-xl font-bold text-foreground">Cargando saldos</p>
         <p className="mt-2 text-base text-muted-foreground">Consultando el estado de tu cuenta…</p>
       </div>
-      <div className="h-1.5 w-48 overflow-hidden rounded-full bg-muted" aria-hidden>
+      <div className="h-2 w-64 overflow-hidden rounded-full bg-muted" aria-hidden>
         <span className="block h-full rounded-full bg-primary [animation:pago-load_3s_linear_forwards]" />
       </div>
     </div>
@@ -128,9 +122,7 @@ export function AmountStep({ choice, setChoice, custom, setCustom, amount, valid
         <aside aria-label="Resumen" className="hidden rounded-xl bg-surface p-6 lg:sticky lg:top-6 lg:block">
           <h3 className="mb-4 text-base font-bold text-foreground">Resumen</h3>
           <dl className="text-base">
-            <div className="flex justify-between gap-4 border-b border-border pb-3"><dt className="text-muted-foreground">Número de cliente</dt><dd className="font-semibold">{customer}</dd></div>
-            <div className="flex justify-between gap-4 border-b border-border py-3"><dt className="text-muted-foreground">Dirección</dt><dd className="text-right font-semibold">{DEMO_ACCOUNT.address}</dd></div>
-            <div className="flex items-baseline justify-between gap-4 pt-4"><dt className="font-bold">Total a pagar</dt><dd className="text-2xl font-extrabold">{valid ? pesos(amount) : "—"}</dd></div>
+            <div className="flex items-baseline justify-between gap-4"><dt className="font-bold">Total a pagar</dt><dd className="text-2xl font-extrabold">{valid ? pesos(amount) : "—"}</dd></div>
           </dl>
           <Button size="lg" disabled={!valid} onClick={onContinue} className="mt-6 w-full">{label}<ArrowRight aria-hidden /></Button>
         </aside>
