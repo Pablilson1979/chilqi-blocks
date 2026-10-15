@@ -5,9 +5,9 @@ import { DEMO_ACCOUNT, pesos, type CollectorId, COLLECTORS } from "@/lib/pago-da
 
 import type { PaymentQuote } from "@/lib/payment-quote";
 
-type Props = { quote: PaymentQuote; open: boolean; onOpenChange: (open: boolean) => void; amount: number; collector: CollectorId | null; email: string; customer: string; processing: boolean; onConfirm: () => void; onOther: () => void; onEditEmail: () => void };
+type Props = { quote: PaymentQuote; open: boolean; onOpenChange: (open: boolean) => void; amount: number; collector: CollectorId | null; email: string; customer: string; processing: boolean; onConfirm: () => void; onFail: () => void; onOther: () => void; onEditEmail: () => void };
 
-export function PaymentConfirmation({ quote, open, onOpenChange, amount, collector, email, customer, processing, onConfirm, onOther, onEditEmail }: Props) {
+export function PaymentConfirmation({ quote, open, onOpenChange, amount, collector, email, customer, processing, onConfirm, onFail, onOther, onEditEmail }: Props) {
   const name = COLLECTORS.find((item) => item.id === collector)?.name;
   return <Dialog.Root open={open} onOpenChange={(next) => { if (!processing) onOpenChange(next); }}><Dialog.Portal>
     <Dialog.Overlay className="fixed inset-0 z-50 bg-foreground/60 motion-safe:animate-in motion-safe:fade-in" />
@@ -19,6 +19,7 @@ export function PaymentConfirmation({ quote, open, onOpenChange, amount, collect
       {collector === "bemobi" && <div className="mt-3 space-y-2 text-base"><p className="text-muted-foreground">Cuenta Chilquinta {pesos(amount)} + comisión Bemobi {pesos(quote.commission)}.</p><p className="font-semibold">{quote.installments === 1 ? "1 pago" : `${quote.installments} cuotas de ${pesos(quote.installmentAmount)} aprox.`}</p><p className="text-sm text-muted-foreground">Simulación referencial. El monto final se confirma en Bemobi.</p></div>}
       <div className="my-5 grid gap-1 text-base sm:grid-cols-[auto_1fr]"><p className="text-muted-foreground">Comprobante a</p><div className="min-w-0 sm:text-right"><p className="break-all font-bold">{email.trim()}</p><Button variant="tertiary" disabled={processing} onClick={onEditEmail} className="h-auto min-h-11 px-0 text-base underline">Cambiar correo</Button></div></div>
       <div className="grid gap-3 sm:grid-cols-2"><Button size="lg" variant="secondary" disabled={processing} onClick={onOther} className="order-2 whitespace-normal sm:order-1">No, es otra dirección</Button><Button size="lg" disabled={processing} onClick={onConfirm} className="order-1 whitespace-normal sm:order-2">{processing ? <><LoaderCircle className="motion-safe:animate-spin" aria-hidden />Procesando…</> : <><LockKeyhole aria-hidden />Sí, pagar {pesos(quote.total)}</>}</Button></div>
+      {!processing && <div className="mt-3 text-center"><Button variant="tertiary" onClick={onFail} className="text-sm underline">Probar pago no logrado (QA)</Button></div>}
       <p role={processing ? "status" : undefined} className="mt-4 text-center text-sm leading-relaxed text-muted-foreground">{processing ? "Estamos procesando tu pago de prueba. Espera un momento." : "Simulación QA: no irás al sitio del recaudador, no se harán cobros ni se enviarán correos."}</p>
     </Dialog.Content>
   </Dialog.Portal></Dialog.Root>;
