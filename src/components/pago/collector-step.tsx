@@ -51,7 +51,7 @@ export function CollectorStep({ installments, setInstallments, amount, customer,
     window.setTimeout(() => emailRef.current?.focus(), 250);
   }
   const payAction = <Button size="lg" disabled={!collector || processing} onClick={attemptPay} aria-disabled={!ready || undefined} className={cn("w-full px-4 whitespace-normal", !ready && "opacity-60")}>{!collector ? "Selecciona medio de pago para continuar" : ready ? `Continuar y pagar ${pesos(quote.total)}` : "Ingresa tu correo para continuar"}<ArrowRight aria-hidden /></Button>;
-  const mobileAction = <Button size="lg" disabled={!collector || processing} onClick={attemptPay} aria-disabled={!ready || undefined} className={cn("w-full px-4 whitespace-normal", !ready && "opacity-60")}>{!collector ? "Selecciona medio de pago para continuar" : ready ? `Continuar y pagar ${pesos(quote.total)}` : "Ingresa tu correo para continuar"}<ArrowRight aria-hidden /></Button>;
+  const mobileAction = <Button size="lg" disabled={!collector || processing} onClick={attemptPay} aria-disabled={!ready || undefined} className={cn("w-full px-4 whitespace-normal", collector && !ready && "opacity-60")}>{!collector ? "Selecciona medio de pago para continuar" : `Continuar y pagar ${pesos(quote.total)}`}<ArrowRight aria-hidden /></Button>;
   return <section aria-labelledby="collector-heading" className="pb-28 lg:pb-0">
     <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><h2 id="collector-heading" className="text-xl font-bold sm:text-2xl">¿Cómo quieres pagar?</h2></div>
     <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
