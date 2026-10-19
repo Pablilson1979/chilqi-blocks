@@ -1,5 +1,3 @@
-import { Info } from "lucide-react";
-
 const FEES = [
   { label: "1 pago", value: "2,2%" },
   { label: "2 a 6 cuotas", value: "2,60% por cuota" },
@@ -7,15 +5,12 @@ const FEES = [
 ];
 
 export function BemobiFeesInfo() {
-  return <div id="bemobi-installments" className="border-x-2 border-b-2 border-success rounded-b-card bg-surface px-4 py-3 sm:px-5">
-    <div className="grid items-center gap-3 sm:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)]">
-      <div className="min-w-0">
-        <p className="mb-1.5 flex items-center gap-2 text-sm font-bold"><Info aria-hidden className="size-4 shrink-0 text-info" />Bemobi cobra comisión por servicio</p>
-        <dl className="divide-y divide-border rounded-lg border border-border bg-surface text-sm">
-          {FEES.map((fee) => <div key={fee.label} className="flex items-baseline justify-between gap-3 px-3 py-1"><dt className="text-muted-foreground">{fee.label}</dt><dd className="whitespace-nowrap font-bold">{fee.value}</dd></div>)}
-        </dl>
-      </div>
-      <p className="rounded-lg bg-info-soft px-3 py-2 text-sm font-bold text-foreground">El monto a pagar no incluye la comisión. Bemobi la sumará según las cuotas que elijas allí.</p>
+  return <div id="bemobi-installments" className="rounded-b-card border-x-2 border-b-2 border-success bg-success-soft px-4 pb-4 pt-1 sm:px-5">
+    <div className="flex flex-col gap-3 border-t border-success/30 pt-3 md:flex-row md:items-center md:gap-5">
+      <p className="text-sm font-bold md:w-36 md:shrink-0">Valor de la comisión Bemobi:</p>
+      <dl className="grid flex-1 grid-cols-3 divide-x divide-border overflow-hidden rounded-full border border-border bg-surface text-center max-sm:rounded-xl">
+        {FEES.map((fee) => <div key={fee.label} className="px-2 py-2"><dt className="text-xs text-muted-foreground">{fee.label}</dt><dd className="text-sm font-bold leading-tight">{fee.value}</dd></div>)}
+      </dl>
     </div>
   </div>;
 }
