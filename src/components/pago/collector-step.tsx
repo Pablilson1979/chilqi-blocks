@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { canPay, COLLECTORS, eligibleCollector, pesos, validEmail, type CollectorId } from "@/lib/pago-data";
 import { cn } from "@/lib/utils";
-import bemobi from "@/assets/pago/BEMOBI.svg.asset.json";
+import bemobi from "@/assets/pago/bemobi-logo.svg.asset.json";
 import bancoestado from "@/assets/pago/bancoestado.svg.asset.json";
 import mach from "@/assets/pago/machv2.svg.asset.json";
 import servipag from "@/assets/pago/servipag.svg.asset.json";
