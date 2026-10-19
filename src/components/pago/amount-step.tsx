@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, FileText } from "lucide-react";
+import { AlertTriangle, ArrowRight, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DEMO_ACCOUNT, MIN_PAYMENT, pesos } from "@/lib/pago-data";
@@ -112,6 +112,16 @@ export function AmountStep({ choice, setChoice, custom, setCustom, amount, valid
               </div>
             )}
           </div>
+          {choice === "custom" && valid && amount < DEMO_ACCOUNT.cutoff && (
+            <div role="alert" className="flex items-start gap-3 rounded-xl border-2 border-destructive bg-primary-soft px-4 py-4 motion-safe:animate-in motion-safe:fade-in sm:px-5">
+              <AlertTriangle aria-hidden className="mt-0.5 size-6 shrink-0 text-destructive" />
+              <div className="min-w-0">
+                <p className="text-base font-bold text-foreground">Con este monto no evitas el corte</p>
+                <p className="mt-1 text-base text-foreground">Para evitarlo, paga al menos <strong>{pesos(DEMO_ACCOUNT.cutoff)}</strong> antes del {DEMO_ACCOUNT.cutoffDate}.</p>
+                <Button variant="tertiary" onClick={() => setChoice("cutoff")} className="mt-1 h-auto min-h-11 px-0 text-base underline">Pagar {pesos(DEMO_ACCOUNT.cutoff)} y evitar el corte</Button>
+              </div>
+            </div>
+          )}
           <div className="flex items-center justify-between gap-3 border-t border-border pt-3">
             <Button variant="tertiary" onClick={onDetail} className="h-auto min-h-11 px-0 text-base"><FileText aria-hidden />Ver detalle boleta</Button>
             <Button variant="tertiary" asChild className="h-auto min-h-11 whitespace-normal px-0 text-right text-base"><Link to="/" onClick={onOther}>Pagar otro N° de cliente</Link></Button>
