@@ -66,9 +66,7 @@ export function CollectorStep({ installments, setInstallments, amount, customer,
       </div>
       <aside aria-label="Resumen del pago" className="rounded-card bg-surface p-5 sm:p-6 lg:sticky lg:top-6"><h3 className="mb-4 text-base font-bold">Resumen del pago</h3>
         <dl className="text-base"><div className="flex justify-between gap-3 border-b border-border py-3"><dt className="text-muted-foreground">Medio de pago</dt><dd className="text-right font-semibold">{selected?.name ?? "Por seleccionar"}</dd></div>
-          <div className="flex justify-between gap-3 py-2"><dt className="text-muted-foreground">Tu cuenta Chilquinta</dt><dd className="font-semibold">{pesos(amount)}</dd></div>
-          
-          <div className="flex items-baseline justify-between gap-3 border-t border-border pt-4"><dt className="font-bold">Total a pagar</dt><dd aria-live="polite" className="text-2xl font-extrabold">{pesos(quote.total)}</dd></div>
+          <div className="flex items-baseline justify-between gap-3 pt-4"><dt className="font-bold">Total a pagar</dt><dd aria-live="polite" className="text-2xl font-extrabold">{pesos(quote.total)}</dd></div>
         </dl>
         {collector === "bemobi" && <p className="mt-4 rounded-lg bg-info-soft px-3 py-2 text-sm font-semibold text-foreground">Bemobi cobra una comisión según las cuotas que elijas en su sitio. La verás antes de confirmar el pago.</p>}
         <div className="mt-5 hidden lg:block">{payAction}{!ready && <p className="mt-3 text-sm text-muted-foreground">{!collector ? "Selecciona un recaudador e ingresa un correo válido para continuar." : "Ingresa un correo válido para continuar."}</p>}</div>
