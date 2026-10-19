@@ -14,7 +14,6 @@ import { SelectionMark } from "./payment-shared";
 import { PaymentConfirmation } from "./payment-confirmation";
 import type { PaymentOutcome } from "./payment-context";
 import { paymentQuote } from "@/lib/payment-quote";
-import { BemobiInstallments } from "./bemobi-installments";
 import { BemobiFeesInfo } from "./bemobi-fees-info";
 
 const LOGOS: Record<CollectorId, string> = { bemobi: bemobi.url, bancoestado: bancoestado.url, mach: mach.url, servipag: servipag.url, unired: unired.url };
@@ -23,11 +22,12 @@ type Props = { installments: number; setInstallments: (count: number) => void; a
 export function CollectorStep({ installments, setInstallments, amount, customer, collector, setCollector, email, setEmail, processing, onBack, onOther, onSubmit }: Props) {
   const [others, setOthers] = useState(collector === "unired");
   const [touched, setTouched] = useState(false);
-  const [simple, setSimple] = useState(false);
+  const simple = true;
   const [confirm, setConfirm] = useState(false);
   const [outcome, setOutcome] = useState<PaymentOutcome>("success");
   const emailRef = useRef<HTMLInputElement>(null);
-  const quote = paymentQuote(amount, collector, installments);
+  // Bemobi commission is charged by the collector; Chilquinta shows only the account amount.
+  const quote = paymentQuote(amount, null, 1);
   const ready = canPay(amount, collector, email);
   const selected = COLLECTORS.find((item) => item.id === collector);
   const emailError = (touched || email.length > 0) && !validEmail(email);
@@ -41,7 +41,7 @@ export function CollectorStep({ installments, setInstallments, amount, customer,
       <span className="col-start-2 row-start-2 text-sm leading-snug text-muted-foreground sm:col-start-3 sm:row-start-1">Permite pagos hasta:<br className="hidden sm:block" /> <strong className="font-semibold">{pesos(item.limit)}</strong>{item.installments && <span className="block">Hasta {item.installments} cuotas</span>}</span>
       <span className={cn("col-start-3 row-start-1 self-start rounded px-2 py-1 text-xs font-semibold sm:col-start-4 sm:self-center", item.type === "Crédito" ? "bg-info-soft text-info" : "bg-primary-soft text-primary")}>{item.type}</span>
       {item.id === "bemobi" && <span className="col-start-2 col-end-4 text-sm font-semibold text-muted-foreground sm:col-end-5">Con comisión por servicio</span>}<span className="sr-only">{item.name}</span>
-    </Button>{item.id === "bemobi" && active && simple && <BemobiFeesInfo />}{item.id === "bemobi" && active && !simple && <BemobiInstallments quote={quote} onChange={setInstallments} disabled={processing} />}{!eligible && <p id={`limit-${item.id}`} className="mt-2 text-sm font-semibold text-destructive">Tu monto supera el límite de {pesos(item.limit)}.</p>}</div>;
+    </Button>{item.id === "bemobi" && active && simple && <BemobiFeesInfo />}{!eligible && <p id={`limit-${item.id}`} className="mt-2 text-sm font-semibold text-destructive">Tu monto supera el límite de {pesos(item.limit)}.</p>}</div>;
   }
 
   function attemptPay() {
@@ -53,7 +53,7 @@ export function CollectorStep({ installments, setInstallments, amount, customer,
   const payAction = <Button size="lg" disabled={!collector || processing} onClick={attemptPay} aria-disabled={!ready || undefined} className={cn("w-full px-4 whitespace-normal", !ready && "opacity-60")}>{ready ? `Continuar y pagar ${pesos(quote.total)}` : "Ingresa tu correo para continuar"}<ArrowRight aria-hidden /></Button>;
   const mobileAction = <Button size="lg" disabled={!collector || processing} onClick={attemptPay} aria-disabled={!ready || undefined} className={cn("w-full px-4 whitespace-normal", !ready && "opacity-60")}>{ready ? `Continuar y pagar ${pesos(quote.total)}` : "Ingresa tu correo para continuar"}<ArrowRight aria-hidden /></Button>;
   return <section aria-labelledby="collector-heading" className="pb-28 lg:pb-0">
-    <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><h2 id="collector-heading" className="text-xl font-bold sm:text-2xl">¿Cómo quieres pagar?</h2><div role="radiogroup" aria-label="Versión del paso" className="inline-flex rounded-lg bg-muted p-1">{([{ v: false, l: "Con simulador" }, { v: true, l: "Versión simple" }] as const).map((o) => <Button key={o.l} variant="ghost" size="sm" role="radio" aria-checked={simple === o.v} disabled={processing} onClick={() => { setSimple(o.v); if (o.v) setInstallments(1); }} className={cn("text-sm", simple === o.v ? "bg-surface font-bold shadow-sm hover:bg-surface" : "text-muted-foreground")}>{o.l}</Button>)}</div></div>
+    <div className="mb-5 flex flex-wrap items-center justify-between gap-3"><h2 id="collector-heading" className="text-xl font-bold sm:text-2xl">¿Cómo quieres pagar?</h2></div>
     <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_360px]">
       <div className="min-w-0">
         <div role="radiogroup" aria-label="Recaudador" className="space-y-3">{COLLECTORS.filter((item) => item.tab === "express").map(collectorCard)}
@@ -67,14 +67,14 @@ export function CollectorStep({ installments, setInstallments, amount, customer,
       <aside aria-label="Resumen del pago" className="rounded-card bg-surface p-5 sm:p-6 lg:sticky lg:top-6"><h3 className="mb-4 text-base font-bold">Resumen del pago</h3>
         <dl className="text-base"><div className="flex justify-between gap-3 border-b border-border py-3"><dt className="text-muted-foreground">Medio de pago</dt><dd className="text-right font-semibold">{selected?.name ?? "Por seleccionar"}</dd></div>
           <div className="flex justify-between gap-3 py-2"><dt className="text-muted-foreground">Tu cuenta Chilquinta</dt><dd className="font-semibold">{pesos(amount)}</dd></div>
-          {collector === "bemobi" && <div className="flex justify-between gap-3 pb-3"><dt className="text-muted-foreground">Comisión Bemobi</dt><dd className="font-semibold">+{pesos(quote.commission)}</dd></div>}
-          <div className="flex items-baseline justify-between gap-3 border-t border-border pt-4"><dt className="font-bold">{collector === "bemobi" ? "Total estimado" : "Total a pagar"}</dt><dd aria-live="polite" className="text-2xl font-extrabold">{pesos(quote.total)}</dd></div>
+          
+          <div className="flex items-baseline justify-between gap-3 border-t border-border pt-4"><dt className="font-bold">Total a pagar</dt><dd aria-live="polite" className="text-2xl font-extrabold">{pesos(quote.total)}</dd></div>
         </dl>
-        {collector === "bemobi" && <p className="mt-2 text-sm text-muted-foreground">Incluye la comisión por servicio de Bemobi.</p>}
+        {collector === "bemobi" && <p className="mt-3 rounded-lg bg-info-soft px-3 py-2 text-sm font-bold text-foreground">Bemobi sumará su comisión a este valor según las cuotas que elijas allí.</p>}
         <div className="mt-5 hidden lg:block">{payAction}{!ready && <p className="mt-3 text-sm text-muted-foreground">{!collector ? "Selecciona un recaudador e ingresa un correo válido para continuar." : "Ingresa un correo válido para continuar."}</p>}</div>
       </aside>
     </div>
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-card-hover lg:hidden"><div className="mx-auto max-w-[600px]">{!collector ? <p className="mb-2 text-center text-sm font-semibold text-muted-foreground">Selecciona un medio de pago</p> : !ready ? <p className="mb-2 flex items-center justify-center gap-2 text-center text-sm font-semibold text-foreground"><Mail aria-hidden className="size-4 text-primary" />Falta tu correo para enviarte el comprobante</p> : collector === "bemobi" && <p className="mb-2 text-center text-sm text-muted-foreground">Incluye {pesos(quote.commission)} de comisión Bemobi</p>}{mobileAction}</div></div>
+    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-surface px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-card-hover lg:hidden"><div className="mx-auto max-w-[600px]">{!collector ? <p className="mb-2 text-center text-sm font-semibold text-muted-foreground">Selecciona un medio de pago</p> : !ready ? <p className="mb-2 flex items-center justify-center gap-2 text-center text-sm font-semibold text-foreground"><Mail aria-hidden className="size-4 text-primary" />Falta tu correo para enviarte el comprobante</p> : collector === "bemobi" && <p className="mb-2 text-center text-sm font-semibold text-foreground">Bemobi sumará su comisión según las cuotas</p>}{mobileAction}</div></div>
     <PaymentConfirmation quote={quote} open={confirm} onOpenChange={setConfirm} amount={amount} collector={collector} email={email} customer={customer} processing={processing} onConfirm={() => onSubmit(outcome)} onFail={() => onSubmit("error")} onOther={onOther} onEditEmail={() => { setConfirm(false); window.setTimeout(() => emailRef.current?.focus(), 100); }} />
   </section>;
 }
