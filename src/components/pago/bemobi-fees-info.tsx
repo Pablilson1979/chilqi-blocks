@@ -15,7 +15,7 @@ export function BemobiFeesInfo() {
           {FEES.map((fee) => <div key={fee.label} className="flex items-baseline justify-between gap-3 px-3 py-1"><dt className="text-muted-foreground">{fee.label}</dt><dd className="whitespace-nowrap font-bold">{fee.value}</dd></div>)}
         </dl>
       </div>
-      <p className="rounded-lg bg-info-soft px-3 py-2 text-sm font-bold text-foreground">El total estimado considera 1 pago. Las cuotas se eligen en Bemobi.</p>
+      <p className="rounded-lg bg-info-soft px-3 py-2 text-sm font-bold text-foreground">El monto a pagar no incluye la comisión. Bemobi la sumará según las cuotas que elijas allí.</p>
     </div>
   </div>;
 }
