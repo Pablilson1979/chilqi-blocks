@@ -70,7 +70,6 @@ export function CollectorStep({ installments, setInstallments, amount, customer,
           
           <div className="flex items-baseline justify-between gap-3 border-t border-border pt-4"><dt className="font-bold">Total a pagar</dt><dd aria-live="polite" className="text-2xl font-extrabold">{pesos(quote.total)}</dd></div>
         </dl>
-        {collector === "bemobi" && <p className="mt-3 rounded-lg bg-info-soft px-3 py-2 text-sm font-bold text-foreground">Bemobi sumará su comisión a este valor según las cuotas que elijas allí.</p>}
         <div className="mt-5 hidden lg:block">{payAction}{!ready && <p className="mt-3 text-sm text-muted-foreground">{!collector ? "Selecciona un recaudador e ingresa un correo válido para continuar." : "Ingresa un correo válido para continuar."}</p>}</div>
       </aside>
     </div>
