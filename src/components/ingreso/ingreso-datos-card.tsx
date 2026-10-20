@@ -88,6 +88,8 @@ export function IngresoDatosCard({ servicio, className }: IngresoDatosCardProps)
               className="flex-1"
               value={cliente}
               onChange={(e) => setCliente(e.target.value.replace(/\D/g, "").slice(0, 10))}
+              state={cliente.length === 0 ? "default" : clienteOk ? "success" : "error"}
+              {...(cliente.length > 0 && !clienteOk ? { message: "Ingresa al menos 5 números." } : {})}
             />
             <button
               type="button"

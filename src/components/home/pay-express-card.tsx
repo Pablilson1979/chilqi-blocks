@@ -1,5 +1,6 @@
 import { useId, useState } from "react";
-import { AlertCircle, Check } from "lucide-react";
+import { AlertCircle } from "lucide-react";
+import { SuccessTick } from "@/components/chilquinta/success-tick";
 import { useNavigate } from "@tanstack/react-router";
 import { usePayment } from "@/components/pago/payment-context";
 
@@ -121,7 +122,7 @@ export function PayExpressCard({ className }: { className?: string }) {
           onBlur={() => setTouched(true)}
           className="h-10 min-h-10 min-w-0 flex-1 border-0 bg-transparent px-0 text-base font-semibold shadow-none focus-visible:outline-none focus-visible:ring-0"
         />
-        {canSubmit ? <span id={`${fieldId}-success`} className="flex size-7 shrink-0 items-center justify-center rounded-full bg-success-tint text-success"><Check className="size-4" strokeWidth={3} aria-hidden /><span className="sr-only">Formato válido</span></span> : null}
+        {canSubmit ? <span id={`${fieldId}-success`}><SuccessTick label="Formato válido" /></span> : null}
         {mode === "cliente" && showError ? <CustomerNumberHelp /> : null}
         </div>
       </div>

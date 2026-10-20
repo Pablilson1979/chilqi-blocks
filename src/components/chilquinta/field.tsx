@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Check, CheckCircle2, AlertCircle } from "lucide-react";
+import { CheckCircle2, AlertCircle } from "lucide-react";
+import { SuccessTick } from "@/components/chilquinta/success-tick";
 
 import { cn } from "@/lib/utils";
 import { Input, type InputProps } from "@/components/ui/input";
@@ -37,23 +38,17 @@ export const Field = React.forwardRef<HTMLInputElement, FieldProps>(
             state={state}
             aria-invalid={state === "error" || undefined}
             aria-describedby={messageId}
-            className={cn(state !== "default" && "pr-14")}
+            className={cn(state !== "default" && "pr-14", state === "success" && "border-2 border-success")}
             {...props}
           />
-          {state !== "default" ? (
+          {state === "success" ? (
+            <SuccessTick className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2" />
+          ) : state === "error" ? (
             <span
               aria-hidden
-              className={cn(
-                "pointer-events-none absolute right-4 top-1/2 flex size-7 -translate-y-1/2 items-center justify-center rounded-full",
-                state === "success" && "bg-success/25 text-success",
-                state === "error" && "bg-destructive/15 text-destructive",
-              )}
+              className="pointer-events-none absolute right-4 top-1/2 flex size-7 -translate-y-1/2 items-center justify-center rounded-full bg-destructive/15 text-destructive"
             >
-              {state === "success" ? (
-                <Check className="size-4" strokeWidth={3} />
-              ) : (
-                <AlertCircle className="size-4" strokeWidth={2.5} />
-              )}
+              <AlertCircle className="size-4" strokeWidth={2.5} />
             </span>
           ) : null}
         </div>
