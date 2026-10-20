@@ -14,6 +14,7 @@
 - Keep map-reference timeline styling as an opt-in presentation of the shared Tracker; derive all steps from the same logic to avoid diverging supply and map states.
 - Keep news content in a browser-safe typed data module and render listing and article detail as separate routes; this allows verified content or future services to replace prototype data without changing the editorial presentation.
 - Keep payment identifier schemas in a browser-safe validation module and customer-number help separate from the home payment form so future payment services can reuse the same rules without changing the UI.
+- Reuse CustomerNumberHelp with configurable triggers across customer-number forms; one dialog keeps the bill guidance and accessible behavior consistent.
 - Keep online-payment rules and demo account data in browser-safe modules, presentation under `components/pago`, and temporary payment context in a root provider; never store payment identity or receipt data in URLs or browser persistence, so the QA flow can be replaced safely by real services.
 - Keep collector selection and address confirmation in dedicated payment components, and preserve retry drafts only in the payment provider; use the shared StatusMessage for both payment outcomes so results stay consistent with the site.
 - Calculate collector fees and installment rounding in one browser-safe quote module, and carry the quote in ephemeral receipts and installment choice in retry drafts so selection, confirmation and outcomes never disagree.

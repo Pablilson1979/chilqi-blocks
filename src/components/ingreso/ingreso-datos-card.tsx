@@ -1,9 +1,10 @@
 import * as React from "react";
-import { HelpCircle, Lock, ShieldCheck } from "lucide-react";
+import { Lock, ShieldCheck } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/chilquinta/field";
+import { CustomerNumberHelp } from "@/components/home/customer-number-help";
 
 /** Formatea el RUT a 12345678-9 mientras se escribe. */
 function formatRut(value: string) {
@@ -30,7 +31,6 @@ export interface IngresoDatosCardProps {
 export function IngresoDatosCard({ servicio, className }: IngresoDatosCardProps) {
   const [rut, setRut] = React.useState("");
   const [cliente, setCliente] = React.useState("");
-  const [ayuda, setAyuda] = React.useState(false);
   const [enviado, setEnviado] = React.useState(false);
 
   const rutOk = rutValido(rut);
@@ -91,23 +91,8 @@ export function IngresoDatosCard({ servicio, className }: IngresoDatosCardProps)
               state={cliente.length === 0 ? "default" : clienteOk ? "success" : "error"}
               {...(cliente.length > 0 && !clienteOk ? { message: "Ingresa al menos 5 números." } : {})}
             />
-            <button
-              type="button"
-              aria-label="¿Dónde encuentro mi número de cliente?"
-              aria-expanded={ayuda}
-              onClick={() => setAyuda((v) => !v)}
-              className="mt-[30px] flex size-11 shrink-0 items-center justify-center rounded-full bg-info/10 text-info transition-colors hover:bg-info/20 focus-visible:outline-3 focus-visible:outline-ring focus-visible:outline-offset-2"
-            >
-              <HelpCircle className="size-5" aria-hidden />
-            </button>
+            <CustomerNumberHelp variant="icon" className="mt-[30px]" />
           </div>
-          {ayuda ? (
-            <p className="rounded-card bg-muted p-ch-md text-sm leading-relaxed text-foreground">
-              Tu número de cliente aparece en la parte superior de tu boleta, junto a la dirección
-              del suministro. También puedes buscarlo con la opción{" "}
-              <span className="font-semibold">Busca tu N° cliente</span>.
-            </p>
-          ) : null}
         </div>
 
         <Button type="submit" size="lg" disabled={!puedeEnviar} className="mt-ch-sm w-full">

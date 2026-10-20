@@ -11,11 +11,11 @@ import {
 import { CorteCard, formatHora } from "./shared";
 import ClientOnlyMap from "./ClientOnlyMap";
 import { Button } from "@/components/ui/button";
+import { CustomerNumberHelp } from "@/components/home/customer-number-help";
 import {
   Zap,
   Hash,
   Check,
-  HelpCircle,
   Home,
   FlaskConical,
   Bell,
@@ -187,9 +187,7 @@ export default function ModoCliente({
                 Consultar
               </button>
             </div>
-            <button type="button" className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground">
-              <HelpCircle className="h-3.5 w-3.5" /> ¿Dónde encuentro mi N° de cliente?
-            </button>
+            <CustomerNumberHelp variant="text" className="mt-3" />
           </form>
         )}
 
