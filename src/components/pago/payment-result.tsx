@@ -18,11 +18,6 @@ export function PaymentResult() {
     ["Dirección", DEMO_ACCOUNT.address],
     ["Recaudador", collector?.name ?? receipt.collector],
     ["N° de cupón", coupon],
-    ...(receipt.collector === "bemobi" ? [
-      ["Cuenta Chilquinta", pesos(receipt.amount)],
-      ["Comisión Bemobi", pesos(receipt.quote.commission)],
-      ["Cuotas", receipt.quote.installments === 1 ? "1 pago" : `${receipt.quote.installments} cuotas de ${pesos(receipt.quote.installmentAmount)} aprox.`],
-    ] : []),
     ["Correo electrónico", receipt.email],
     ["Fecha y hora", `${receipt.date} hrs`],
   ];
