@@ -1,8 +1,9 @@
 import * as React from "react";
-import { HelpCircle, MapPin, Search } from "lucide-react";
+import { MapPin, Search } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/chilquinta/field";
+import { CustomerNumberHelp } from "@/components/home/customer-number-help";
 import { CASOS, type Caso } from "@/components/visita/content";
 
 /** Ejemplos ordenados según el flujo del reporte: en espera → en camino → en reparación → cierres → excepciones. */
@@ -29,7 +30,6 @@ export interface BuscarVisitaProps {
  */
 export function BuscarVisita({ onBuscar, error }: BuscarVisitaProps) {
   const [valor, setValor] = React.useState("");
-  const [ayuda, setAyuda] = React.useState(false);
   const puede = valor.replace(/\D/g, "").length >= 6;
 
   return (
@@ -66,32 +66,8 @@ export function BuscarVisita({ onBuscar, error }: BuscarVisitaProps) {
                 "Puedes usar cualquiera de los dos: solo números, sin puntos ni guion."
               }
             />
-            <button
-              type="button"
-              aria-label="¿Dónde encuentro estos números?"
-              aria-expanded={ayuda}
-              onClick={() => setAyuda((v) => !v)}
-              className="mt-[30px] flex size-11 shrink-0 items-center justify-center rounded-full bg-info/10 text-info transition-colors hover:bg-info/20"
-            >
-              <HelpCircle className="size-5" aria-hidden />
-            </button>
+            <CustomerNumberHelp variant="icon" includeRequestHelp className="mt-[30px]" />
           </div>
-
-          {ayuda ? (
-            <div className="rounded-card bg-muted p-ch-md text-sm leading-relaxed text-foreground">
-              <p>
-                <span className="font-bold">N° de solicitud (8 dígitos):</span> llega en el
-                mensaje que recibes al reportar tu corte por la web, WhatsApp o teléfono.
-              </p>
-              <p className="mt-ch-sm">
-                <span className="font-bold">N° de cliente (7 dígitos):</span> aparece en la
-                parte superior de tu boleta, sin el dígito verificador.
-              </p>
-              <p className="mt-ch-sm">
-                Con cualquiera de los dos puedes consultar el estado de tu visita.
-              </p>
-            </div>
-          ) : null}
 
           <Button type="submit" size="lg" disabled={!puede} className="w-full">
             <Search aria-hidden />

@@ -1,5 +1,7 @@
 # Roadmap
 
+- [x] Unify customer-number help with the supplied bill and verify mobile/desktop dialogs.
+
 - [x] Add a simple Bemobi installment simulator with upfront commission and consistent confirmation/results.
 - [x] Verify Bemobi calculations and the complete mobile/desktop flow, including retry and switching collectors.
 
