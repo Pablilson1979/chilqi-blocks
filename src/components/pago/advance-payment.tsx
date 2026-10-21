@@ -74,7 +74,7 @@ export function AdvancePayment() {
         <div className="mb-2 flex items-center justify-end"><CustomerNumberHelp variant="text" /></div>
         <Field id="adv-customer" label="N° de cliente" inputMode="numeric" placeholder="Ej: 3377982" value={customer} maxLength={7}
           onChange={(e) => { setCustomer(e.target.value.replace(/\D/g, "")); setDebt(false); }} onBlur={() => setTouched(true)}
-          state={state} {...(state === "error" ? { message: parsed.error?.issues[0]?.message } : {})} />
+          state={state} {...(state === "error" ? { message: parsed.error?.issues[0]?.message ?? "Revisa tu número" } : {})} />
         {debt && <StatusMessage tone="warning" className="mt-5" title="Tienes una cuenta pendiente" description="El pago adelantado es solo para clientes al día. Primero paga tu cuenta y luego podrás abonar." />}
         {debt ? <Button size="lg" className="mt-6 w-full" asChild><Link to="/">Ir a Paga tu cuenta aquí<ArrowRight aria-hidden /></Link></Button>
           : <Button type="submit" size="lg" className="mt-6 w-full">Continuar<ArrowRight aria-hidden /></Button>}
