@@ -1,9 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { describe, it } from "node:test";
+import { strict as assert } from "node:assert";
 import { validAdvanceAmount } from "./pago-adelantado";
 
 describe("pago adelantado", () => {
   it("exige monto mínimo de $500", () => {
-    expect(validAdvanceAmount(499)).toBe(false);
-    expect(validAdvanceAmount(500)).toBe(true);
+    assert.equal(validAdvanceAmount(499), false);
+    assert.equal(validAdvanceAmount(500), true);
   });
 });
