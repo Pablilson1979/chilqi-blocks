@@ -97,9 +97,16 @@ const CORTES_Y_EMERGENCIAS: MenuLink[] = [
   },
 ];
 
+const CONVENIOS_Y_PAGOS: MenuLink[] = [
+  { label: "Convenio de pago", description: "Aquí podrás realizar tu convenio de pago", href: "", icon: "/icons/pagos/convenio.webp" },
+  { label: "Opciones de pago", description: "Aquí podrás ver todos nuestros recaudadores", href: "", icon: "/icons/pagos/opciones.webp" },
+  { label: "Pago adelantado", description: "Realiza el pago anticipado de tu cuenta", href: "/pago-adelantado", icon: "/icons/pagos/adelantado.webp" },
+  { label: "Fecha de corte", description: "Aquí podrás revisar cuándo es tu fecha de corte de energía", href: "", icon: "/icons/pagos/fecha.webp" },
+];
+
 export const CHILQUINTA_NAV: NavItem[] = [
   { label: "Boleta y facturación", href: "#" },
-  { label: "Convenios y pagos", href: "#" },
+  { label: "Convenios y pagos", href: "#", panel: CONVENIOS_Y_PAGOS },
   { label: "Cortes y emergencias", href: "#", panel: CORTES_Y_EMERGENCIAS },
   { label: "Consumo y lecturas", href: "#" },
   { label: "Servicio al cliente", href: "#", panel: SERVICIO_AL_CLIENTE },
