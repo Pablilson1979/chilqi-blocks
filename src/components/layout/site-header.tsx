@@ -282,27 +282,7 @@ export function SiteHeader({
                   <ul className="grid grid-cols-2 gap-x-ch-xl gap-y-ch-base">
                     {item.panel.map((link) => (
                       <li key={link.label}>
-                        <a
-                          href={link.href}
-                          onClick={() => setOpenPanel(null)}
-                          className="group flex items-start gap-ch-sm rounded-card p-ch-sm transition-colors hover:bg-accent"
-                        >
-                          <img
-                            src={link.icon}
-                            alt=""
-                            aria-hidden
-                            className="mt-1 size-6 shrink-0 object-contain"
-                            loading="lazy"
-                          />
-                          <span className="min-w-0">
-                            <span className="block text-[17px] font-bold leading-snug text-foreground group-hover:text-primary">
-                              {link.label}
-                            </span>
-                            <span className="mt-1 block text-[14px] leading-snug text-muted-foreground">
-                              {link.description}
-                            </span>
-                          </span>
-                        </a>
+                        <PanelLink link={link} onSelect={() => setOpenPanel(null)} />
                       </li>
                     ))}
                   </ul>
