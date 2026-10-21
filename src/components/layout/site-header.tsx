@@ -97,9 +97,16 @@ const CORTES_Y_EMERGENCIAS: MenuLink[] = [
   },
 ];
 
+const CONVENIOS_Y_PAGOS: MenuLink[] = [
+  { label: "Convenio de pago", description: "Aquí podrás realizar tu convenio de pago", href: "", icon: "/icons/pagos/convenio.webp" },
+  { label: "Opciones de pago", description: "Aquí podrás ver todos nuestros recaudadores", href: "", icon: "/icons/pagos/opciones.webp" },
+  { label: "Pago adelantado", description: "Realiza el pago anticipado de tu cuenta", href: "/pago-adelantado", icon: "/icons/pagos/adelantado.webp" },
+  { label: "Fecha de corte", description: "Aquí podrás revisar cuándo es tu fecha de corte de energía", href: "", icon: "/icons/pagos/fecha.webp" },
+];
+
 export const CHILQUINTA_NAV: NavItem[] = [
   { label: "Boleta y facturación", href: "#" },
-  { label: "Convenios y pagos", href: "#" },
+  { label: "Convenios y pagos", href: "#", panel: CONVENIOS_Y_PAGOS },
   { label: "Cortes y emergencias", href: "#", panel: CORTES_Y_EMERGENCIAS },
   { label: "Consumo y lecturas", href: "#" },
   { label: "Servicio al cliente", href: "#", panel: SERVICIO_AL_CLIENTE },
@@ -275,27 +282,7 @@ export function SiteHeader({
                   <ul className="grid grid-cols-2 gap-x-ch-xl gap-y-ch-base">
                     {item.panel.map((link) => (
                       <li key={link.label}>
-                        <a
-                          href={link.href}
-                          onClick={() => setOpenPanel(null)}
-                          className="group flex items-start gap-ch-sm rounded-card p-ch-sm transition-colors hover:bg-accent"
-                        >
-                          <img
-                            src={link.icon}
-                            alt=""
-                            aria-hidden
-                            className="mt-1 size-6 shrink-0 object-contain"
-                            loading="lazy"
-                          />
-                          <span className="min-w-0">
-                            <span className="block text-[17px] font-bold leading-snug text-foreground group-hover:text-primary">
-                              {link.label}
-                            </span>
-                            <span className="mt-1 block text-[14px] leading-snug text-muted-foreground">
-                              {link.description}
-                            </span>
-                          </span>
-                        </a>
+                        <PanelLink link={link} onSelect={() => setOpenPanel(null)} />
                       </li>
                     ))}
                   </ul>
@@ -311,12 +298,26 @@ export function SiteHeader({
             <ul className="flex flex-col py-2">
               {nav.map((item) => (
                 <li key={item.label}>
-                  <a
-                    href={item.href}
-                    className="ch-touch flex items-center rounded-input px-2 text-[15px] font-semibold text-foreground transition-colors hover:text-primary"
-                  >
-                    {item.label}
-                  </a>
+                  {item.panel ? (
+                    <details className="group">
+                      <summary className="ch-touch flex cursor-pointer list-none items-center justify-between rounded-input px-2 text-[15px] font-semibold text-foreground">
+                        {item.label}
+                        <ChevronDown aria-hidden className="size-4 transition-transform group-open:rotate-180" />
+                      </summary>
+                      <ul className="flex flex-col gap-1 pb-2">
+                        {item.panel.map((link) => (
+                          <li key={link.label}><PanelLink link={link} onSelect={() => setOpen(false)} /></li>
+                        ))}
+                      </ul>
+                    </details>
+                  ) : (
+                    <a
+                      href={item.href}
+                      className="ch-touch flex items-center rounded-input px-2 text-[15px] font-semibold text-foreground transition-colors hover:text-primary"
+                    >
+                      {item.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -324,6 +325,24 @@ export function SiteHeader({
         )}
       </div>
     </header>
+  );
+}
+
+function PanelLink({ link, onSelect }: { link: MenuLink; onSelect: () => void }) {
+  const body = (
+    <>
+      <img src={link.icon} alt="" aria-hidden className="mt-1 size-6 shrink-0 object-contain" loading="lazy" />
+      <span className="min-w-0">
+        <span className="block text-[17px] font-bold leading-snug text-foreground group-hover/l:text-primary">{link.label}</span>
+        <span className="mt-1 block text-[14px] leading-snug text-muted-foreground">{link.description}</span>
+      </span>
+    </>
+  );
+  if (!link.href) return <div className="flex items-start gap-ch-sm rounded-card p-ch-sm">{body}</div>;
+  return (
+    <a href={link.href} onClick={onSelect} className="group/l flex items-start gap-ch-sm rounded-card p-ch-sm transition-colors hover:bg-accent">
+      {body}
+    </a>
   );
 }
 
